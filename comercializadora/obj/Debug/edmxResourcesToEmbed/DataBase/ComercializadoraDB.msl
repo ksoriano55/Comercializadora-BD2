@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ComercializadoraDBModelStoreContainer" CdmEntityContainer="ComercializadoraDBEntities">
+    <EntitySetMapping Name="categorias">
+      <EntityTypeMapping TypeName="ComercializadoraDBModel.categorias">
+        <MappingFragment StoreEntitySet="categorias">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="categoriaId" ColumnName="categoriaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
