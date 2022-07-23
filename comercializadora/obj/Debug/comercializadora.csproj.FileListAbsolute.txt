@@ -51,6 +51,8 @@ C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\ros
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\roslyn\VBCSCompiler.exe
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\Antlr3.Runtime.dll
+C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\EntityFramework.dll
+C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\EntityFramework.SqlServer.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\Newtonsoft.Json.dll
@@ -62,6 +64,8 @@ C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\Sys
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\System.Web.WebPages.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\System.Web.WebPages.Razor.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\WebGrease.dll
+C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\EntityFramework.xml
+C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\EntityFramework.SqlServer.xml
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\System.Web.Helpers.xml
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\System.Web.Mvc.xml
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\System.Web.Optimization.xml

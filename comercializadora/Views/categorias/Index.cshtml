@@ -4,30 +4,95 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>CATEGORIAS</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modalCreate">
+                            <i class="ace-icon fa fa-plus-circle bigger-120"></i>
+                            Registrar Nuevo
+                        </button>
+                    </li>
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.descripcion)
+                                        </th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.descripcion)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.descripcion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.categoriaId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.categoriaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.categoriaId })
-        </td>
-    </tr>
-}
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.descripcion)
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-app" data-rel="tooltip" title="Editar" data-toggle="modal" data-target="#Editar_@item.categoriaId">
+                                                    <i class="fa fa-edit"></i> Editar
+                                                </a>
+                                            </td>
+                                        </tr>
 
-</table>
+                                        <!-- Modal Editar Herramienta-->
+                                        <div id="Editar_@item.categoriaId" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel"> EDITAR CATEGORIA</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body" id="EditarCategorias">
+                                                        @Html.Partial("EditCategorias", new comercializadora.DataBase.categorias() { categoriaId = item.categoriaId , descripcion = item.descripcion })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Registrar Nueva Categoria-->
+
+<div id="modalCreate" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel"> REGISTRAR NUEVA CATEGORIA</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("CreateCategorias", new comercializadora.DataBase.categorias())
+            </div>
+
+        </div>
+    </div>
+</div>

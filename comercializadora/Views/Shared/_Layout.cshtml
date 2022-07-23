@@ -28,6 +28,10 @@
 
     <!-- Custom Theme Style -->
     <link href="~/Content/css/custom.min.css" rel="stylesheet">
+    <!-- Datatables -->
+
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     @RenderSection("styles", required: false)
 </head>
 
@@ -63,10 +67,10 @@
                                 <li>
                                     <a><i class="fa fa-bug"></i>Mantenimientos<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Categoria", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                        <li>@Html.ActionLink("Categoria", "Index", "Categorias", new { area = "" }, new { @class = "navbar-brand" })</li>
                                     </ul>
                                 </li>
-                          </ul>
+                            </ul>
                         </div>
 
                     </div>
@@ -99,7 +103,7 @@
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                
+
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="javascript:;"> Profile</a>
                                     <a class="dropdown-item" href="javascript:;">
@@ -116,7 +120,7 @@
             </div>
             <!-- /top navigation -->
             <!-- page content -->
-         
+
             <div class="right_col" role="main">
                 @RenderBody()
             </div>
@@ -172,6 +176,19 @@
 
     <!-- Custom Theme Scripts -->
     <script src="~/Content/js/custom.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="~/Vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

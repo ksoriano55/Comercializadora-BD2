@@ -10,7 +10,7 @@ using comercializadora.DataBase;
 
 namespace comercializadora.Controllers
 {
-    public class categoriasController : Controller
+    public class CategoriasController : Controller
     {
         private ComercializadoraDBEntities db = new ComercializadoraDBEntities();
 
@@ -82,7 +82,7 @@ namespace comercializadora.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categorias).State = EntityState.Modified;
+                db.Entry(categorias).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
