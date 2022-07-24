@@ -12,6 +12,9 @@ namespace comercializadora.DataBase
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Core.Objects.DataClasses;
+    using System.Linq;
     
     public partial class ComercializadoraDBEntities : DbContext
     {
@@ -25,6 +28,30 @@ namespace comercializadora.DataBase
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<categorias> categorias { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Compra> Compra { get; set; }
+        public DbSet<CuentaBancaria> CuentaBancaria { get; set; }
+        public DbSet<Factura> Factura { get; set; }
+        public DbSet<Finca> Finca { get; set; }
+        public DbSet<Insumo> Insumo { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Productor> Productor { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
+        public DbSet<CompraDetalle> CompraDetalle { get; set; }
+        public DbSet<FacturaDetalle> FacturaDetalle { get; set; }
+        public DbSet<ListaPrecio> ListaPrecio { get; set; }
+    
+        public virtual ObjectResult<SP_InsertListaPrecio_Result> SP_InsertListaPrecio(string codigo, string descripcion)
+        {
+            var codigoParameter = codigo != null ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertListaPrecio_Result>("SP_InsertListaPrecio", codigoParameter, descripcionParameter);
+        }
     }
 }

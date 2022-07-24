@@ -12,9 +12,11 @@ namespace comercializadora.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class categorias
+    public partial class FacturaDetalle
     {
-        public int categoriaId { get; set; }
-        public string descripcion { get; set; }
+        public int Cantidad { get; set; }
+        public float PrecioUnitario { get; set; }
+        public int ProductoID { get; set; }
+        public int FacturaID { get; set; }
     }
 }

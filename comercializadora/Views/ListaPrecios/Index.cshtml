@@ -1,8 +1,9 @@
-﻿@model IEnumerable<comercializadora.DataBase.categorias>
+﻿@model IEnumerable<comercializadora.DataBase.ListaPrecio>
 
 @{
     ViewBag.Title = "Index";
 }
+
 
 <div class="row">
     <div class="col-md-12 col-sm-12 ">
@@ -30,7 +31,10 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.descripcion)
+                                            @Html.DisplayNameFor(model => model.Codigo)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Descripcion)
                                         </th>
                                         <th>Acciones</th>
                                     </tr>
@@ -40,29 +44,32 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.descripcion)
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-app" data-rel="tooltip" title="Editar" data-toggle="modal" data-target="#Editar_@item.categoriaId">
-                                                    <i class="fa fa-edit"></i> Editar
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Codigo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-app" data-rel="tooltip" title="Editar" data-toggle="modal" data-target="#Editar_@item.Codigo">
+                                                <i class="fa fa-edit"></i> Editar
+                                            </a>
+                                        </td>
+                                    </tr>
 
-                                        <!-- Modal Editar Herramienta-->
-                                        <div id="Editar_@item.categoriaId" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <!-- Modal Editar Lista de Precios-->
+                                        <div id="Editar_@item.Codigo" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="myModalLabel"> EDITAR CATEGORIA</h4>
+                                                        <h4 class="modal-title" id="myModalLabel"> EDITAR LISTA DE PRECIOS</h4>
                                                         <button type="button" class="close" data-dismiss="modal">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body" id="EditarCategorias">
-                                                        @Html.Partial("EditCategorias", new comercializadora.DataBase.categorias() { categoriaId = item.categoriaId , descripcion = item.descripcion })
+                                                        @Html.Partial("_Edit", new comercializadora.DataBase.ListaPrecio() { Codigo = item.Codigo, Descripcion = item.Descripcion })
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,19 +85,20 @@
     </div>
 </div>
 
-<!-- Modal Registrar Nueva Categoria-->
+
+<!-- Modal Registrar Nueva Lista de Precios-->
 
 <div id="modalCreate" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel"> REGISTRAR NUEVA CATEGORIA</h5>
+                <h5 class="modal-title" id="myModalLabel"> REGISTRAR NUEVA LISTA DE PRECIOS</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                @Html.Partial("CreateCategorias", new comercializadora.DataBase.categorias())
+                @Html.Partial("_Create", new comercializadora.DataBase.ListaPrecio())
             </div>
 
         </div>

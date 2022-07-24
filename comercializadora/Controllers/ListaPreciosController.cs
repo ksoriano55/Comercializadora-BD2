@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+//using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -10,107 +10,114 @@ using comercializadora.DataBase;
 
 namespace comercializadora.Controllers
 {
-    public class CategoriasController : Controller
+    public class ListaPreciosController : Controller
     {
         private ComercializadoraDBEntities db = new ComercializadoraDBEntities();
 
-        // GET: categorias
+        // GET: ListaPrecios
         public ActionResult Index()
         {
-            return View(db.categorias.ToList());
+            return View(db.ListaPrecio.ToList());
         }
 
-        // GET: categorias/Details/5
-        public ActionResult Details(int? id)
+        // GET: ListaPrecios/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            categorias categorias = db.categorias.Find(id);
-            if (categorias == null)
+            ListaPrecio listaPrecio = db.ListaPrecio.Find(id);
+            if (listaPrecio == null)
             {
                 return HttpNotFound();
             }
-            return View(categorias);
+            return View(listaPrecio);
         }
 
-        // GET: categorias/Create
+        // GET: ListaPrecios/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: categorias/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "categoriaId,descripcion")] categorias categorias)
+        public ActionResult Create([Bind(Include = "Codigo,Descripcion")] ListaPrecio listaPrecio)
         {
             if (ModelState.IsValid)
             {
-                db.categorias.Add(categorias);
-                db.SaveChanges();
+                var MensajeError = "";
+                IEnumerable<object> list;
+
+                list = db.SP_InsertListaPrecio(listaPrecio.Codigo,
+                                               listaPrecio.Descripcion);
+                foreach (SP_InsertListaPrecio_Result tbListaPrecio in list)
+                    MensajeError = tbListaPrecio.MessageError;
+                if (MensajeError.StartsWith("-1"))
+                {
+                    return Json("No se pudo registrar, favor contacte al administrador.", JsonRequestBehavior.AllowGet);
+                }
+
                 return RedirectToAction("Index");
             }
 
-            return View(categorias);
+            return View(listaPrecio);
         }
 
-        // GET: categorias/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: ListaPrecios/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            categorias categorias = db.categorias.Find(id);
-            if (categorias == null)
+            ListaPrecio listaPrecio = db.ListaPrecio.Find(id);
+            if (listaPrecio == null)
             {
                 return HttpNotFound();
             }
-            return View(categorias);
+            return View(listaPrecio);
         }
 
-        // POST: categorias/Edit/5
+        // POST: ListaPrecios/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "categoriaId,descripcion")] categorias categorias)
+        public ActionResult Edit([Bind(Include = "Codigo,Descripcion")] ListaPrecio listaPrecio)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categorias).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(listaPrecio).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categorias);
+            return View(listaPrecio);
         }
 
-        // GET: categorias/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: ListaPrecios/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            categorias categorias = db.categorias.Find(id);
-            if (categorias == null)
+            ListaPrecio listaPrecio = db.ListaPrecio.Find(id);
+            if (listaPrecio == null)
             {
                 return HttpNotFound();
             }
-            return View(categorias);
+            return View(listaPrecio);
         }
 
-        // POST: categorias/Delete/5
+        // POST: ListaPrecios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            categorias categorias = db.categorias.Find(id);
-            db.categorias.Remove(categorias);
+            ListaPrecio listaPrecio = db.ListaPrecio.Find(id);
+            db.ListaPrecio.Remove(listaPrecio);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

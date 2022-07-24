@@ -5,7 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c08cf7747f04460694223f3b044c9dcd" Name="Diagram1">
-        <EntityTypeShape EntityType="ComercializadoraDBModel.categorias" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Cliente" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Compra" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.CuentaBancaria" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Factura" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Finca" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Insumo" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Producto" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Productor" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Proveedor" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.CompraDetalle" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.FacturaDetalle" Width="1.5" PointX="7.75" PointY="3.75" />
+        <AssociationConnector Association="ComercializadoraDBModel.Factura_Cliente_FK" />
+        <AssociationConnector Association="ComercializadoraDBModel.CompraDetalle_Compra_FK" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.ListaPrecio" Width="1.5" PointX="0.75" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
