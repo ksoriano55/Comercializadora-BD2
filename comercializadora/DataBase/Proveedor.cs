@@ -14,11 +14,20 @@ namespace comercializadora.DataBase
     
     public partial class Proveedor
     {
+        public Proveedor()
+        {
+            this.Pagos = new HashSet<Pagos>();
+            this.Compra = new HashSet<Compra>();
+        }
+    
         public int ProveedorID { get; set; }
         public string Nombre { get; set; }
         public string RTN { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
         public string EMail { get; set; }
+    
+        public virtual ICollection<Pagos> Pagos { get; set; }
+        public virtual ICollection<Compra> Compra { get; set; }
     }
 }

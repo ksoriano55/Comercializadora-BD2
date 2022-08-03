@@ -14,10 +14,13 @@ namespace comercializadora.DataBase
     
     public partial class CompraDetalle
     {
+        public int CompraDetalleId { get; set; }
+        public int CompraID { get; set; }
+        public int InsumoId { get; set; }
         public int Cantidad { get; set; }
-        public float PrecioUnitario { get; set; }
-        public int Compra_CompraID { get; set; }
+        public decimal PrecioUnitario { get; set; }
     
         public virtual Compra Compra { get; set; }
+        public virtual Insumo Insumo { get; set; }
     }
 }

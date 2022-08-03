@@ -17,12 +17,19 @@ namespace comercializadora.DataBase
         public Compra()
         {
             this.CompraDetalle = new HashSet<CompraDetalle>();
+            this.Pagos = new HashSet<Pagos>();
         }
     
         public int CompraID { get; set; }
-        public System.DateTime Fecha { get; set; }
         public int ProveedorID { get; set; }
+        public string CodigoCompra { get; set; }
+        public decimal ValorCompra { get; set; }
+        public Nullable<decimal> SaldoPendiente { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public Nullable<System.DateTime> FechaVencimiento { get; set; }
     
         public virtual ICollection<CompraDetalle> CompraDetalle { get; set; }
+        public virtual ICollection<Pagos> Pagos { get; set; }
+        public virtual Proveedor Proveedor { get; set; }
     }
 }

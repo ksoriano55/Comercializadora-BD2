@@ -6,19 +6,57 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c08cf7747f04460694223f3b044c9dcd" Name="Diagram1">
         <EntityTypeShape EntityType="ComercializadoraDBModel.Cliente" Width="1.5" PointX="0.75" PointY="3.875" />
-        <EntityTypeShape EntityType="ComercializadoraDBModel.Compra" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.CuentaBancaria" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ComercializadoraDBModel.Factura" Width="1.5" PointX="3" PointY="4.125" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.Finca" Width="1.5" PointX="5.75" PointY="3.75" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.Insumo" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.Producto" Width="1.5" PointX="4.75" PointY="6.75" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.Productor" Width="1.5" PointX="6.75" PointY="6.75" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.Proveedor" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ComercializadoraDBModel.CompraDetalle" Width="1.5" PointX="3" PointY="0.875" />
-        <EntityTypeShape EntityType="ComercializadoraDBModel.FacturaDetalle" Width="1.5" PointX="7.75" PointY="3.75" />
-        <AssociationConnector Association="ComercializadoraDBModel.Factura_Cliente_FK" />
-        <AssociationConnector Association="ComercializadoraDBModel.CompraDetalle_Compra_FK" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.ListaPrecio" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Bodega" Width="1.5" PointX="6.75" PointY="13.875" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Inventario" Width="1.5" PointX="11" PointY="8.875" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Inventario_Bodega_BodegaId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Inventario_Insumo_InsumoId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Inventario_Producto_ProductoId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Lotes" Width="1.5" PointX="8" PointY="10.375" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Lotes_Finca_FincaId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Producto_Lote_LoteId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.vInventarioInsumos" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.vInventarioProductos" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.TipoPago" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Pagos" Width="1.5" PointX="12.625" PointY="3.5" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_CuentaBancariaID" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Pagos_Productor_ProductorId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Pagos_TipoPago_TipoPagoId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Compra" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.CompraDetalle" Width="1.5" PointX="12.625" PointY="16.875" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Cosecha" Width="1.5" PointX="10.375" PointY="16.625" />
+        <AssociationConnector Association="ComercializadoraDBModel.CompraDetalle_Compra_FK" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Pagos_Compra_CompraId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Pagos_Cosecha_CosechaId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.PrecioCompra" Width="1.5" PointX="11.375" PointY="12.625" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.vPrecioCompraInsumos" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.vPrecioCompraProductos" Width="1.5" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_PrecioCompra_Insumo_InsumoId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_PrecioCompra_ListaPrecios_ListaPrecios" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_PrecioCompra_Producto_ProductoId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_CompraDetalle_Insumo_InsumoId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.FacturaDetalle" Width="1.5" PointX="13" PointY="0.75" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_FacturaDetalle_Insumo_InsumoId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_FacturaDetalle_Producto_ProductoId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Factura" Width="1.5" PointX="14" PointY="8.375" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Factura_Cliente_ClienteId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Factura_Productor_ProductorId" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_FacturaDetalle_Factura_FacturaId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.CosechaDetalle" Width="1.5" PointX="17" PointY="11.625" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.PrecioVenta" Width="1.5" PointX="14.375" PointY="12.875" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Cobros" Width="1.5" PointX="0.75" PointY="12.75" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_CosechaID" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_ProducID" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_ListaPrecio" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_ProductoID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

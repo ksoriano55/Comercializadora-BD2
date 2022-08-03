@@ -54,9 +54,30 @@
                             <h3>GENERAL</h3>
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Facturas <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-home"></i> Inventario <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Lista Precios", "Index", "ListaPrecios", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                        <li>@Html.ActionLink("Entrada Inventarios", "Index", "Inventarios", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                    </ul>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-home"></i> Compras <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Compras", "Index", "Compras", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                    </ul>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-home"></i> Precios <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Precios Compras", "Index", "PrecioCompras", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-home"></i> Cosecha <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Productores", "Index", "Productor", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                        <li>@Html.ActionLink("Cosecha", "Index", "CosechaDetalles", new { area = "" }, new { @class = "navbar-brand" })</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -68,6 +89,8 @@
                                     <a><i class="fa fa-bug"></i>Mantenimientos<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>@Html.ActionLink("Lista Precios", "Index", "ListaPrecios", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                        <li>@Html.ActionLink("Tipos de pagos", "Index", "TipoPagos", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                        <li>@Html.ActionLink("Bodega", "Index", "Bodega", new { area = "" }, new { @class = "navbar-brand" })</li>
                                     </ul>
                                 </li>
                             </ul>
