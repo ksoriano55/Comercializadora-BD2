@@ -14,8 +14,15 @@ namespace comercializadora.DataBase
     
     public partial class CuentaBancaria
     {
+        public CuentaBancaria()
+        {
+            this.Productor = new HashSet<Productor>();
+        }
+    
         public int CuantaID { get; set; }
         public string Banco { get; set; }
         public string NumeroCuenta { get; set; }
+    
+        public virtual ICollection<Productor> Productor { get; set; }
     }
 }

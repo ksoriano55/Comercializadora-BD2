@@ -14,10 +14,23 @@ namespace comercializadora.DataBase
     
     public partial class Factura
     {
+        public Factura()
+        {
+            this.FacturaDetalle = new HashSet<FacturaDetalle>();
+        }
+    
         public int FacturaID { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public int Cliente_ClienteID { get; set; }
+        public string CodigoFactura { get; set; }
+        public Nullable<int> ClienteId { get; set; }
+        public Nullable<int> ProductorId { get; set; }
+        public string TipoFactura { get; set; }
+        public System.DateTime FechaFactura { get; set; }
+        public Nullable<System.DateTime> FechaVencimiento { get; set; }
+        public decimal ValorFactura { get; set; }
+        public decimal SaldoPendiente { get; set; }
     
         public virtual Cliente Cliente { get; set; }
+        public virtual Productor Productor { get; set; }
+        public virtual ICollection<FacturaDetalle> FacturaDetalle { get; set; }
     }
 }

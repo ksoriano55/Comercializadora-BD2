@@ -1,0 +1,106 @@
+﻿@model IEnumerable<comercializadora.DataBase.Productor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    @Html.ActionLink("Registrar Nuevo", "Create")
+</p>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>PRODUCTORES</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a href="@Url.Action("Create", "Productor")" class="btn btn-outline-info btn-sm" title="Registrar Nuevo">
+                            <i class="ace-icon fa fa-plus-circle bigger-120"></i>
+                            Registrar Nuevo
+                        </a>
+                    </li>
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Nombre)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Identidad)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.RTN)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Telefono)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EMail)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.SaldoDisponible)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.DiasCredito)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CuentaBancaria.Banco)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Identidad)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RTN)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Telefono)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EMail)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SaldoDisponible)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DiasCredito)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CuentaBancaria.Banco)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.ProductorID }) |
+
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.ProductorID })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

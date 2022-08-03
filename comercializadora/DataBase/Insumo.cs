@@ -14,7 +14,20 @@ namespace comercializadora.DataBase
     
     public partial class Insumo
     {
+        public Insumo()
+        {
+            this.Inventario = new HashSet<Inventario>();
+            this.PrecioCompra = new HashSet<PrecioCompra>();
+            this.CompraDetalle = new HashSet<CompraDetalle>();
+            this.FacturaDetalle = new HashSet<FacturaDetalle>();
+        }
+    
         public int InsumoID { get; set; }
         public string Descripcion { get; set; }
+    
+        public virtual ICollection<Inventario> Inventario { get; set; }
+        public virtual ICollection<PrecioCompra> PrecioCompra { get; set; }
+        public virtual ICollection<CompraDetalle> CompraDetalle { get; set; }
+        public virtual ICollection<FacturaDetalle> FacturaDetalle { get; set; }
     }
 }

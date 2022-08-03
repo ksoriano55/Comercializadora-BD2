@@ -89,11 +89,19 @@ namespace comercializadora.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(listaPrecio).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var MensajeError = "";
+                IEnumerable<object> list;
+
+                list = db.SP_UpdateListaPrecio(listaPrecio.Codigo,
+                                               listaPrecio.Descripcion);
+                foreach (SP_UpdateListaPrecio_Result tbListaPrecio in list)
+                    MensajeError = tbListaPrecio.MessageError;
+                if (MensajeError.StartsWith("-1"))
+                {
+                    return Json("No se pudo registrar, favor contacte al administrador.", JsonRequestBehavior.AllowGet);
+                }
             }
-            return View(listaPrecio);
+            return RedirectToAction("Index");
         }
 
         // GET: ListaPrecios/Delete/5

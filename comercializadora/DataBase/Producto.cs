@@ -14,8 +14,24 @@ namespace comercializadora.DataBase
     
     public partial class Producto
     {
+        public Producto()
+        {
+            this.Inventario = new HashSet<Inventario>();
+            this.PrecioCompra = new HashSet<PrecioCompra>();
+            this.FacturaDetalle = new HashSet<FacturaDetalle>();
+            this.CosechaDetalle = new HashSet<CosechaDetalle>();
+            this.PrecioVenta = new HashSet<PrecioVenta>();
+        }
+    
         public int ProductoID { get; set; }
         public string Descripcion { get; set; }
         public int LoteID { get; set; }
+    
+        public virtual ICollection<Inventario> Inventario { get; set; }
+        public virtual Lotes Lotes { get; set; }
+        public virtual ICollection<PrecioCompra> PrecioCompra { get; set; }
+        public virtual ICollection<FacturaDetalle> FacturaDetalle { get; set; }
+        public virtual ICollection<CosechaDetalle> CosechaDetalle { get; set; }
+        public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
     }
 }

@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ComercializadoraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bodega">
+          <Key>
+            <PropertyRef Name="BodegaId" />
+          </Key>
+          <Property Name="BodegaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="ClienteID" />
@@ -15,25 +23,60 @@
           <Property Name="Telefono" Type="varchar" MaxLength="12" />
           <Property Name="Direccion" Type="varchar" MaxLength="120" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.Cobros' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Cobros">
+          <Key>
+            <PropertyRef Name="TipoPagoID" />
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="NumeroDeRecivo" Type="varchar" MaxLength="15" />
+          <Property Name="CodigoCliente" Type="varchar" MaxLength="30" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Monto" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TipoPagoID" Type="int" Nullable="false" />
+          <Property Name="Clave" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Compra">
           <Key>
             <PropertyRef Name="CompraID" />
           </Key>
-          <Property Name="CompraID" Type="int" Nullable="false" />
-          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="CompraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProveedorID" Type="int" Nullable="false" />
+          <Property Name="CodigoCompra" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ValorCompra" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SaldoPendiente" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="date" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.CompraDetalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="CompraDetalle">
           <Key>
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="PrecioUnitario" />
-            <PropertyRef Name="Compra_CompraID" />
+            <PropertyRef Name="CompraDetalleId" />
           </Key>
+          <Property Name="CompraDetalleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompraID" Type="int" Nullable="false" />
+          <Property Name="InsumoId" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="int" Nullable="false" />
-          <Property Name="PrecioUnitario" Type="real" Nullable="false" />
-          <Property Name="Compra_CompraID" Type="int" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cosecha">
+          <Key>
+            <PropertyRef Name="CosechaId" />
+          </Key>
+          <Property Name="CosechaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFinal" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CosechaDetalle">
+          <Key>
+            <PropertyRef Name="CosechaDetalleID" />
+          </Key>
+          <Property Name="CosechaDetalleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CosechaID" Type="int" Nullable="false" />
+          <Property Name="ProductoID" Type="int" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CuentaBancaria">
           <Key>
@@ -47,29 +90,32 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.CompraDetalle
           <Key>
             <PropertyRef Name="FacturaID" />
           </Key>
-          <Property Name="FacturaID" Type="int" Nullable="false" />
-          <Property Name="Fecha" Type="date" Nullable="false" />
-          <Property Name="Cliente_ClienteID" Type="int" Nullable="false" />
+          <Property Name="FacturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoFactura" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ClienteId" Type="int" />
+          <Property Name="ProductorId" Type="int" />
+          <Property Name="TipoFactura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaFactura" Type="date" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="date" />
+          <Property Name="ValorFactura" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SaldoPendiente" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="FacturaDetalle">
           <Key>
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="PrecioUnitario" />
-            <PropertyRef Name="ProductoID" />
-            <PropertyRef Name="FacturaID" />
+            <PropertyRef Name="FacturaDetalleId" />
           </Key>
-          <Property Name="Cantidad" Type="int" Nullable="false" />
-          <Property Name="PrecioUnitario" Type="real" Nullable="false" />
-          <Property Name="ProductoID" Type="int" Nullable="false" />
+          <Property Name="FacturaDetalleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FacturaID" Type="int" Nullable="false" />
+          <Property Name="ProductoID" Type="int" />
+          <Property Name="InsumoId" Type="int" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Finca">
           <Key>
             <PropertyRef Name="FincaID" />
           </Key>
-          <Property Name="FincaID" Type="int" Nullable="false" />
+          <Property Name="FincaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="80" Nullable="false" />
           <Property Name="ProductorID" Type="int" Nullable="false" />
         </EntityType>
@@ -77,8 +123,18 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Key>
             <PropertyRef Name="InsumoID" />
           </Key>
-          <Property Name="InsumoID" Type="int" Nullable="false" />
+          <Property Name="InsumoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="120" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inventario">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+          </Key>
+          <Property Name="InventarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BodegaId" Type="int" Nullable="false" />
+          <Property Name="ProductoId" Type="int" />
+          <Property Name="InsumoId" Type="int" />
+          <Property Name="Disponible" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ListaPrecio">
           <Key>
@@ -87,11 +143,59 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Lotes">
+          <Key>
+            <PropertyRef Name="LoteId" />
+          </Key>
+          <Property Name="LoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FincaId" Type="int" Nullable="false" />
+          <Property Name="Extencion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TipoSuelo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TipoRiego" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CantidadCosecha" Type="int" />
+        </EntityType>
+        <EntityType Name="Pagos">
+          <Key>
+            <PropertyRef Name="PagoId" />
+          </Key>
+          <Property Name="PagoId" Type="int" Nullable="false" />
+          <Property Name="ProductorId" Type="int" />
+          <Property Name="ProveedorId" Type="int" />
+          <Property Name="cosechaId" Type="int" Nullable="false" />
+          <Property Name="CompraId" Type="int" />
+          <Property Name="Concepto" Type="varchar" MaxLength="100" />
+          <Property Name="TipoPagoId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Monto" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrecioCompra">
+          <Key>
+            <PropertyRef Name="precioCompraId" />
+          </Key>
+          <Property Name="precioCompraId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ListaPrecios" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProductoId" Type="int" />
+          <Property Name="InsumoId" Type="int" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FechaDesde" Type="date" Nullable="false" />
+          <Property Name="FechaHasta" Type="date" />
+        </EntityType>
+        <EntityType Name="PrecioVenta">
+          <Key>
+            <PropertyRef Name="PrecioID" />
+          </Key>
+          <Property Name="PrecioID" Type="int" Nullable="false" />
+          <Property Name="ProductoID" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FechaDesde" Type="date" Nullable="false" />
+          <Property Name="FechaHasta" Type="date" Nullable="false" />
+          <Property Name="ListaPrecio" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="ProductoID" />
           </Key>
-          <Property Name="ProductoID" Type="int" Nullable="false" />
+          <Property Name="ProductoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="80" Nullable="false" />
           <Property Name="LoteID" Type="int" Nullable="false" />
         </EntityType>
@@ -105,17 +209,97 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="RTN" Type="varchar" MaxLength="14" />
           <Property Name="Telefono" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="EMail" Type="varchar" MaxLength="80" />
+          <Property Name="SaldoDisponible" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DiasCredito" Type="int" />
+          <Property Name="CuentaBancariaID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
             <PropertyRef Name="ProveedorID" />
           </Key>
-          <Property Name="ProveedorID" Type="int" Nullable="false" />
+          <Property Name="ProveedorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="80" Nullable="false" />
           <Property Name="RTN" Type="varchar" MaxLength="14" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="EMail" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="TipoPago">
+          <Key>
+            <PropertyRef Name="TipoPagoId" />
+          </Key>
+          <Property Name="TipoPagoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vInventarioInsumos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vInventarioInsumos">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+            <PropertyRef Name="Codigo_Bodega" />
+            <PropertyRef Name="Nombre_Bodega" />
+            <PropertyRef Name="InsumoID" />
+            <PropertyRef Name="Nombre_Insumo" />
+            <PropertyRef Name="Disponible" />
+          </Key>
+          <Property Name="InventarioId" Type="int" Nullable="false" />
+          <Property Name="Codigo_Bodega" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre_Bodega" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="InsumoID" Type="int" Nullable="false" />
+          <Property Name="Nombre_Insumo" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="Disponible" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vInventarioProductos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vInventarioProductos">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+            <PropertyRef Name="Codigo_Bodega" />
+            <PropertyRef Name="Nombre_Bodega" />
+            <PropertyRef Name="ProductoID" />
+            <PropertyRef Name="Nombre_Producto" />
+            <PropertyRef Name="Disponible" />
+          </Key>
+          <Property Name="InventarioId" Type="int" Nullable="false" />
+          <Property Name="Codigo_Bodega" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre_Bodega" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductoID" Type="int" Nullable="false" />
+          <Property Name="Nombre_Producto" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="Disponible" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompraInsumos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vPrecioCompraInsumos">
+          <Key>
+            <PropertyRef Name="precioCompraId" />
+            <PropertyRef Name="InsumoID" />
+            <PropertyRef Name="Nombre_Insumo" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="FechaDesde" />
+          </Key>
+          <Property Name="precioCompraId" Type="int" Nullable="false" />
+          <Property Name="InsumoID" Type="int" Nullable="false" />
+          <Property Name="Nombre_Insumo" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FechaDesde" Type="date" Nullable="false" />
+          <Property Name="FechaHasta" Type="date" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompraProductos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vPrecioCompraProductos">
+          <Key>
+            <PropertyRef Name="precioCompraId" />
+            <PropertyRef Name="productoId" />
+            <PropertyRef Name="Nombre_Producto" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="FechaDesde" />
+          </Key>
+          <Property Name="precioCompraId" Type="int" Nullable="false" />
+          <Property Name="productoId" Type="int" Nullable="false" />
+          <Property Name="Nombre_Producto" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FechaDesde" Type="date" Nullable="false" />
+          <Property Name="FechaHasta" Type="date" />
         </EntityType>
         <Association Name="CompraDetalle_Compra_FK">
           <End Role="Compra" Type="Self.Compra" Multiplicity="1" />
@@ -125,59 +309,558 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
               <PropertyRef Name="CompraID" />
             </Principal>
             <Dependent Role="CompraDetalle">
-              <PropertyRef Name="Compra_CompraID" />
+              <PropertyRef Name="CompraID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Factura_Cliente_FK">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+        <Association Name="FK_Compra_Proveedor_ProveedorId">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Insumo_InsumoId">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="1" />
+          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CosechaID">
+          <End Role="Cosecha" Type="Self.Cosecha" Multiplicity="1" />
+          <End Role="CosechaDetalle" Type="Self.CosechaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cosecha">
+              <PropertyRef Name="CosechaId" />
+            </Principal>
+            <Dependent Role="CosechaDetalle">
+              <PropertyRef Name="CosechaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CuentaBancariaID">
+          <End Role="CuentaBancaria" Type="Self.CuentaBancaria" Multiplicity="1" />
+          <End Role="Productor" Type="Self.Productor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaBancaria">
+              <PropertyRef Name="CuantaID" />
+            </Principal>
+            <Dependent Role="Productor">
+              <PropertyRef Name="CuentaBancariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Cliente_ClienteId">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="ClienteID" />
             </Principal>
             <Dependent Role="Factura">
-              <PropertyRef Name="Cliente_ClienteID" />
+              <PropertyRef Name="ClienteId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Factura_Productor_ProductorId">
+          <End Role="Productor" Type="Self.Productor" Multiplicity="0..1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productor">
+              <PropertyRef Name="ProductorID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="ProductorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacturaDetalle_Factura_FacturaId">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="FacturaDetalle" Type="Self.FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="FacturaID" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="FacturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacturaDetalle_Insumo_InsumoId">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="0..1" />
+          <End Role="FacturaDetalle" Type="Self.FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacturaDetalle_Producto_ProductoId">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="FacturaDetalle" Type="Self.FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventario_Bodega_BodegaId">
+          <End Role="Bodega" Type="Self.Bodega" Multiplicity="1" />
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bodega">
+              <PropertyRef Name="BodegaId" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="BodegaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventario_Insumo_InsumoId">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="0..1" />
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventario_Producto_ProductoId">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaPrecio">
+          <End Role="ListaPrecio" Type="Self.ListaPrecio" Multiplicity="1" />
+          <End Role="PrecioVenta" Type="Self.PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="ListaPrecio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lotes_Finca_FincaId">
+          <End Role="Finca" Type="Self.Finca" Multiplicity="1" />
+          <End Role="Lotes" Type="Self.Lotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Finca">
+              <PropertyRef Name="FincaID" />
+            </Principal>
+            <Dependent Role="Lotes">
+              <PropertyRef Name="FincaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Compra_CompraId">
+          <End Role="Compra" Type="Self.Compra" Multiplicity="0..1" />
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compra">
+              <PropertyRef Name="CompraID" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="CompraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Cosecha_CosechaId">
+          <End Role="Cosecha" Type="Self.Cosecha" Multiplicity="1" />
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cosecha">
+              <PropertyRef Name="CosechaId" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="cosechaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Productor_ProductorId">
+          <End Role="Productor" Type="Self.Productor" Multiplicity="0..1" />
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productor">
+              <PropertyRef Name="ProductorID" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="ProductorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Proveedor_ProveedorId">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_TipoPago_TipoPagoId">
+          <End Role="TipoPago" Type="Self.TipoPago" Multiplicity="1" />
+          <End Role="Pagos" Type="Self.Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPago">
+              <PropertyRef Name="TipoPagoId" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="TipoPagoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrecioCompra_Insumo_InsumoId">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="0..1" />
+          <End Role="PrecioCompra" Type="Self.PrecioCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="PrecioCompra">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrecioCompra_ListaPrecios_ListaPrecios">
+          <End Role="ListaPrecio" Type="Self.ListaPrecio" Multiplicity="1" />
+          <End Role="PrecioCompra" Type="Self.PrecioCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PrecioCompra">
+              <PropertyRef Name="ListaPrecios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrecioCompra_Producto_ProductoId">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="PrecioCompra" Type="Self.PrecioCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="PrecioCompra">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProducID">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="CosechaDetalle" Type="Self.CosechaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="CosechaDetalle">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Lote_LoteId">
+          <End Role="Lotes" Type="Self.Lotes" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lotes">
+              <PropertyRef Name="LoteId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="LoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoID">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="PrecioVenta" Type="Self.PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_DeleteTipoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TipoPago" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertBodega" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="proveedorId" Type="int" Mode="In" />
+          <Parameter Name="ValorCompra" Type="decimal" Mode="In" />
+          <Parameter Name="SaldoPendiente" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertCompraDetalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="compraId" Type="int" Mode="In" />
+          <Parameter Name="insumoId" Type="int" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="proveedorId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertInventario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="bodega" Type="int" Mode="In" />
+          <Parameter Name="productoId" Type="int" Mode="In" />
+          <Parameter Name="insumoId" Type="int" Mode="In" />
+          <Parameter Name="disponible" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_InsertListaPrecio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo" Type="varchar" Mode="In" />
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_InsertPrecioCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="listaPrecio" Type="varchar" Mode="In" />
+          <Parameter Name="productoId" Type="int" Mode="In" />
+          <Parameter Name="insumoId" Type="int" Mode="In" />
+          <Parameter Name="Precio" Type="decimal" Mode="In" />
+          <Parameter Name="fechaDesde" Type="date" Mode="In" />
+          <Parameter Name="fechaHasta" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertProductores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="identidad" Type="varchar" Mode="In" />
+          <Parameter Name="rtn" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="saldodisponible" Type="decimal" Mode="In" />
+          <Parameter Name="diascredito" Type="int" Mode="In" />
+          <Parameter Name="cuentabancaria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertTipoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateBodega" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="bodegaid" Type="int" Mode="In" />
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateListaPrecio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateProductores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="productorid" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="identidad" Type="varchar" Mode="In" />
+          <Parameter Name="rtn" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="saldodisponible" Type="decimal" Mode="In" />
+          <Parameter Name="diascredito" Type="int" Mode="In" />
+          <Parameter Name="cuentabancaria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateTipoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TipoPago" Type="int" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ComercializadoraDBModelStoreContainer">
+          <EntitySet Name="Bodega" EntityType="Self.Bodega" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Compra" EntityType="Self.Compra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompraDetalle" EntityType="Self.CompraDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cosecha" EntityType="Self.Cosecha" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CosechaDetalle" EntityType="Self.CosechaDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CuentaBancaria" EntityType="Self.CuentaBancaria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FacturaDetalle" EntityType="Self.FacturaDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Finca" EntityType="Self.Finca" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Insumo" EntityType="Self.Insumo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ListaPrecio" EntityType="Self.ListaPrecio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lotes" EntityType="Self.Lotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pagos" EntityType="Self.Pagos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrecioCompra" EntityType="Self.PrecioCompra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrecioVenta" EntityType="Self.PrecioVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productor" EntityType="Self.Productor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CompraDetalle" EntityType="Self.CompraDetalle" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cobros" EntityType="Self.Cobros" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [CompraDetalle].[Cantidad] AS [Cantidad], 
-    [CompraDetalle].[PrecioUnitario] AS [PrecioUnitario], 
-    [CompraDetalle].[Compra_CompraID] AS [Compra_CompraID]
-    FROM [dbo].[CompraDetalle] AS [CompraDetalle]</DefiningQuery>
+    [Cobros].[NumeroDeRecivo] AS [NumeroDeRecivo], 
+    [Cobros].[CodigoCliente] AS [CodigoCliente], 
+    [Cobros].[Fecha] AS [Fecha], 
+    [Cobros].[Monto] AS [Monto], 
+    [Cobros].[TipoPagoID] AS [TipoPagoID], 
+    [Cobros].[Clave] AS [Clave]
+    FROM [dbo].[Cobros] AS [Cobros]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="FacturaDetalle" EntityType="Self.FacturaDetalle" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="vInventarioInsumos" EntityType="Self.vInventarioInsumos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [FacturaDetalle].[Cantidad] AS [Cantidad], 
-    [FacturaDetalle].[PrecioUnitario] AS [PrecioUnitario], 
-    [FacturaDetalle].[ProductoID] AS [ProductoID], 
-    [FacturaDetalle].[FacturaID] AS [FacturaID]
-    FROM [dbo].[FacturaDetalle] AS [FacturaDetalle]</DefiningQuery>
+    [vInventarioInsumos].[InventarioId] AS [InventarioId], 
+    [vInventarioInsumos].[Codigo_Bodega] AS [Codigo_Bodega], 
+    [vInventarioInsumos].[Nombre_Bodega] AS [Nombre_Bodega], 
+    [vInventarioInsumos].[InsumoID] AS [InsumoID], 
+    [vInventarioInsumos].[Nombre_Insumo] AS [Nombre_Insumo], 
+    [vInventarioInsumos].[Disponible] AS [Disponible]
+    FROM [dbo].[vInventarioInsumos] AS [vInventarioInsumos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vInventarioProductos" EntityType="Self.vInventarioProductos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vInventarioProductos].[InventarioId] AS [InventarioId], 
+    [vInventarioProductos].[Codigo_Bodega] AS [Codigo_Bodega], 
+    [vInventarioProductos].[Nombre_Bodega] AS [Nombre_Bodega], 
+    [vInventarioProductos].[ProductoID] AS [ProductoID], 
+    [vInventarioProductos].[Nombre_Producto] AS [Nombre_Producto], 
+    [vInventarioProductos].[Disponible] AS [Disponible]
+    FROM [dbo].[vInventarioProductos] AS [vInventarioProductos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vPrecioCompraInsumos" EntityType="Self.vPrecioCompraInsumos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vPrecioCompraInsumos].[precioCompraId] AS [precioCompraId], 
+    [vPrecioCompraInsumos].[InsumoID] AS [InsumoID], 
+    [vPrecioCompraInsumos].[Nombre_Insumo] AS [Nombre_Insumo], 
+    [vPrecioCompraInsumos].[Precio] AS [Precio], 
+    [vPrecioCompraInsumos].[FechaDesde] AS [FechaDesde], 
+    [vPrecioCompraInsumos].[FechaHasta] AS [FechaHasta]
+    FROM [dbo].[vPrecioCompraInsumos] AS [vPrecioCompraInsumos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vPrecioCompraProductos" EntityType="Self.vPrecioCompraProductos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vPrecioCompraProductos].[precioCompraId] AS [precioCompraId], 
+    [vPrecioCompraProductos].[productoId] AS [productoId], 
+    [vPrecioCompraProductos].[Nombre_Producto] AS [Nombre_Producto], 
+    [vPrecioCompraProductos].[Precio] AS [Precio], 
+    [vPrecioCompraProductos].[FechaDesde] AS [FechaDesde], 
+    [vPrecioCompraProductos].[FechaHasta] AS [FechaHasta]
+    FROM [dbo].[vPrecioCompraProductos] AS [vPrecioCompraProductos]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="CompraDetalle_Compra_FK" Association="Self.CompraDetalle_Compra_FK">
             <End Role="Compra" EntitySet="Compra" />
             <End Role="CompraDetalle" EntitySet="CompraDetalle" />
           </AssociationSet>
-          <AssociationSet Name="Factura_Cliente_FK" Association="Self.Factura_Cliente_FK">
+          <AssociationSet Name="FK_Compra_Proveedor_ProveedorId" Association="Self.FK_Compra_Proveedor_ProveedorId">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Insumo_InsumoId" Association="Self.FK_CompraDetalle_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CosechaID" Association="Self.FK_CosechaID">
+            <End Role="Cosecha" EntitySet="Cosecha" />
+            <End Role="CosechaDetalle" EntitySet="CosechaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CuentaBancariaID" Association="Self.FK_CuentaBancariaID">
+            <End Role="CuentaBancaria" EntitySet="CuentaBancaria" />
+            <End Role="Productor" EntitySet="Productor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Cliente_ClienteId" Association="Self.FK_Factura_Cliente_ClienteId">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Productor_ProductorId" Association="Self.FK_Factura_Productor_ProductorId">
+            <End Role="Productor" EntitySet="Productor" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacturaDetalle_Factura_FacturaId" Association="Self.FK_FacturaDetalle_Factura_FacturaId">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacturaDetalle_Insumo_InsumoId" Association="Self.FK_FacturaDetalle_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacturaDetalle_Producto_ProductoId" Association="Self.FK_FacturaDetalle_Producto_ProductoId">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventario_Bodega_BodegaId" Association="Self.FK_Inventario_Bodega_BodegaId">
+            <End Role="Bodega" EntitySet="Bodega" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventario_Insumo_InsumoId" Association="Self.FK_Inventario_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventario_Producto_ProductoId" Association="Self.FK_Inventario_Producto_ProductoId">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaPrecio" Association="Self.FK_ListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lotes_Finca_FincaId" Association="Self.FK_Lotes_Finca_FincaId">
+            <End Role="Finca" EntitySet="Finca" />
+            <End Role="Lotes" EntitySet="Lotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Compra_CompraId" Association="Self.FK_Pagos_Compra_CompraId">
+            <End Role="Compra" EntitySet="Compra" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Cosecha_CosechaId" Association="Self.FK_Pagos_Cosecha_CosechaId">
+            <End Role="Cosecha" EntitySet="Cosecha" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Productor_ProductorId" Association="Self.FK_Pagos_Productor_ProductorId">
+            <End Role="Productor" EntitySet="Productor" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Proveedor_ProveedorId" Association="Self.FK_Pagos_Proveedor_ProveedorId">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_TipoPago_TipoPagoId" Association="Self.FK_Pagos_TipoPago_TipoPagoId">
+            <End Role="TipoPago" EntitySet="TipoPago" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrecioCompra_Insumo_InsumoId" Association="Self.FK_PrecioCompra_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="PrecioCompra" EntitySet="PrecioCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrecioCompra_ListaPrecios_ListaPrecios" Association="Self.FK_PrecioCompra_ListaPrecios_ListaPrecios">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="PrecioCompra" EntitySet="PrecioCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrecioCompra_Producto_ProductoId" Association="Self.FK_PrecioCompra_Producto_ProductoId">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PrecioCompra" EntitySet="PrecioCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProducID" Association="Self.FK_ProducID">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="CosechaDetalle" EntitySet="CosechaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Lote_LoteId" Association="Self.FK_Producto_Lote_LoteId">
+            <End Role="Lotes" EntitySet="Lotes" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoID" Association="Self.FK_ProductoID">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -186,30 +869,209 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
       <Schema Namespace="ComercializadoraDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ComercializadoraDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cliente" EntityType="ComercializadoraDBModel.Cliente" />
-          <EntitySet Name="Compra" EntityType="ComercializadoraDBModel.Compra" />
           <EntitySet Name="CuentaBancaria" EntityType="ComercializadoraDBModel.CuentaBancaria" />
-          <EntitySet Name="Factura" EntityType="ComercializadoraDBModel.Factura" />
           <EntitySet Name="Finca" EntityType="ComercializadoraDBModel.Finca" />
           <EntitySet Name="Insumo" EntityType="ComercializadoraDBModel.Insumo" />
           <EntitySet Name="Producto" EntityType="ComercializadoraDBModel.Producto" />
           <EntitySet Name="Productor" EntityType="ComercializadoraDBModel.Productor" />
           <EntitySet Name="Proveedor" EntityType="ComercializadoraDBModel.Proveedor" />
-          <EntitySet Name="CompraDetalle" EntityType="ComercializadoraDBModel.CompraDetalle" />
-          <EntitySet Name="FacturaDetalle" EntityType="ComercializadoraDBModel.FacturaDetalle" />
-          <AssociationSet Name="Factura_Cliente_FK" Association="ComercializadoraDBModel.Factura_Cliente_FK">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Factura" EntitySet="Factura" />
-          </AssociationSet>
-          <AssociationSet Name="CompraDetalle_Compra_FK" Association="ComercializadoraDBModel.CompraDetalle_Compra_FK">
-            <End Role="Compra" EntitySet="Compra" />
-            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
-          </AssociationSet>
           <EntitySet Name="ListaPrecio" EntityType="ComercializadoraDBModel.ListaPrecio" />
           <FunctionImport Name="SP_InsertListaPrecio" ReturnType="Collection(ComercializadoraDBModel.SP_InsertListaPrecio_Result)">
             <Parameter Name="codigo" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
           </FunctionImport>
-        </EntityContainer>
+          <EntitySet Name="Bodega" EntityType="ComercializadoraDBModel.Bodega" />
+          <EntitySet Name="Inventario" EntityType="ComercializadoraDBModel.Inventario" />
+          <AssociationSet Name="FK_Inventario_Bodega_BodegaId" Association="ComercializadoraDBModel.FK_Inventario_Bodega_BodegaId">
+            <End Role="Bodega" EntitySet="Bodega" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventario_Insumo_InsumoId" Association="ComercializadoraDBModel.FK_Inventario_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventario_Producto_ProductoId" Association="ComercializadoraDBModel.FK_Inventario_Producto_ProductoId">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <EntitySet Name="Lotes" EntityType="ComercializadoraDBModel.Lotes" />
+          <AssociationSet Name="FK_Lotes_Finca_FincaId" Association="ComercializadoraDBModel.FK_Lotes_Finca_FincaId">
+            <End Role="Finca" EntitySet="Finca" />
+            <End Role="Lotes" EntitySet="Lotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Lote_LoteId" Association="ComercializadoraDBModel.FK_Producto_Lote_LoteId">
+            <End Role="Lotes" EntitySet="Lotes" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <EntitySet Name="vInventarioInsumos" EntityType="ComercializadoraDBModel.vInventarioInsumos" />
+          <EntitySet Name="vInventarioProductos" EntityType="ComercializadoraDBModel.vInventarioProductos" />
+          <FunctionImport Name="SP_InsertInventario" ReturnType="Collection(ComercializadoraDBModel.SP_InsertInventario_Result)">
+            <Parameter Name="bodega" Mode="In" Type="Int32" />
+            <Parameter Name="productoId" Mode="In" Type="Int32" />
+            <Parameter Name="insumoId" Mode="In" Type="Int32" />
+            <Parameter Name="disponible" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="TipoPago" EntityType="ComercializadoraDBModel.TipoPago" />
+          <FunctionImport Name="SP_InsertTipoPago" ReturnType="Collection(ComercializadoraDBModel.SP_InsertTipoPago_Result)">
+          <Parameter Name="Descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DeleteTipoPago" ReturnType="Collection(ComercializadoraDBModel.SP_DeleteTipoPago_Result)">
+          <Parameter Name="TipoPago" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateTipoPago" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateTipoPago_Result)">
+            <Parameter Name="TipoPago" Mode="In" Type="Int32" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Pagos" EntityType="ComercializadoraDBModel.Pagos" />
+          <AssociationSet Name="FK_CuentaBancariaID" Association="ComercializadoraDBModel.FK_CuentaBancariaID">
+            <End Role="CuentaBancaria" EntitySet="CuentaBancaria" />
+            <End Role="Productor" EntitySet="Productor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Productor_ProductorId" Association="ComercializadoraDBModel.FK_Pagos_Productor_ProductorId">
+            <End Role="Productor" EntitySet="Productor" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Proveedor_ProveedorId" Association="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_TipoPago_TipoPagoId" Association="ComercializadoraDBModel.FK_Pagos_TipoPago_TipoPagoId">
+            <End Role="TipoPago" EntitySet="TipoPago" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <EntitySet Name="Compra" EntityType="ComercializadoraDBModel.Compra" />
+          <EntitySet Name="CompraDetalle" EntityType="ComercializadoraDBModel.CompraDetalle" />
+          <EntitySet Name="Cosecha" EntityType="ComercializadoraDBModel.Cosecha" />
+          <AssociationSet Name="CompraDetalle_Compra_FK" Association="ComercializadoraDBModel.CompraDetalle_Compra_FK">
+            <End Role="Compra" EntitySet="Compra" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Compra_CompraId" Association="ComercializadoraDBModel.FK_Pagos_Compra_CompraId">
+            <End Role="Compra" EntitySet="Compra" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Cosecha_CosechaId" Association="ComercializadoraDBModel.FK_Pagos_Cosecha_CosechaId">
+            <End Role="Cosecha" EntitySet="Cosecha" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <EntitySet Name="PrecioCompra" EntityType="ComercializadoraDBModel.PrecioCompra" />
+          <EntitySet Name="vPrecioCompraInsumos" EntityType="ComercializadoraDBModel.vPrecioCompraInsumos" />
+          <EntitySet Name="vPrecioCompraProductos" EntityType="ComercializadoraDBModel.vPrecioCompraProductos" />
+          <AssociationSet Name="FK_PrecioCompra_Insumo_InsumoId" Association="ComercializadoraDBModel.FK_PrecioCompra_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="PrecioCompra" EntitySet="PrecioCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrecioCompra_ListaPrecios_ListaPrecios" Association="ComercializadoraDBModel.FK_PrecioCompra_ListaPrecios_ListaPrecios">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="PrecioCompra" EntitySet="PrecioCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrecioCompra_Producto_ProductoId" Association="ComercializadoraDBModel.FK_PrecioCompra_Producto_ProductoId">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PrecioCompra" EntitySet="PrecioCompra" />
+          </AssociationSet>
+          <FunctionImport Name="SP_InsertPrecioCompra" ReturnType="Collection(ComercializadoraDBModel.SP_InsertPrecioCompra_Result)">
+            <Parameter Name="listaPrecio" Mode="In" Type="String" />
+            <Parameter Name="productoId" Mode="In" Type="Int32" />
+            <Parameter Name="insumoId" Mode="In" Type="Int32" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="fechaDesde" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaHasta" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <AssociationSet Name="FK_Compra_Proveedor_ProveedorId" Association="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Insumo_InsumoId" Association="ComercializadoraDBModel.FK_CompraDetalle_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <FunctionImport Name="SP_InsertCompra" ReturnType="Collection(ComercializadoraDBModel.SP_InsertCompra_Result)">
+            <Parameter Name="proveedorId" Mode="In" Type="Int32" />
+            <Parameter Name="ValorCompra" Mode="In" Type="Decimal" />
+            <Parameter Name="SaldoPendiente" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertCompraDetalle" ReturnType="Collection(ComercializadoraDBModel.SP_InsertCompraDetalle_Result)">
+            <Parameter Name="compraId" Mode="In" Type="Int32" />
+            <Parameter Name="insumoId" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="proveedorId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateListaPrecio" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateListaPrecio_Result)">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="FacturaDetalle" EntityType="ComercializadoraDBModel.FacturaDetalle" />
+          <AssociationSet Name="FK_FacturaDetalle_Insumo_InsumoId" Association="ComercializadoraDBModel.FK_FacturaDetalle_Insumo_InsumoId">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacturaDetalle_Producto_ProductoId" Association="ComercializadoraDBModel.FK_FacturaDetalle_Producto_ProductoId">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <EntitySet Name="Factura" EntityType="ComercializadoraDBModel.Factura" />
+          <AssociationSet Name="FK_Factura_Cliente_ClienteId" Association="ComercializadoraDBModel.FK_Factura_Cliente_ClienteId">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Productor_ProductorId" Association="ComercializadoraDBModel.FK_Factura_Productor_ProductorId">
+            <End Role="Productor" EntitySet="Productor" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacturaDetalle_Factura_FacturaId" Association="ComercializadoraDBModel.FK_FacturaDetalle_Factura_FacturaId">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="FacturaDetalle" EntitySet="FacturaDetalle" />
+          </AssociationSet>
+          <EntitySet Name="CosechaDetalle" EntityType="ComercializadoraDBModel.CosechaDetalle" />
+          <EntitySet Name="PrecioVenta" EntityType="ComercializadoraDBModel.PrecioVenta" />
+          <EntitySet Name="Cobros" EntityType="ComercializadoraDBModel.Cobros" />
+          <AssociationSet Name="FK_CosechaID" Association="ComercializadoraDBModel.FK_CosechaID">
+            <End Role="Cosecha" EntitySet="Cosecha" />
+            <End Role="CosechaDetalle" EntitySet="CosechaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProducID" Association="ComercializadoraDBModel.FK_ProducID">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="CosechaDetalle" EntitySet="CosechaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaPrecio" Association="ComercializadoraDBModel.FK_ListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoID" Association="ComercializadoraDBModel.FK_ProductoID">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
+          <FunctionImport Name="SP_InsertBodega" ReturnType="Collection(ComercializadoraDBModel.SP_InsertBodega_Result)">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertProductores" ReturnType="Collection(ComercializadoraDBModel.SP_InsertProductores_Result)">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="identidad" Mode="In" Type="String" />
+            <Parameter Name="rtn" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="saldodisponible" Mode="In" Type="Decimal" />
+            <Parameter Name="diascredito" Mode="In" Type="Int32" />
+            <Parameter Name="cuentabancaria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateBodega" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateBodega_Result)">
+            <Parameter Name="bodegaid" Mode="In" Type="Int32" />
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateProductores" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateProductores_Result)">
+            <Parameter Name="productorid" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="identidad" Mode="In" Type="String" />
+            <Parameter Name="rtn" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="saldodisponible" Mode="In" Type="Decimal" />
+            <Parameter Name="diascredito" Mode="In" Type="Int32" />
+            <Parameter Name="cuentabancaria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          </EntityContainer>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="ClienteID" />
@@ -219,17 +1081,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="RTN" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="Direccion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Factura" Relationship="ComercializadoraDBModel.Factura_Cliente_FK" FromRole="Cliente" ToRole="Factura" />
-        </EntityType>
-        <EntityType Name="Compra">
-          <Key>
-            <PropertyRef Name="CompraID" />
-          </Key>
-          <Property Name="CompraID" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ProveedorID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CompraDetalle" Relationship="ComercializadoraDBModel.CompraDetalle_Compra_FK" FromRole="Compra" ToRole="CompraDetalle" />
-        </EntityType>
+          <NavigationProperty Name="Factura" Relationship="ComercializadoraDBModel.FK_Factura_Cliente_ClienteId" FromRole="Cliente" ToRole="Factura" />
+          </EntityType>
         <EntityType Name="CuentaBancaria">
           <Key>
             <PropertyRef Name="CuantaID" />
@@ -237,15 +1090,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="CuantaID" Type="Int32" Nullable="false" />
           <Property Name="Banco" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="NumeroCuenta" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Factura">
-          <Key>
-            <PropertyRef Name="FacturaID" />
-          </Key>
-          <Property Name="FacturaID" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Cliente_ClienteID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cliente" Relationship="ComercializadoraDBModel.Factura_Cliente_FK" FromRole="Factura" ToRole="Cliente" />
+          <NavigationProperty Name="Productor" Relationship="ComercializadoraDBModel.FK_CuentaBancariaID" FromRole="CuentaBancaria" ToRole="Productor" />
         </EntityType>
         <EntityType Name="Finca">
           <Key>
@@ -254,6 +1099,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="FincaID" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="ProductorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Lotes" Relationship="ComercializadoraDBModel.FK_Lotes_Finca_FincaId" FromRole="Finca" ToRole="Lotes" />
         </EntityType>
         <EntityType Name="Insumo">
           <Key>
@@ -261,6 +1107,10 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           </Key>
           <Property Name="InsumoID" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventario" Relationship="ComercializadoraDBModel.FK_Inventario_Insumo_InsumoId" FromRole="Insumo" ToRole="Inventario" />
+          <NavigationProperty Name="PrecioCompra" Relationship="ComercializadoraDBModel.FK_PrecioCompra_Insumo_InsumoId" FromRole="Insumo" ToRole="PrecioCompra" />
+          <NavigationProperty Name="CompraDetalle" Relationship="ComercializadoraDBModel.FK_CompraDetalle_Insumo_InsumoId" FromRole="Insumo" ToRole="CompraDetalle" />
+          <NavigationProperty Name="FacturaDetalle" Relationship="ComercializadoraDBModel.FK_FacturaDetalle_Insumo_InsumoId" FromRole="Insumo" ToRole="FacturaDetalle" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -269,6 +1119,12 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="ProductoID" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="LoteID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventario" Relationship="ComercializadoraDBModel.FK_Inventario_Producto_ProductoId" FromRole="Producto" ToRole="Inventario" />
+          <NavigationProperty Name="Lotes" Relationship="ComercializadoraDBModel.FK_Producto_Lote_LoteId" FromRole="Producto" ToRole="Lotes" />
+          <NavigationProperty Name="PrecioCompra" Relationship="ComercializadoraDBModel.FK_PrecioCompra_Producto_ProductoId" FromRole="Producto" ToRole="PrecioCompra" />
+          <NavigationProperty Name="FacturaDetalle" Relationship="ComercializadoraDBModel.FK_FacturaDetalle_Producto_ProductoId" FromRole="Producto" ToRole="FacturaDetalle" />
+          <NavigationProperty Name="CosechaDetalle" Relationship="ComercializadoraDBModel.FK_ProducID" FromRole="Producto" ToRole="CosechaDetalle" />
+          <NavigationProperty Name="PrecioVenta" Relationship="ComercializadoraDBModel.FK_ProductoID" FromRole="Producto" ToRole="PrecioVenta" />
         </EntityType>
         <EntityType Name="Productor">
           <Key>
@@ -280,6 +1136,12 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="RTN" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="EMail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="SaldoDisponible" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DiasCredito" Type="Int32" />
+          <Property Name="CuentaBancariaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CuentaBancaria" Relationship="ComercializadoraDBModel.FK_CuentaBancariaID" FromRole="Productor" ToRole="CuentaBancaria" />
+          <NavigationProperty Name="Pagos" Relationship="ComercializadoraDBModel.FK_Pagos_Productor_ProductorId" FromRole="Productor" ToRole="Pagos" />
+          <NavigationProperty Name="Factura" Relationship="ComercializadoraDBModel.FK_Factura_Productor_ProductorId" FromRole="Productor" ToRole="Factura" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -291,42 +1153,273 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <Property Name="Telefono" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="Direccion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="EMail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pagos" Relationship="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId" FromRole="Proveedor" ToRole="Pagos" />
+          <NavigationProperty Name="Compra" Relationship="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId" FromRole="Proveedor" ToRole="Compra" />
         </EntityType>
-        <EntityType Name="CompraDetalle">
+        <EntityType Name="ListaPrecio">
           <Key>
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="PrecioUnitario" />
-            <PropertyRef Name="Compra_CompraID" />
+            <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Cantidad" Type="Int32" Nullable="false" />
-          <Property Name="PrecioUnitario" Type="Single" Nullable="false" />
-          <Property Name="Compra_CompraID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Compra" Relationship="ComercializadoraDBModel.CompraDetalle_Compra_FK" FromRole="CompraDetalle" ToRole="Compra" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PrecioCompra" Relationship="ComercializadoraDBModel.FK_PrecioCompra_ListaPrecios_ListaPrecios" FromRole="ListaPrecio" ToRole="PrecioCompra" />
+          <NavigationProperty Name="PrecioVenta" Relationship="ComercializadoraDBModel.FK_ListaPrecio" FromRole="ListaPrecio" ToRole="PrecioVenta" />
         </EntityType>
-        <EntityType Name="FacturaDetalle">
+        <ComplexType Name="SP_InsertListaPrecio_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <EntityType Name="Bodega">
           <Key>
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="PrecioUnitario" />
-            <PropertyRef Name="ProductoID" />
-            <PropertyRef Name="FacturaID" />
+            <PropertyRef Name="BodegaId" />
           </Key>
-          <Property Name="Cantidad" Type="Int32" Nullable="false" />
-          <Property Name="PrecioUnitario" Type="Single" Nullable="false" />
-          <Property Name="ProductoID" Type="Int32" Nullable="false" />
-          <Property Name="FacturaID" Type="Int32" Nullable="false" />
+          <Property Name="BodegaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inventario" Relationship="ComercializadoraDBModel.FK_Inventario_Bodega_BodegaId" FromRole="Bodega" ToRole="Inventario" />
         </EntityType>
-        <Association Name="Factura_Cliente_FK">
-          <End Type="ComercializadoraDBModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="ComercializadoraDBModel.Factura" Role="Factura" Multiplicity="*" />
+        <EntityType Name="Inventario">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+          </Key>
+          <Property Name="InventarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BodegaId" Type="Int32" Nullable="false" />
+          <Property Name="ProductoId" Type="Int32" />
+          <Property Name="InsumoId" Type="Int32" />
+          <Property Name="Disponible" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bodega" Relationship="ComercializadoraDBModel.FK_Inventario_Bodega_BodegaId" FromRole="Inventario" ToRole="Bodega" />
+          <NavigationProperty Name="Insumo" Relationship="ComercializadoraDBModel.FK_Inventario_Insumo_InsumoId" FromRole="Inventario" ToRole="Insumo" />
+          <NavigationProperty Name="Producto" Relationship="ComercializadoraDBModel.FK_Inventario_Producto_ProductoId" FromRole="Inventario" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_Inventario_Bodega_BodegaId">
+          <End Type="ComercializadoraDBModel.Bodega" Role="Bodega" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Inventario" Role="Inventario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="ClienteID" />
+            <Principal Role="Bodega">
+              <PropertyRef Name="BodegaId" />
             </Principal>
-            <Dependent Role="Factura">
-              <PropertyRef Name="Cliente_ClienteID" />
+            <Dependent Role="Inventario">
+              <PropertyRef Name="BodegaId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Inventario_Insumo_InsumoId">
+          <End Type="ComercializadoraDBModel.Insumo" Role="Insumo" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Inventario" Role="Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventario_Producto_ProductoId">
+          <End Type="ComercializadoraDBModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Inventario" Role="Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Lotes">
+          <Key>
+            <PropertyRef Name="LoteId" />
+          </Key>
+          <Property Name="LoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FincaId" Type="Int32" Nullable="false" />
+          <Property Name="Extencion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TipoSuelo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TipoRiego" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CantidadCosecha" Type="Int32" />
+          <NavigationProperty Name="Finca" Relationship="ComercializadoraDBModel.FK_Lotes_Finca_FincaId" FromRole="Lotes" ToRole="Finca" />
+          <NavigationProperty Name="Producto" Relationship="ComercializadoraDBModel.FK_Producto_Lote_LoteId" FromRole="Lotes" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_Lotes_Finca_FincaId">
+          <End Type="ComercializadoraDBModel.Finca" Role="Finca" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Lotes" Role="Lotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Finca">
+              <PropertyRef Name="FincaID" />
+            </Principal>
+            <Dependent Role="Lotes">
+              <PropertyRef Name="FincaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Lote_LoteId">
+          <End Type="ComercializadoraDBModel.Lotes" Role="Lotes" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lotes">
+              <PropertyRef Name="LoteId" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="LoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vInventarioInsumos">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+            <PropertyRef Name="Codigo_Bodega" />
+            <PropertyRef Name="Nombre_Bodega" />
+            <PropertyRef Name="InsumoID" />
+            <PropertyRef Name="Nombre_Insumo" />
+            <PropertyRef Name="Disponible" />
+          </Key>
+          <Property Name="InventarioId" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Bodega" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre_Bodega" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="InsumoID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Insumo" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Disponible" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vInventarioProductos">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+            <PropertyRef Name="Codigo_Bodega" />
+            <PropertyRef Name="Nombre_Bodega" />
+            <PropertyRef Name="ProductoID" />
+            <PropertyRef Name="Nombre_Producto" />
+            <PropertyRef Name="Disponible" />
+          </Key>
+          <Property Name="InventarioId" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Bodega" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre_Bodega" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProductoID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Producto" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Disponible" Type="Int32" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="SP_InsertInventario_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <EntityType Name="TipoPago">
+          <Key>
+            <PropertyRef Name="TipoPagoId" />
+          </Key>
+          <Property Name="TipoPagoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pagos" Relationship="ComercializadoraDBModel.FK_Pagos_TipoPago_TipoPagoId" FromRole="TipoPago" ToRole="Pagos" />
+        </EntityType>
+        <ComplexType Name="SP_InsertTipoPago_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_DeleteTipoPago_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_UpdateTipoPago_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <EntityType Name="Pagos">
+          <Key>
+            <PropertyRef Name="PagoId" />
+          </Key>
+          <Property Name="PagoId" Type="Int32" Nullable="false" />
+          <Property Name="ProductorId" Type="Int32" />
+          <Property Name="ProveedorId" Type="Int32" />
+          <Property Name="cosechaId" Type="Int32" Nullable="false" />
+          <Property Name="CompraId" Type="Int32" />
+          <Property Name="Concepto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TipoPagoId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Productor" Relationship="ComercializadoraDBModel.FK_Pagos_Productor_ProductorId" FromRole="Pagos" ToRole="Productor" />
+          <NavigationProperty Name="Proveedor" Relationship="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId" FromRole="Pagos" ToRole="Proveedor" />
+          <NavigationProperty Name="TipoPago" Relationship="ComercializadoraDBModel.FK_Pagos_TipoPago_TipoPagoId" FromRole="Pagos" ToRole="TipoPago" />
+          <NavigationProperty Name="Compra" Relationship="ComercializadoraDBModel.FK_Pagos_Compra_CompraId" FromRole="Pagos" ToRole="Compra" />
+          <NavigationProperty Name="Cosecha" Relationship="ComercializadoraDBModel.FK_Pagos_Cosecha_CosechaId" FromRole="Pagos" ToRole="Cosecha" />
+        </EntityType>
+        <Association Name="FK_CuentaBancariaID">
+          <End Type="ComercializadoraDBModel.CuentaBancaria" Role="CuentaBancaria" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Productor" Role="Productor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaBancaria">
+              <PropertyRef Name="CuantaID" />
+            </Principal>
+            <Dependent Role="Productor">
+              <PropertyRef Name="CuentaBancariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Productor_ProductorId">
+          <End Type="ComercializadoraDBModel.Productor" Role="Productor" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productor">
+              <PropertyRef Name="ProductorID" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="ProductorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Proveedor_ProveedorId">
+          <End Type="ComercializadoraDBModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_TipoPago_TipoPagoId">
+          <End Type="ComercializadoraDBModel.TipoPago" Role="TipoPago" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPago">
+              <PropertyRef Name="TipoPagoId" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="TipoPagoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Compra">
+          <Key>
+            <PropertyRef Name="CompraID" />
+          </Key>
+          <Property Name="CompraID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProveedorID" Type="Int32" Nullable="false" />
+          <Property Name="CodigoCompra" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ValorCompra" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SaldoPendiente" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CompraDetalle" Relationship="ComercializadoraDBModel.CompraDetalle_Compra_FK" FromRole="Compra" ToRole="CompraDetalle" />
+          <NavigationProperty Name="Pagos" Relationship="ComercializadoraDBModel.FK_Pagos_Compra_CompraId" FromRole="Compra" ToRole="Pagos" />
+          <NavigationProperty Name="Proveedor" Relationship="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId" FromRole="Compra" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="CompraDetalle">
+          <Key>
+            <PropertyRef Name="CompraDetalleId" />
+          </Key>
+          <Property Name="CompraDetalleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompraID" Type="Int32" Nullable="false" />
+          <Property Name="InsumoId" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Compra" Relationship="ComercializadoraDBModel.CompraDetalle_Compra_FK" FromRole="CompraDetalle" ToRole="Compra" />
+          <NavigationProperty Name="Insumo" Relationship="ComercializadoraDBModel.FK_CompraDetalle_Insumo_InsumoId" FromRole="CompraDetalle" ToRole="Insumo" />
+        </EntityType>
+        <EntityType Name="Cosecha">
+          <Key>
+            <PropertyRef Name="CosechaId" />
+          </Key>
+          <Property Name="CosechaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Pagos" Relationship="ComercializadoraDBModel.FK_Pagos_Cosecha_CosechaId" FromRole="Cosecha" ToRole="Pagos" />
+          <NavigationProperty Name="CosechaDetalle" Relationship="ComercializadoraDBModel.FK_CosechaID" FromRole="Cosecha" ToRole="CosechaDetalle" />
+        </EntityType>
         <Association Name="CompraDetalle_Compra_FK">
           <End Type="ComercializadoraDBModel.Compra" Role="Compra" Multiplicity="1" />
           <End Type="ComercializadoraDBModel.CompraDetalle" Role="CompraDetalle" Multiplicity="*" />
@@ -335,21 +1428,340 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
               <PropertyRef Name="CompraID" />
             </Principal>
             <Dependent Role="CompraDetalle">
-              <PropertyRef Name="Compra_CompraID" />
+              <PropertyRef Name="CompraID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ListaPrecio">
+        <Association Name="FK_Pagos_Compra_CompraId">
+          <End Type="ComercializadoraDBModel.Compra" Role="Compra" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compra">
+              <PropertyRef Name="CompraID" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="CompraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Cosecha_CosechaId">
+          <End Type="ComercializadoraDBModel.Cosecha" Role="Cosecha" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cosecha">
+              <PropertyRef Name="CosechaId" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="cosechaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PrecioCompra">
           <Key>
-            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="precioCompraId" />
           </Key>
-          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="precioCompraId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ListaPrecios" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ProductoId" Type="Int32" />
+          <Property Name="InsumoId" Type="Int32" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaHasta" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Insumo" Relationship="ComercializadoraDBModel.FK_PrecioCompra_Insumo_InsumoId" FromRole="PrecioCompra" ToRole="Insumo" />
+          <NavigationProperty Name="ListaPrecio" Relationship="ComercializadoraDBModel.FK_PrecioCompra_ListaPrecios_ListaPrecios" FromRole="PrecioCompra" ToRole="ListaPrecio" />
+          <NavigationProperty Name="Producto" Relationship="ComercializadoraDBModel.FK_PrecioCompra_Producto_ProductoId" FromRole="PrecioCompra" ToRole="Producto" />
         </EntityType>
-        <ComplexType Name="SP_InsertListaPrecio_Result">
+        <EntityType Name="vPrecioCompraInsumos">
+          <Key>
+            <PropertyRef Name="precioCompraId" />
+            <PropertyRef Name="InsumoID" />
+            <PropertyRef Name="Nombre_Insumo" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="FechaDesde" />
+          </Key>
+          <Property Name="precioCompraId" Type="Int32" Nullable="false" />
+          <Property Name="InsumoID" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Insumo" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaHasta" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="vPrecioCompraProductos">
+          <Key>
+            <PropertyRef Name="precioCompraId" />
+            <PropertyRef Name="productoId" />
+            <PropertyRef Name="Nombre_Producto" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="FechaDesde" />
+          </Key>
+          <Property Name="precioCompraId" Type="Int32" Nullable="false" />
+          <Property Name="productoId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Producto" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaHasta" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK_PrecioCompra_Insumo_InsumoId">
+          <End Type="ComercializadoraDBModel.Insumo" Role="Insumo" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.PrecioCompra" Role="PrecioCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="PrecioCompra">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrecioCompra_ListaPrecios_ListaPrecios">
+          <End Type="ComercializadoraDBModel.ListaPrecio" Role="ListaPrecio" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.PrecioCompra" Role="PrecioCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PrecioCompra">
+              <PropertyRef Name="ListaPrecios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrecioCompra_Producto_ProductoId">
+          <End Type="ComercializadoraDBModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.PrecioCompra" Role="PrecioCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="PrecioCompra">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_InsertPrecioCompra_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
         </ComplexType>
-      </Schema>
+        <Association Name="FK_Compra_Proveedor_ProveedorId">
+          <End Type="ComercializadoraDBModel.Proveedor" Role="Proveedor" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Compra" Role="Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Insumo_InsumoId">
+          <End Type="ComercializadoraDBModel.Insumo" Role="Insumo" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.CompraDetalle" Role="CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_InsertCompra_Result">
+          <Property Type="String" Name="MensajeError" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="SP_InsertCompraDetalle_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_UpdateListaPrecio_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <EntityType Name="FacturaDetalle">
+          <Key>
+            <PropertyRef Name="FacturaDetalleId" />
+          </Key>
+          <Property Name="FacturaDetalleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacturaID" Type="Int32" Nullable="false" />
+          <Property Name="ProductoID" Type="Int32" />
+          <Property Name="InsumoId" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Insumo" Relationship="ComercializadoraDBModel.FK_FacturaDetalle_Insumo_InsumoId" FromRole="FacturaDetalle" ToRole="Insumo" />
+          <NavigationProperty Name="Producto" Relationship="ComercializadoraDBModel.FK_FacturaDetalle_Producto_ProductoId" FromRole="FacturaDetalle" ToRole="Producto" />
+          <NavigationProperty Name="Factura" Relationship="ComercializadoraDBModel.FK_FacturaDetalle_Factura_FacturaId" FromRole="FacturaDetalle" ToRole="Factura" />
+        </EntityType>
+        <Association Name="FK_FacturaDetalle_Insumo_InsumoId">
+          <End Type="ComercializadoraDBModel.Insumo" Role="Insumo" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.FacturaDetalle" Role="FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="InsumoID" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="InsumoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacturaDetalle_Producto_ProductoId">
+          <End Type="ComercializadoraDBModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.FacturaDetalle" Role="FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="FacturaID" />
+          </Key>
+          <Property Name="FacturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoFactura" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClienteId" Type="Int32" />
+          <Property Name="ProductorId" Type="Int32" />
+          <Property Name="TipoFactura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaFactura" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="0" />
+          <Property Name="ValorFactura" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SaldoPendiente" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Cliente" Relationship="ComercializadoraDBModel.FK_Factura_Cliente_ClienteId" FromRole="Factura" ToRole="Cliente" />
+          <NavigationProperty Name="Productor" Relationship="ComercializadoraDBModel.FK_Factura_Productor_ProductorId" FromRole="Factura" ToRole="Productor" />
+          <NavigationProperty Name="FacturaDetalle" Relationship="ComercializadoraDBModel.FK_FacturaDetalle_Factura_FacturaId" FromRole="Factura" ToRole="FacturaDetalle" />
+        </EntityType>
+        <Association Name="FK_Factura_Cliente_ClienteId">
+          <End Type="ComercializadoraDBModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Factura" Role="Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Productor_ProductorId">
+          <End Type="ComercializadoraDBModel.Productor" Role="Productor" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Factura" Role="Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productor">
+              <PropertyRef Name="ProductorID" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="ProductorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacturaDetalle_Factura_FacturaId">
+          <End Type="ComercializadoraDBModel.Factura" Role="Factura" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.FacturaDetalle" Role="FacturaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="FacturaID" />
+            </Principal>
+            <Dependent Role="FacturaDetalle">
+              <PropertyRef Name="FacturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CosechaDetalle">
+          <Key>
+            <PropertyRef Name="CosechaDetalleID" />
+          </Key>
+          <Property Name="CosechaDetalleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CosechaID" Type="Int32" Nullable="false" />
+          <Property Name="ProductoID" Type="Int32" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cosecha" Relationship="ComercializadoraDBModel.FK_CosechaID" FromRole="CosechaDetalle" ToRole="Cosecha" />
+          <NavigationProperty Name="Producto" Relationship="ComercializadoraDBModel.FK_ProducID" FromRole="CosechaDetalle" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="PrecioVenta">
+          <Key>
+            <PropertyRef Name="PrecioID" />
+          </Key>
+          <Property Name="PrecioID" Type="Int32" Nullable="false" />
+          <Property Name="ProductoID" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaHasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ListaPrecio" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ListaPrecio1" Relationship="ComercializadoraDBModel.FK_ListaPrecio" FromRole="PrecioVenta" ToRole="ListaPrecio" />
+          <NavigationProperty Name="Producto" Relationship="ComercializadoraDBModel.FK_ProductoID" FromRole="PrecioVenta" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Cobros">
+          <Key>
+            <PropertyRef Name="TipoPagoID" />
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="NumeroDeRecivo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoCliente" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Monto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TipoPagoID" Type="Int32" Nullable="false" />
+          <Property Name="Clave" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CosechaID">
+          <End Type="ComercializadoraDBModel.Cosecha" Role="Cosecha" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.CosechaDetalle" Role="CosechaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cosecha">
+              <PropertyRef Name="CosechaId" />
+            </Principal>
+            <Dependent Role="CosechaDetalle">
+              <PropertyRef Name="CosechaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProducID">
+          <End Type="ComercializadoraDBModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.CosechaDetalle" Role="CosechaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="CosechaDetalle">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaPrecio">
+          <End Type="ComercializadoraDBModel.ListaPrecio" Role="ListaPrecio" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="ListaPrecio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoID">
+          <End Type="ComercializadoraDBModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoID" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="ProductoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_InsertBodega_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_UpdateBodega_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_InsertProductores_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_UpdateProductores_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -366,30 +1778,12 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Compra">
-            <EntityTypeMapping TypeName="ComercializadoraDBModel.Compra">
-              <MappingFragment StoreEntitySet="Compra">
-                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="CompraID" ColumnName="CompraID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CuentaBancaria">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.CuentaBancaria">
               <MappingFragment StoreEntitySet="CuentaBancaria">
                 <ScalarProperty Name="NumeroCuenta" ColumnName="NumeroCuenta" />
                 <ScalarProperty Name="Banco" ColumnName="Banco" />
                 <ScalarProperty Name="CuantaID" ColumnName="CuantaID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Factura">
-            <EntityTypeMapping TypeName="ComercializadoraDBModel.Factura">
-              <MappingFragment StoreEntitySet="Factura">
-                <ScalarProperty Name="Cliente_ClienteID" ColumnName="Cliente_ClienteID" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -422,6 +1816,9 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <EntitySetMapping Name="Productor">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.Productor">
               <MappingFragment StoreEntitySet="Productor">
+                <ScalarProperty Name="CuentaBancariaID" ColumnName="CuentaBancariaID" />
+                <ScalarProperty Name="DiasCredito" ColumnName="DiasCredito" />
+                <ScalarProperty Name="SaldoDisponible" ColumnName="SaldoDisponible" />
                 <ScalarProperty Name="EMail" ColumnName="EMail" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="RTN" ColumnName="RTN" />
@@ -443,25 +1840,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CompraDetalle">
-            <EntityTypeMapping TypeName="ComercializadoraDBModel.CompraDetalle">
-              <MappingFragment StoreEntitySet="CompraDetalle">
-                <ScalarProperty Name="Compra_CompraID" ColumnName="Compra_CompraID" />
-                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FacturaDetalle">
-            <EntityTypeMapping TypeName="ComercializadoraDBModel.FacturaDetalle">
-              <MappingFragment StoreEntitySet="FacturaDetalle">
-                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
-                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
-                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ListaPrecio">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.ListaPrecio">
               <MappingFragment StoreEntitySet="ListaPrecio">
@@ -473,6 +1851,302 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.FacturaDetall
           <FunctionImportMapping FunctionImportName="SP_InsertListaPrecio" FunctionName="ComercializadoraDBModel.Store.SP_InsertListaPrecio" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertListaPrecio_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Bodega">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Bodega">
+              <MappingFragment StoreEntitySet="Bodega">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="BodegaId" ColumnName="BodegaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventario">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Inventario">
+              <MappingFragment StoreEntitySet="Inventario">
+                <ScalarProperty Name="Disponible" ColumnName="Disponible" />
+                <ScalarProperty Name="InsumoId" ColumnName="InsumoId" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="BodegaId" ColumnName="BodegaId" />
+                <ScalarProperty Name="InventarioId" ColumnName="InventarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lotes">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Lotes">
+              <MappingFragment StoreEntitySet="Lotes">
+                <ScalarProperty Name="CantidadCosecha" ColumnName="CantidadCosecha" />
+                <ScalarProperty Name="TipoRiego" ColumnName="TipoRiego" />
+                <ScalarProperty Name="TipoSuelo" ColumnName="TipoSuelo" />
+                <ScalarProperty Name="Extencion" ColumnName="Extencion" />
+                <ScalarProperty Name="FincaId" ColumnName="FincaId" />
+                <ScalarProperty Name="LoteId" ColumnName="LoteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vInventarioInsumos">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.vInventarioInsumos">
+              <MappingFragment StoreEntitySet="vInventarioInsumos">
+                <ScalarProperty Name="Disponible" ColumnName="Disponible" />
+                <ScalarProperty Name="Nombre_Insumo" ColumnName="Nombre_Insumo" />
+                <ScalarProperty Name="InsumoID" ColumnName="InsumoID" />
+                <ScalarProperty Name="Nombre_Bodega" ColumnName="Nombre_Bodega" />
+                <ScalarProperty Name="Codigo_Bodega" ColumnName="Codigo_Bodega" />
+                <ScalarProperty Name="InventarioId" ColumnName="InventarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vInventarioProductos">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.vInventarioProductos">
+              <MappingFragment StoreEntitySet="vInventarioProductos">
+                <ScalarProperty Name="Disponible" ColumnName="Disponible" />
+                <ScalarProperty Name="Nombre_Producto" ColumnName="Nombre_Producto" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="Nombre_Bodega" ColumnName="Nombre_Bodega" />
+                <ScalarProperty Name="Codigo_Bodega" ColumnName="Codigo_Bodega" />
+                <ScalarProperty Name="InventarioId" ColumnName="InventarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertInventario" FunctionName="ComercializadoraDBModel.Store.SP_InsertInventario" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertInventario_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TipoPago">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.TipoPago">
+              <MappingFragment StoreEntitySet="TipoPago">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="TipoPagoId" ColumnName="TipoPagoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertTipoPago" FunctionName="ComercializadoraDBModel.Store.SP_InsertTipoPago" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertTipoPago_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_DeleteTipoPago" FunctionName="ComercializadoraDBModel.Store.SP_DeleteTipoPago" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_DeleteTipoPago_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateTipoPago" FunctionName="ComercializadoraDBModel.Store.SP_UpdateTipoPago" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateTipoPago_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Pagos">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Pagos">
+              <MappingFragment StoreEntitySet="Pagos">
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="TipoPagoId" ColumnName="TipoPagoId" />
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="CompraId" ColumnName="CompraId" />
+                <ScalarProperty Name="cosechaId" ColumnName="cosechaId" />
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+                <ScalarProperty Name="ProductorId" ColumnName="ProductorId" />
+                <ScalarProperty Name="PagoId" ColumnName="PagoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compra">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Compra">
+              <MappingFragment StoreEntitySet="Compra">
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="SaldoPendiente" ColumnName="SaldoPendiente" />
+                <ScalarProperty Name="ValorCompra" ColumnName="ValorCompra" />
+                <ScalarProperty Name="CodigoCompra" ColumnName="CodigoCompra" />
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+                <ScalarProperty Name="CompraID" ColumnName="CompraID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompraDetalle">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.CompraDetalle">
+              <MappingFragment StoreEntitySet="CompraDetalle">
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="InsumoId" ColumnName="InsumoId" />
+                <ScalarProperty Name="CompraID" ColumnName="CompraID" />
+                <ScalarProperty Name="CompraDetalleId" ColumnName="CompraDetalleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cosecha">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Cosecha">
+              <MappingFragment StoreEntitySet="Cosecha">
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CosechaId" ColumnName="CosechaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrecioCompra">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.PrecioCompra">
+              <MappingFragment StoreEntitySet="PrecioCompra">
+                <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
+                <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="InsumoId" ColumnName="InsumoId" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="ListaPrecios" ColumnName="ListaPrecios" />
+                <ScalarProperty Name="precioCompraId" ColumnName="precioCompraId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPrecioCompraInsumos">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.vPrecioCompraInsumos">
+              <MappingFragment StoreEntitySet="vPrecioCompraInsumos">
+                <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
+                <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Nombre_Insumo" ColumnName="Nombre_Insumo" />
+                <ScalarProperty Name="InsumoID" ColumnName="InsumoID" />
+                <ScalarProperty Name="precioCompraId" ColumnName="precioCompraId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPrecioCompraProductos">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.vPrecioCompraProductos">
+              <MappingFragment StoreEntitySet="vPrecioCompraProductos">
+                <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
+                <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Nombre_Producto" ColumnName="Nombre_Producto" />
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="precioCompraId" ColumnName="precioCompraId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertPrecioCompra" FunctionName="ComercializadoraDBModel.Store.SP_InsertPrecioCompra" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertPrecioCompra_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertCompra" FunctionName="ComercializadoraDBModel.Store.SP_InsertCompra" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertCompra_Result">
+                <ScalarProperty Name="MensajeError" ColumnName="MensajeError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertCompraDetalle" FunctionName="ComercializadoraDBModel.Store.SP_InsertCompraDetalle" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertCompraDetalle_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateListaPrecio" FunctionName="ComercializadoraDBModel.Store.SP_UpdateListaPrecio" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateListaPrecio_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="FacturaDetalle">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.FacturaDetalle">
+              <MappingFragment StoreEntitySet="FacturaDetalle">
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="InsumoId" ColumnName="InsumoId" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
+                <ScalarProperty Name="FacturaDetalleId" ColumnName="FacturaDetalleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="SaldoPendiente" ColumnName="SaldoPendiente" />
+                <ScalarProperty Name="ValorFactura" ColumnName="ValorFactura" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaFactura" ColumnName="FechaFactura" />
+                <ScalarProperty Name="TipoFactura" ColumnName="TipoFactura" />
+                <ScalarProperty Name="ProductorId" ColumnName="ProductorId" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="CodigoFactura" ColumnName="CodigoFactura" />
+                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CosechaDetalle">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.CosechaDetalle">
+              <MappingFragment StoreEntitySet="CosechaDetalle">
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="CosechaID" ColumnName="CosechaID" />
+                <ScalarProperty Name="CosechaDetalleID" ColumnName="CosechaDetalleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrecioVenta">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.PrecioVenta">
+              <MappingFragment StoreEntitySet="PrecioVenta">
+                <ScalarProperty Name="ListaPrecio" ColumnName="ListaPrecio" />
+                <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
+                <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="ProductoID" ColumnName="ProductoID" />
+                <ScalarProperty Name="PrecioID" ColumnName="PrecioID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cobros">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Cobros">
+              <MappingFragment StoreEntitySet="Cobros">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="TipoPagoID" ColumnName="TipoPagoID" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="CodigoCliente" ColumnName="CodigoCliente" />
+                <ScalarProperty Name="NumeroDeRecivo" ColumnName="NumeroDeRecivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertBodega" FunctionName="ComercializadoraDBModel.Store.SP_InsertBodega" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertBodega_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertProductores" FunctionName="ComercializadoraDBModel.Store.SP_InsertProductores" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertProductores_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateBodega" FunctionName="ComercializadoraDBModel.Store.SP_UpdateBodega" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateBodega_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateProductores" FunctionName="ComercializadoraDBModel.Store.SP_UpdateProductores" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateProductores_Result">
                 <ScalarProperty Name="MessageError" ColumnName="MessageError" />
               </ComplexTypeMapping>
             </ResultMapping>

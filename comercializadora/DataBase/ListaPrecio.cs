@@ -14,7 +14,16 @@ namespace comercializadora.DataBase
     
     public partial class ListaPrecio
     {
+        public ListaPrecio()
+        {
+            this.PrecioCompra = new HashSet<PrecioCompra>();
+            this.PrecioVenta = new HashSet<PrecioVenta>();
+        }
+    
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
+    
+        public virtual ICollection<PrecioCompra> PrecioCompra { get; set; }
+        public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
     }
 }

@@ -1,0 +1,82 @@
+﻿@model comercializadora.DataBase.Pagos
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pagos</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cosechaId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cosechaId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Concepto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Concepto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Compra.CompraID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Compra.CompraID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Productor.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Productor.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoPago.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoPago.Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PagoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

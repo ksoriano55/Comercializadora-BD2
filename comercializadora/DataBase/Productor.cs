@@ -14,11 +14,24 @@ namespace comercializadora.DataBase
     
     public partial class Productor
     {
+        public Productor()
+        {
+            this.Pagos = new HashSet<Pagos>();
+            this.Factura = new HashSet<Factura>();
+        }
+    
         public int ProductorID { get; set; }
         public string Nombre { get; set; }
         public string Identidad { get; set; }
         public string RTN { get; set; }
         public string Telefono { get; set; }
         public string EMail { get; set; }
+        public Nullable<decimal> SaldoDisponible { get; set; }
+        public Nullable<int> DiasCredito { get; set; }
+        public int CuentaBancariaID { get; set; }
+    
+        public virtual CuentaBancaria CuentaBancaria { get; set; }
+        public virtual ICollection<Pagos> Pagos { get; set; }
+        public virtual ICollection<Factura> Factura { get; set; }
     }
 }

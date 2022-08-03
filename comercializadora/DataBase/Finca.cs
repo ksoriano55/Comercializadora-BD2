@@ -14,8 +14,15 @@ namespace comercializadora.DataBase
     
     public partial class Finca
     {
+        public Finca()
+        {
+            this.Lotes = new HashSet<Lotes>();
+        }
+    
         public int FincaID { get; set; }
         public string Nombre { get; set; }
         public int ProductorID { get; set; }
+    
+        public virtual ICollection<Lotes> Lotes { get; set; }
     }
 }
