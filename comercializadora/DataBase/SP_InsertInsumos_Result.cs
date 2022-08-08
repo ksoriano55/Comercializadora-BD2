@@ -10,20 +10,9 @@
 namespace comercializadora.DataBase
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Finca
+    public partial class SP_InsertInsumos_Result
     {
-        public Finca()
-        {
-            this.Lotes = new HashSet<Lotes>();
-        }
-    
-        public int FincaID { get; set; }
-        public string Nombre { get; set; }
-        public int ProductorID { get; set; }
-    
-        public virtual ICollection<Lotes> Lotes { get; set; }
-        public virtual Productor Productor { get; set; }
+        public string MessageError { get; set; }
     }
 }

@@ -52,8 +52,8 @@ namespace comercializadora.DataBase
         public DbSet<FacturaDetalle> FacturaDetalle { get; set; }
         public DbSet<Factura> Factura { get; set; }
         public DbSet<CosechaDetalle> CosechaDetalle { get; set; }
-        public DbSet<PrecioVenta> PrecioVenta { get; set; }
         public DbSet<Cobros> Cobros { get; set; }
+        public DbSet<PrecioVenta> PrecioVenta { get; set; }
     
         public virtual ObjectResult<SP_InsertListaPrecio_Result> SP_InsertListaPrecio(string codigo, string descripcion)
         {
@@ -306,6 +306,79 @@ namespace comercializadora.DataBase
                 new ObjectParameter("cuentabancaria", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateProductores_Result>("SP_UpdateProductores", productoridParameter, nombreParameter, identidadParameter, rtnParameter, telefonoParameter, emailParameter, saldodisponibleParameter, diascreditoParameter, cuentabancariaParameter);
+        }
+    
+        public virtual ObjectResult<SP_InsertProductos_Result> SP_InsertProductos(Nullable<int> loteId, string descripcion)
+        {
+            var loteIdParameter = loteId.HasValue ?
+                new ObjectParameter("loteId", loteId) :
+                new ObjectParameter("loteId", typeof(int));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertProductos_Result>("SP_InsertProductos", loteIdParameter, descripcionParameter);
+        }
+    
+        public virtual ObjectResult<SP_InsertFactura_Result> SP_InsertFactura(Nullable<int> clienteId, Nullable<int> productorId)
+        {
+            var clienteIdParameter = clienteId.HasValue ?
+                new ObjectParameter("clienteId", clienteId) :
+                new ObjectParameter("clienteId", typeof(int));
+    
+            var productorIdParameter = productorId.HasValue ?
+                new ObjectParameter("productorId", productorId) :
+                new ObjectParameter("productorId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertFactura_Result>("SP_InsertFactura", clienteIdParameter, productorIdParameter);
+        }
+    
+        public virtual ObjectResult<SP_InsertFacturaDetalle_Result> SP_InsertFacturaDetalle(Nullable<int> facturaId, Nullable<int> productoId, Nullable<int> insumoId, Nullable<int> cantidad, Nullable<int> clienteId)
+        {
+            var facturaIdParameter = facturaId.HasValue ?
+                new ObjectParameter("facturaId", facturaId) :
+                new ObjectParameter("facturaId", typeof(int));
+    
+            var productoIdParameter = productoId.HasValue ?
+                new ObjectParameter("productoId", productoId) :
+                new ObjectParameter("productoId", typeof(int));
+    
+            var insumoIdParameter = insumoId.HasValue ?
+                new ObjectParameter("insumoId", insumoId) :
+                new ObjectParameter("insumoId", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var clienteIdParameter = clienteId.HasValue ?
+                new ObjectParameter("clienteId", clienteId) :
+                new ObjectParameter("clienteId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertFacturaDetalle_Result>("SP_InsertFacturaDetalle", facturaIdParameter, productoIdParameter, insumoIdParameter, cantidadParameter, clienteIdParameter);
+        }
+    
+        public virtual ObjectResult<SP_InsertInsumos_Result> SP_InsertInsumos(string descripcion)
+        {
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertInsumos_Result>("SP_InsertInsumos", descripcionParameter);
+        }
+    
+        public virtual ObjectResult<SP_UpdateInsumo_Result> SP_UpdateInsumo(Nullable<int> insumoId, string descripcion)
+        {
+            var insumoIdParameter = insumoId.HasValue ?
+                new ObjectParameter("InsumoId", insumoId) :
+                new ObjectParameter("InsumoId", typeof(int));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateInsumo_Result>("SP_UpdateInsumo", insumoIdParameter, descripcionParameter);
         }
     }
 }

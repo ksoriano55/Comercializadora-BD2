@@ -1,4 +1,4 @@
-﻿@model IEnumerable<comercializadora.DataBase.TipoPago>
+﻿@model IEnumerable<comercializadora.DataBase.Insumo>
 
 @{
     ViewBag.Title = "Index";
@@ -8,7 +8,7 @@
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
             <div class="x_title">
-                <h2>TIPOS DE PAGOS</h2>
+                <h2>INSUMOS</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modalCreate">
@@ -43,28 +43,24 @@
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
                                             <td>
-                                                <a class="btn btn-app" data-rel="tooltip" title="Editar" data-toggle="modal" data-target="#Editar_@item.TipoPagoId">
+                                                <a class="btn btn-app" data-rel="tooltip" title="Editar" data-toggle="modal" data-target="#Editar_@item.InsumoID">
                                                     <i class="fa fa-edit"></i> Editar
-                                                </a>
-                                                <a class="btn btn-app" data-rel="tooltip" title="Editar" data-toggle="modal" data-target="#Editar_@item.TipoPagoId">
-                                                    <i class="fa fa-trash"></i> Eliminar
                                                 </a>
                                             </td>
                                         </tr>
 
-
                                         <!-- Modal Editar Lista de Precios-->
-                                        <div id="Editar_@item.TipoPagoId" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div id="Editar_@item.InsumoID" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="myModalLabel"> EDITAR LISTA DE PRECIOS</h4>
+                                                        <h4 class="modal-title" id="myModalLabel"> EDITAR INSUMO</h4>
                                                         <button type="button" class="close" data-dismiss="modal">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body" id="EditarCategorias">
-                                                        @Html.Partial("_Edit", new comercializadora.DataBase.TipoPago() { TipoPagoId = item.TipoPagoId, Descripcion = item.Descripcion })
+                                                        @Html.Partial("_Edit", new comercializadora.DataBase.Insumo() { InsumoID = item.InsumoID, Descripcion = item.Descripcion })
                                                     </div>
                                                 </div>
                                             </div>
@@ -80,20 +76,19 @@
     </div>
 </div>
 
-
-<!-- Modal Registrar Nueva Tipo de pago-->
+<!-- Modal Registrar Nuevo Insumo-->
 
 <div id="modalCreate" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel"> REGISTRAR NUEVO TIPO DE PAGO</h5>
+                <h5 class="modal-title" id="myModalLabel"> REGISTRAR NUEVO INSUMO</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                @Html.Partial("_Create", new comercializadora.DataBase.TipoPago())
+                @Html.Partial("_Create", new comercializadora.DataBase.Insumo())
             </div>
 
         </div>

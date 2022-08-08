@@ -1,19 +1,16 @@
-﻿$(document).ready(function () {
-    $('#visibleInsumo').hide();
-    $('#InsumoId').val(null);
-    $('#visibleProducto').show();
-});
+﻿
+$(document).ready(function () {
 
-function yesnoCheck() {
-    esInsumo = document.getElementById('esInsumo')
-    if (esInsumo.checked) {
-        $('#visibleInsumo').show();
-        $('#visibleProducto').hide();
-        $('#ProductoId').val(null);
-    }
-    else {
-        $('#visibleInsumo').hide();
-        $('#visibleProducto').show();
-        $('#InsumoId').val(null);
-    }
-}
+    $("#FincaId").change(function () {
+        let finca = $('#FincaId').val()
+        console.log("cambie algo", finca)
+        $("#LoteId").empty();
+
+        $.getJSON('/Productos/getLotes', { idFinca: $('#FincaId').val() }, function (data) {
+            $.each(data, function () {
+                $('#LoteId').append('<option value=' +
+                    this.Value + '>' + this.Text + '</option>');
+            });
+        });
+    });
+});

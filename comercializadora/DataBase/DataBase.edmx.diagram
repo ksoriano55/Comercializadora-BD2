@@ -51,13 +51,16 @@
         <AssociationConnector Association="ComercializadoraDBModel.FK_Factura_Productor_ProductorId" />
         <AssociationConnector Association="ComercializadoraDBModel.FK_FacturaDetalle_Factura_FacturaId" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.CosechaDetalle" Width="1.5" PointX="17" PointY="11.625" />
-        <EntityTypeShape EntityType="ComercializadoraDBModel.PrecioVenta" Width="1.5" PointX="14.375" PointY="12.875" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.Cobros" Width="1.5" PointX="0.75" PointY="12.75" />
         <AssociationConnector Association="ComercializadoraDBModel.FK_CosechaID" />
         <AssociationConnector Association="ComercializadoraDBModel.FK_ProducID" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_Finca_Productor_ProductorId" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.PrecioVenta" Width="1.5" PointX="14" PointY="12.75" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_InsumoId" />
         <AssociationConnector Association="ComercializadoraDBModel.FK_ListaPrecio" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_ListaPrecioID" />
         <AssociationConnector Association="ComercializadoraDBModel.FK_ProductoID" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

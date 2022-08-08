@@ -20,6 +20,7 @@ namespace comercializadora.DataBase
             this.PrecioCompra = new HashSet<PrecioCompra>();
             this.CompraDetalle = new HashSet<CompraDetalle>();
             this.FacturaDetalle = new HashSet<FacturaDetalle>();
+            this.PrecioVenta = new HashSet<PrecioVenta>();
         }
     
         public int InsumoID { get; set; }
@@ -29,5 +30,6 @@ namespace comercializadora.DataBase
         public virtual ICollection<PrecioCompra> PrecioCompra { get; set; }
         public virtual ICollection<CompraDetalle> CompraDetalle { get; set; }
         public virtual ICollection<FacturaDetalle> FacturaDetalle { get; set; }
+        public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
     }
 }

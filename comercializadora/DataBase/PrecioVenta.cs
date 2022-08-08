@@ -14,13 +14,15 @@ namespace comercializadora.DataBase
     
     public partial class PrecioVenta
     {
-        public int PrecioID { get; set; }
-        public int ProductoID { get; set; }
+        public int PrecioVentaID { get; set; }
+        public Nullable<int> ProductoID { get; set; }
         public decimal Precio { get; set; }
         public System.DateTime FechaDesde { get; set; }
         public System.DateTime FechaHasta { get; set; }
         public string ListaPrecio { get; set; }
+        public Nullable<int> InsumoId { get; set; }
     
+        public virtual Insumo Insumo { get; set; }
         public virtual ListaPrecio ListaPrecio1 { get; set; }
         public virtual Producto Producto { get; set; }
     }

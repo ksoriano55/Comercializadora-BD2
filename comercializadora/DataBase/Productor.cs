@@ -18,6 +18,7 @@ namespace comercializadora.DataBase
         {
             this.Pagos = new HashSet<Pagos>();
             this.Factura = new HashSet<Factura>();
+            this.Finca = new HashSet<Finca>();
         }
     
         public int ProductorID { get; set; }
@@ -29,9 +30,12 @@ namespace comercializadora.DataBase
         public Nullable<decimal> SaldoDisponible { get; set; }
         public Nullable<int> DiasCredito { get; set; }
         public int CuentaBancariaID { get; set; }
+        public string ListaPrecioID { get; set; }
     
         public virtual CuentaBancaria CuentaBancaria { get; set; }
         public virtual ICollection<Pagos> Pagos { get; set; }
         public virtual ICollection<Factura> Factura { get; set; }
+        public virtual ICollection<Finca> Finca { get; set; }
+        public virtual ListaPrecio ListaPrecio { get; set; }
     }
 }

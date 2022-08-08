@@ -26,6 +26,7 @@ namespace comercializadora.DataBase
         public string Telefono { get; set; }
         public string Direccion { get; set; }
         public string EMail { get; set; }
+        public Nullable<int> ListaPrecioID { get; set; }
     
         public virtual ICollection<Pagos> Pagos { get; set; }
         public virtual ICollection<Compra> Compra { get; set; }

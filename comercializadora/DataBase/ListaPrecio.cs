@@ -18,6 +18,7 @@ namespace comercializadora.DataBase
         {
             this.PrecioCompra = new HashSet<PrecioCompra>();
             this.PrecioVenta = new HashSet<PrecioVenta>();
+            this.Productor = new HashSet<Productor>();
         }
     
         public string Codigo { get; set; }
@@ -25,5 +26,6 @@ namespace comercializadora.DataBase
     
         public virtual ICollection<PrecioCompra> PrecioCompra { get; set; }
         public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
+        public virtual ICollection<Productor> Productor { get; set; }
     }
 }

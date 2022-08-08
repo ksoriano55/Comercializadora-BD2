@@ -1,0 +1,75 @@
+﻿@model comercializadora.DataBase.Factura
+@using comercializadora.DataBase
+@{
+    ViewBag.Title = "CreateFacturaProductor";
+}
+
+
+@using (Html.BeginForm("Create", "Facturas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Registro de nueva venta a productor</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => model.ProductorId, "ProductorId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.DropDownList("ProductorId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductorId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @Html.Partial("_FacturaDetalleProductor", new FacturaDetalle())
+
+                <br />
+                <br />
+                <hr />
+                <div class="form-group row">
+                    <div class="table-responsive col-md-12">
+                        <table id="TableFacturas" class="table table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Descripcion</th>
+                                    <th>Cantidad</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="center">
+                    <a href="@Url.Action("IndexFacturaProductor","Facturas")" class="btn btn-xs btn-danger" data-rel="tooltip">
+                        <i class="ace-icon fa fa-times"></i>
+                        Cancelar
+                    </a>
+                    <button class="btn btn-xs btn-info" id="btnGuardar" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Guardar
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/App/Facturas.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

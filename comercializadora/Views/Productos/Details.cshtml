@@ -1,0 +1,76 @@
+﻿@model comercializadora.DataBase.Producto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>DETALLES DE PRODUCTO</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li>
+                <a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <dl class="dl-horizontal">
+            <dt>
+                Producto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+            <dt>
+                Productor
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Lotes.Finca.Productor.Nombre)
+            </dd>
+            <dt>
+                Finca
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Lotes.Finca.Nombre)
+            </dd>
+
+            <dt>
+                Tipo suelo en lote
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Lotes.TipoSuelo)
+            </dd>
+
+            <dt>
+                Tipo de riego en lote
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Lotes.TipoRiego)
+            </dd>
+
+            <dt>
+                Extencion territorial del lote
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Lotes.Extencion)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="center">
+        <a href="@Url.Action("Index","Productos")" class="btn btn-xs btn-info" data-rel="tooltip">
+            Regresar
+        </a>
+    </div>
+</div>
+

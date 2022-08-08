@@ -133,26 +133,37 @@
     <Compile Include="Controllers\BodegaController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\CosechaDetallesController.cs" />
+    <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InsumosController.cs" />
     <Compile Include="Controllers\InventariosController.cs" />
     <Compile Include="Controllers\ListaPreciosController.cs" />
     <Compile Include="Controllers\PagosController.cs" />
     <Compile Include="Controllers\PrecioComprasController.cs" />
     <Compile Include="Controllers\ProductorController.cs" />
+    <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\TipoPagosController.cs" />
-    <Compile Include="DataBase\Bodega.cs" />
+    <Compile Include="DataBase\Bodega.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\Cliente.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\Cobros.cs" />
+    <Compile Include="DataBase\Cobros.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\Compra.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\CompraDetalle.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\Cosecha.cs" />
-    <Compile Include="DataBase\CosechaDetalle.cs" />
+    <Compile Include="DataBase\Cosecha.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\CosechaDetalle.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\CuentaBancaria.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -183,14 +194,24 @@
     <Compile Include="DataBase\Insumo.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\Inventario.cs" />
+    <Compile Include="DataBase\Inventario.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\ListaPrecio.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\Lotes.cs" />
-    <Compile Include="DataBase\Pagos.cs" />
-    <Compile Include="DataBase\PrecioCompra.cs" />
-    <Compile Include="DataBase\PrecioVenta.cs" />
+    <Compile Include="DataBase\Lotes.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Pagos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\PrecioCompra.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\PrecioVenta.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\Producto.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -200,26 +221,75 @@
     <Compile Include="DataBase\Proveedor.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SP_DeleteTipoPago_Result.cs" />
-    <Compile Include="DataBase\SP_InsertBodega_Result.cs" />
-    <Compile Include="DataBase\SP_InsertCompraDetalle_Result.cs" />
-    <Compile Include="DataBase\SP_InsertCompra_Result.cs" />
-    <Compile Include="DataBase\SP_InsertInventario_Result.cs" />
+    <Compile Include="DataBase\SP_DeleteTipoPago_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertBodega_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertCompraDetalle_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertCompra_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertFacturaDetalle_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertFactura_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertInsumos_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertInventario_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\SP_InsertListaPrecio_Result.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SP_InsertPrecioCompra_Result.cs" />
-    <Compile Include="DataBase\SP_InsertProductores_Result.cs" />
-    <Compile Include="DataBase\SP_InsertTipoPago_Result.cs" />
-    <Compile Include="DataBase\SP_UpdateBodega_Result.cs" />
-    <Compile Include="DataBase\SP_UpdateListaPrecio_Result.cs" />
-    <Compile Include="DataBase\SP_UpdateProductores_Result.cs" />
-    <Compile Include="DataBase\SP_UpdateTipoPago_Result.cs" />
-    <Compile Include="DataBase\TipoPago.cs" />
-    <Compile Include="DataBase\vInventarioInsumos.cs" />
-    <Compile Include="DataBase\vInventarioProductos.cs" />
-    <Compile Include="DataBase\vPrecioCompraInsumos.cs" />
-    <Compile Include="DataBase\vPrecioCompraProductos.cs" />
+    <Compile Include="DataBase\SP_InsertPrecioCompra_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertProductores_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertProductos_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_InsertTipoPago_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_UpdateBodega_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_UpdateInsumo_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_UpdateListaPrecio_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_UpdateProductores_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\SP_UpdateTipoPago_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\TipoPago.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\vInventarioInsumos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\vInventarioProductos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\vPrecioCompraInsumos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\vPrecioCompraProductos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +317,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\App\Compras.js" />
+    <Content Include="Scripts\App\Facturas.js" />
     <Content Include="Scripts\App\Generalidades.js" />
     <Content Include="Scripts\App\Inventario.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -5031,6 +5102,21 @@
     <Content Include="Views\TipoPagos\Index.cshtml" />
     <Content Include="Views\TipoPagos\_Create.cshtml" />
     <Content Include="Views\TipoPagos\_Edit.cshtml" />
+    <Content Include="Views\Facturas\Create.cshtml" />
+    <Content Include="Views\Facturas\Details.cshtml" />
+    <Content Include="Views\Facturas\Index.cshtml" />
+    <Content Include="Views\Facturas\_FacturaDetalle.cshtml" />
+    <Content Include="Views\Productos\Create.cshtml" />
+    <Content Include="Views\Productos\Details.cshtml" />
+    <Content Include="Views\Productos\Edit.cshtml" />
+    <Content Include="Views\Productos\Index.cshtml" />
+    <Content Include="Views\Facturas\_FacturaDetalleList.cshtml" />
+    <Content Include="Views\Facturas\CreateFacturaProductor.cshtml" />
+    <Content Include="Views\Facturas\_FacturaDetalleProductor.cshtml" />
+    <Content Include="Views\Facturas\IndexFacturaProductor.cshtml" />
+    <Content Include="Views\Insumos\Index.cshtml" />
+    <Content Include="Views\Insumos\_Create.cshtml" />
+    <Content Include="Views\Insumos\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

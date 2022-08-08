@@ -1,0 +1,89 @@
+﻿@model comercializadora.DataBase.Factura
+@using comercializadora.DataBase
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Detalle de Factura</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li>
+                <a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CodigoFactura)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CodigoFactura)
+            </dd>
+            <dt>
+                Cliente
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cliente.Nombre) @Html.DisplayFor(model => model.Productor.Nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TipoFactura)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TipoFactura)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaFactura)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaFactura)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaVencimiento)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaVencimiento)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ValorFactura)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ValorFactura)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SaldoPendiente)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SaldoPendiente)
+            </dd>
+        </dl>
+    </div>
+    @Html.Partial("_FacturaDetalleList", Model.FacturaDetalle)
+
+    <br />
+    <br />
+    @{
+        var ruta = Model.Cliente != null ? "Index" : "IndexFacturaProductor";
+     }
+    <a href="@Url.Action(ruta,"Facturas")" class="btn btn-xs btn-info" data-rel="tooltip">
+        Regresar
+    </a>
+</div>
+   
