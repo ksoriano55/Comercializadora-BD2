@@ -24,7 +24,9 @@ namespace comercializadora.DataBase
         public string RTN { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
+        public string ListaPrecioID { get; set; }
     
         public virtual ICollection<Factura> Factura { get; set; }
+        public virtual ListaPrecio ListaPrecio { get; set; }
     }
 }

@@ -1,3 +1,5 @@
+C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\obj\Debug\comercializadora.csproj.AssemblyReference.cache
+C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\obj\Debug\comercializadora.csproj.CoreCompileInputs.cache
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\comercializadora.dll.config
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\comercializadora.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\comercializadora.pdb
@@ -83,8 +85,6 @@ C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\es\
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\es\System.Web.WebPages.resources.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\obj\Debug\comercializadora.csproj.AssemblyReference.cache
-C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\obj\Debug\comercializadora.csproj.CoreCompileInputs.cache
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\obj\Debug\comercializadora.csproj.CopyComplete
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\obj\Debug\comercializadora.dll
 C:\Users\ksoriano\Documents\GitHub\Comercializadora-BD2\comercializadora\obj\Debug\comercializadora.pdb

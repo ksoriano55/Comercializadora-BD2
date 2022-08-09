@@ -22,6 +22,7 @@
           <Property Name="RTN" Type="varchar" MaxLength="14" />
           <Property Name="Telefono" Type="varchar" MaxLength="12" />
           <Property Name="Direccion" Type="varchar" MaxLength="120" />
+          <Property Name="ListaPrecioID" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.Cobros' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -225,7 +226,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.Cobros' no ti
           <Property Name="Telefono" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="EMail" Type="varchar" MaxLength="80" />
-          <Property Name="ListaPrecioID" Type="int" />
+          <Property Name="ListaPrecioID" Type="varchar" MaxLength="10" />
+          <Property Name="DiasCredito" Type="int" />
         </EntityType>
         <EntityType Name="TipoPago">
           <Key>
@@ -652,6 +654,30 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkClienteListaPrecio">
+          <End Role="ListaPrecio" Type="Self.ListaPrecio" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="ListaPrecioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkProveedorListaPrecio">
+          <End Role="ListaPrecio" Type="Self.ListaPrecio" Multiplicity="0..1" />
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="ListaPrecioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="SP_DeleteTipoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TipoPago" Type="int" Mode="In" />
         </Function>
@@ -748,6 +774,41 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
         <Function Name="SP_UpdateTipoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TipoPago" Type="int" Mode="In" />
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spDeleteCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClienteID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spInsertCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="RTN" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="ListaPrecio" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spInsertFinca" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ProductorID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spInsertLote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FincaID" Type="int" Mode="In" />
+          <Parameter Name="Extension" Type="varchar" Mode="In" />
+          <Parameter Name="TipoSuelo" Type="varchar" Mode="In" />
+          <Parameter Name="TipoRiego" Type="varchar" Mode="In" />
+          <Parameter Name="CantidadCosecha" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spInsertProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="RTN" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="EMail" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spUpdateProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProveedorID" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="RTN" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="EMail" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ComercializadoraDBModelStoreContainer">
           <EntitySet Name="Bodega" EntityType="Self.Bodega" Schema="dbo" store:Type="Tables" />
@@ -937,6 +998,14 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <End Role="Producto" EntitySet="Producto" />
             <End Role="PrecioVenta" EntitySet="PrecioVenta" />
           </AssociationSet>
+          <AssociationSet Name="fkClienteListaPrecio" Association="Self.fkClienteListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="fkProveedorListaPrecio" Association="Self.fkProveedorListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -949,7 +1018,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <EntitySet Name="Insumo" EntityType="ComercializadoraDBModel.Insumo" />
           <EntitySet Name="Producto" EntityType="ComercializadoraDBModel.Producto" />
           <EntitySet Name="Productor" EntityType="ComercializadoraDBModel.Productor" />
-          <EntitySet Name="Proveedor" EntityType="ComercializadoraDBModel.Proveedor" />
           <EntitySet Name="ListaPrecio" EntityType="ComercializadoraDBModel.ListaPrecio" />
           <FunctionImport Name="SP_InsertListaPrecio" ReturnType="Collection(ComercializadoraDBModel.SP_InsertListaPrecio_Result)">
             <Parameter Name="codigo" Mode="In" Type="String" />
@@ -1006,10 +1074,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <End Role="Productor" EntitySet="Productor" />
             <End Role="Pagos" EntitySet="Pagos" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pagos_Proveedor_ProveedorId" Association="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Pagos" EntitySet="Pagos" />
-          </AssociationSet>
           <AssociationSet Name="FK_Pagos_TipoPago_TipoPagoId" Association="ComercializadoraDBModel.FK_Pagos_TipoPago_TipoPagoId">
             <End Role="TipoPago" EntitySet="TipoPago" />
             <End Role="Pagos" EntitySet="Pagos" />
@@ -1052,10 +1116,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <Parameter Name="fechaDesde" Mode="In" Type="DateTime" />
             <Parameter Name="fechaHasta" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <AssociationSet Name="FK_Compra_Proveedor_ProveedorId" Association="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Compra" EntitySet="Compra" />
-          </AssociationSet>
           <AssociationSet Name="FK_CompraDetalle_Insumo_InsumoId" Association="ComercializadoraDBModel.FK_CompraDetalle_Insumo_InsumoId">
             <End Role="Insumo" EntitySet="Insumo" />
             <End Role="CompraDetalle" EntitySet="CompraDetalle" />
@@ -1182,6 +1242,58 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <Parameter Name="cuentabancaria" Mode="In" Type="Int32" />
             <Parameter Name="listaprecio" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Proveedor" EntityType="ComercializadoraDBModel.Proveedor" />
+          <AssociationSet Name="fkClienteListaPrecio" Association="ComercializadoraDBModel.fkClienteListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Proveedor_ProveedorId" Association="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="fkProveedorListaPrecio" Association="ComercializadoraDBModel.fkProveedorListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pagos_Proveedor_ProveedorId" Association="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Pagos" EntitySet="Pagos" />
+          </AssociationSet>
+          <FunctionImport Name="spDeleteCliente" ReturnType="Collection(String)">
+          <Parameter Name="ClienteID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertCliente" ReturnType="Collection(ComercializadoraDBModel.spInsertCliente_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="RTN" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="ListaPrecio" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertFinca" ReturnType="Collection(ComercializadoraDBModel.spInsertFinca_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ProductorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertLote" ReturnType="Collection(ComercializadoraDBModel.spInsertLote_Result)">
+            <Parameter Name="FincaID" Mode="In" Type="Int32" />
+            <Parameter Name="Extension" Mode="In" Type="String" />
+            <Parameter Name="TipoSuelo" Mode="In" Type="String" />
+            <Parameter Name="TipoRiego" Mode="In" Type="String" />
+            <Parameter Name="CantidadCosecha" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertProveedor" ReturnType="Collection(ComercializadoraDBModel.spInsertProveedor_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="RTN" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="EMail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateProveedor" ReturnType="Collection(ComercializadoraDBModel.spUpdateProveedor_Result)">
+            <Parameter Name="ProveedorID" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="RTN" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="EMail" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Cliente">
           <Key>
@@ -1193,6 +1305,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <Property Name="Telefono" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="Direccion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Factura" Relationship="ComercializadoraDBModel.FK_Factura_Cliente_ClienteId" FromRole="Cliente" ToRole="Factura" />
+          <Property Name="ListaPrecioID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ListaPrecio" Relationship="ComercializadoraDBModel.fkClienteListaPrecio" FromRole="Cliente" ToRole="ListaPrecio" />
           </EntityType>
         <EntityType Name="CuentaBancaria">
           <Key>
@@ -1259,20 +1373,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <Property Name="ListaPrecioID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ListaPrecio" Relationship="ComercializadoraDBModel.FK_ListaPrecioID" FromRole="Productor" ToRole="ListaPrecio" />
         </EntityType>
-        <EntityType Name="Proveedor">
-          <Key>
-            <PropertyRef Name="ProveedorID" />
-          </Key>
-          <Property Name="ProveedorID" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="RTN" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="EMail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Pagos" Relationship="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId" FromRole="Proveedor" ToRole="Pagos" />
-          <NavigationProperty Name="Compra" Relationship="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId" FromRole="Proveedor" ToRole="Compra" />
-          <Property Name="ListaPrecioID" Type="Int32" />
-        </EntityType>
         <EntityType Name="ListaPrecio">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -1282,6 +1382,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <NavigationProperty Name="PrecioCompra" Relationship="ComercializadoraDBModel.FK_PrecioCompra_ListaPrecios_ListaPrecios" FromRole="ListaPrecio" ToRole="PrecioCompra" />
           <NavigationProperty Name="PrecioVenta" Relationship="ComercializadoraDBModel.FK_ListaPrecio" FromRole="ListaPrecio" ToRole="PrecioVenta" />
           <NavigationProperty Name="Productor" Relationship="ComercializadoraDBModel.FK_ListaPrecioID" FromRole="ListaPrecio" ToRole="Productor" />
+          <NavigationProperty Name="Cliente" Relationship="ComercializadoraDBModel.fkClienteListaPrecio" FromRole="ListaPrecio" ToRole="Cliente" />
+          <NavigationProperty Name="Proveedor" Relationship="ComercializadoraDBModel.fkProveedorListaPrecio" FromRole="ListaPrecio" ToRole="Proveedor" />
         </EntityType>
         <ComplexType Name="SP_InsertListaPrecio_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
@@ -1447,10 +1549,10 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Monto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <NavigationProperty Name="Productor" Relationship="ComercializadoraDBModel.FK_Pagos_Productor_ProductorId" FromRole="Pagos" ToRole="Productor" />
-          <NavigationProperty Name="Proveedor" Relationship="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId" FromRole="Pagos" ToRole="Proveedor" />
           <NavigationProperty Name="TipoPago" Relationship="ComercializadoraDBModel.FK_Pagos_TipoPago_TipoPagoId" FromRole="Pagos" ToRole="TipoPago" />
           <NavigationProperty Name="Compra" Relationship="ComercializadoraDBModel.FK_Pagos_Compra_CompraId" FromRole="Pagos" ToRole="Compra" />
           <NavigationProperty Name="Cosecha" Relationship="ComercializadoraDBModel.FK_Pagos_Cosecha_CosechaId" FromRole="Pagos" ToRole="Cosecha" />
+          <NavigationProperty Name="Proveedor" Relationship="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId" FromRole="Pagos" ToRole="Proveedor" />
         </EntityType>
         <Association Name="FK_CuentaBancariaID">
           <End Type="ComercializadoraDBModel.CuentaBancaria" Role="CuentaBancaria" Multiplicity="1" />
@@ -1473,18 +1575,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             </Principal>
             <Dependent Role="Pagos">
               <PropertyRef Name="ProductorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pagos_Proveedor_ProveedorId">
-          <End Type="ComercializadoraDBModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
-          <End Type="ComercializadoraDBModel.Pagos" Role="Pagos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="ProveedorID" />
-            </Principal>
-            <Dependent Role="Pagos">
-              <PropertyRef Name="ProveedorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1658,18 +1748,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
         <ComplexType Name="SP_InsertPrecioCompra_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
         </ComplexType>
-        <Association Name="FK_Compra_Proveedor_ProveedorId">
-          <End Type="ComercializadoraDBModel.Proveedor" Role="Proveedor" Multiplicity="1" />
-          <End Type="ComercializadoraDBModel.Compra" Role="Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="ProveedorID" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="ProveedorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CompraDetalle_Insumo_InsumoId">
           <End Type="ComercializadoraDBModel.Insumo" Role="Insumo" Multiplicity="1" />
           <End Type="ComercializadoraDBModel.CompraDetalle" Role="CompraDetalle" Multiplicity="*" />
@@ -1932,6 +2010,85 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
         <ComplexType Name="SP_UpdateProductores_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
         </ComplexType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ProveedorID" />
+          </Key>
+          <Property Name="ProveedorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="RTN" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="EMail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="ListaPrecioID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DiasCredito" Type="Int32" />
+          <NavigationProperty Name="Compra" Relationship="ComercializadoraDBModel.FK_Compra_Proveedor_ProveedorId" FromRole="Proveedor" ToRole="Compra" />
+          <NavigationProperty Name="ListaPrecio" Relationship="ComercializadoraDBModel.fkProveedorListaPrecio" FromRole="Proveedor" ToRole="ListaPrecio" />
+          <NavigationProperty Name="Pagos" Relationship="ComercializadoraDBModel.FK_Pagos_Proveedor_ProveedorId" FromRole="Proveedor" ToRole="Pagos" />
+        </EntityType>
+        <Association Name="fkClienteListaPrecio">
+          <End Type="ComercializadoraDBModel.ListaPrecio" Role="ListaPrecio" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="ListaPrecioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Proveedor_ProveedorId">
+          <End Type="ComercializadoraDBModel.Proveedor" Role="Proveedor" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.Compra" Role="Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="ProveedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkProveedorListaPrecio">
+          <End Type="ComercializadoraDBModel.ListaPrecio" Role="ListaPrecio" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="ListaPrecioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pagos_Proveedor_ProveedorId">
+          <End Type="ComercializadoraDBModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.Pagos" Role="Pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ProveedorID" />
+            </Principal>
+            <Dependent Role="Pagos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spInsertFinca_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="spInsertLote_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="spInsertCliente_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="spInsertProveedor_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="spUpdateProveedor_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1941,6 +2098,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ListaPrecioID" ColumnName="ListaPrecioID" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="RTN" ColumnName="RTN" />
@@ -1997,19 +2155,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
                 <ScalarProperty Name="Identidad" ColumnName="Identidad" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="ProductorID" ColumnName="ProductorID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Proveedor">
-            <EntityTypeMapping TypeName="ComercializadoraDBModel.Proveedor">
-              <MappingFragment StoreEntitySet="Proveedor">
-                <ScalarProperty Name="ListaPrecioID" ColumnName="ListaPrecioID" />
-                <ScalarProperty Name="EMail" ColumnName="EMail" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="RTN" ColumnName="RTN" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2356,6 +2501,56 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <FunctionImportMapping FunctionImportName="SP_UpdateProductores" FunctionName="ComercializadoraDBModel.Store.SP_UpdateProductores" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateProductores_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="DiasCredito" ColumnName="DiasCredito" />
+                <ScalarProperty Name="ListaPrecioID" ColumnName="ListaPrecioID" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="RTN" ColumnName="RTN" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ProveedorID" ColumnName="ProveedorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spDeleteCliente" FunctionName="ComercializadoraDBModel.Store.spDeleteCliente" />
+          <FunctionImportMapping FunctionImportName="spInsertCliente" FunctionName="ComercializadoraDBModel.Store.spInsertCliente" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.spInsertCliente_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spInsertFinca" FunctionName="ComercializadoraDBModel.Store.spInsertFinca" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.spInsertFinca_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spInsertLote" FunctionName="ComercializadoraDBModel.Store.spInsertLote" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.spInsertLote_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spInsertProveedor" FunctionName="ComercializadoraDBModel.Store.spInsertProveedor" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.spInsertProveedor_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spUpdateProveedor" FunctionName="ComercializadoraDBModel.Store.spUpdateProveedor" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.spUpdateProveedor_Result">
                 <ScalarProperty Name="MessageError" ColumnName="MessageError" />
               </ComplexTypeMapping>
             </ResultMapping>

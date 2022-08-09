@@ -34,7 +34,6 @@ namespace comercializadora.DataBase
         public DbSet<Insumo> Insumo { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Productor> Productor { get; set; }
-        public DbSet<Proveedor> Proveedor { get; set; }
         public DbSet<ListaPrecio> ListaPrecio { get; set; }
         public DbSet<Bodega> Bodega { get; set; }
         public DbSet<Inventario> Inventario { get; set; }
@@ -54,6 +53,7 @@ namespace comercializadora.DataBase
         public DbSet<CosechaDetalle> CosechaDetalle { get; set; }
         public DbSet<Cobros> Cobros { get; set; }
         public DbSet<PrecioVenta> PrecioVenta { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
     
         public virtual ObjectResult<SP_InsertListaPrecio_Result> SP_InsertListaPrecio(string codigo, string descripcion)
         {
@@ -387,6 +387,128 @@ namespace comercializadora.DataBase
                 new ObjectParameter("listaprecio", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateProductores_Result>("SP_UpdateProductores", productoridParameter, nombreParameter, identidadParameter, rtnParameter, telefonoParameter, emailParameter, saldodisponibleParameter, diascreditoParameter, cuentabancariaParameter, listaprecioParameter);
+        }
+    
+        public virtual ObjectResult<string> spDeleteCliente(Nullable<int> clienteID)
+        {
+            var clienteIDParameter = clienteID.HasValue ?
+                new ObjectParameter("ClienteID", clienteID) :
+                new ObjectParameter("ClienteID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spDeleteCliente", clienteIDParameter);
+        }
+    
+        public virtual ObjectResult<spInsertCliente_Result> spInsertCliente(string nombre, string rTN, string telefono, string direccion, string listaPrecio)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var rTNParameter = rTN != null ?
+                new ObjectParameter("RTN", rTN) :
+                new ObjectParameter("RTN", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            var listaPrecioParameter = listaPrecio != null ?
+                new ObjectParameter("ListaPrecio", listaPrecio) :
+                new ObjectParameter("ListaPrecio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertCliente_Result>("spInsertCliente", nombreParameter, rTNParameter, telefonoParameter, direccionParameter, listaPrecioParameter);
+        }
+    
+        public virtual ObjectResult<spInsertFinca_Result> spInsertFinca(string nombre, Nullable<int> productorID)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var productorIDParameter = productorID.HasValue ?
+                new ObjectParameter("ProductorID", productorID) :
+                new ObjectParameter("ProductorID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertFinca_Result>("spInsertFinca", nombreParameter, productorIDParameter);
+        }
+    
+        public virtual ObjectResult<spInsertLote_Result> spInsertLote(Nullable<int> fincaID, string extension, string tipoSuelo, string tipoRiego, Nullable<int> cantidadCosecha)
+        {
+            var fincaIDParameter = fincaID.HasValue ?
+                new ObjectParameter("FincaID", fincaID) :
+                new ObjectParameter("FincaID", typeof(int));
+    
+            var extensionParameter = extension != null ?
+                new ObjectParameter("Extension", extension) :
+                new ObjectParameter("Extension", typeof(string));
+    
+            var tipoSueloParameter = tipoSuelo != null ?
+                new ObjectParameter("TipoSuelo", tipoSuelo) :
+                new ObjectParameter("TipoSuelo", typeof(string));
+    
+            var tipoRiegoParameter = tipoRiego != null ?
+                new ObjectParameter("TipoRiego", tipoRiego) :
+                new ObjectParameter("TipoRiego", typeof(string));
+    
+            var cantidadCosechaParameter = cantidadCosecha.HasValue ?
+                new ObjectParameter("CantidadCosecha", cantidadCosecha) :
+                new ObjectParameter("CantidadCosecha", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertLote_Result>("spInsertLote", fincaIDParameter, extensionParameter, tipoSueloParameter, tipoRiegoParameter, cantidadCosechaParameter);
+        }
+    
+        public virtual ObjectResult<spInsertProveedor_Result> spInsertProveedor(string nombre, string rTN, string telefono, string direccion, string eMail)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var rTNParameter = rTN != null ?
+                new ObjectParameter("RTN", rTN) :
+                new ObjectParameter("RTN", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            var eMailParameter = eMail != null ?
+                new ObjectParameter("EMail", eMail) :
+                new ObjectParameter("EMail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertProveedor_Result>("spInsertProveedor", nombreParameter, rTNParameter, telefonoParameter, direccionParameter, eMailParameter);
+        }
+    
+        public virtual ObjectResult<spUpdateProveedor_Result> spUpdateProveedor(Nullable<int> proveedorID, string nombre, string rTN, string telefono, string eMail)
+        {
+            var proveedorIDParameter = proveedorID.HasValue ?
+                new ObjectParameter("ProveedorID", proveedorID) :
+                new ObjectParameter("ProveedorID", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var rTNParameter = rTN != null ?
+                new ObjectParameter("RTN", rTN) :
+                new ObjectParameter("RTN", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var eMailParameter = eMail != null ?
+                new ObjectParameter("EMail", eMail) :
+                new ObjectParameter("EMail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spUpdateProveedor_Result>("spUpdateProveedor", proveedorIDParameter, nombreParameter, rTNParameter, telefonoParameter, eMailParameter);
         }
     }
 }

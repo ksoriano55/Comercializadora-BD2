@@ -25,9 +25,9 @@ namespace comercializadora.DataBase
         public decimal Monto { get; set; }
     
         public virtual Productor Productor { get; set; }
-        public virtual Proveedor Proveedor { get; set; }
         public virtual TipoPago TipoPago { get; set; }
         public virtual Compra Compra { get; set; }
         public virtual Cosecha Cosecha { get; set; }
+        public virtual Proveedor Proveedor { get; set; }
     }
 }

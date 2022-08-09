@@ -54,6 +54,26 @@
                             <h3>GENERAL</h3>
                             <ul class="nav side-menu">
                                 <li>
+                                    <a><i class="fa fa-group"></i> Productores <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Productores", "Index", "Productor", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-user-plus"></i> Proveedores <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Proveedores", "Index", "Proveedors", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                    </ul>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Clientes", "Index", "Clientes", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                    </ul>
+
+                                </li>
+                                <li>
                                     <a><i class="fa fa-cubes"></i> Inventario <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>@Html.ActionLink("Entrada Inventarios", "Index", "Inventarios", new { area = "" }, new { @class = "navbar-brand" })</li>
@@ -91,7 +111,6 @@
                                 <li>
                                     <a><i class="fa fa-crosshairs"></i> Cosecha <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Productores", "Index", "Productor", new { area = "" }, new { @class = "navbar-brand" })</li>
                                         <li>@Html.ActionLink("Cosecha", "Index", "CosechaDetalles", new { area = "" }, new { @class = "navbar-brand" })</li>
                                     </ul>
                                 </li>
@@ -108,6 +127,8 @@
                                         <li>@Html.ActionLink("Bodega", "Index", "Bodega", new { area = "" }, new { @class = "navbar-brand" })</li>
                                         <li>@Html.ActionLink("Productos", "Index", "Productos", new { area = "" }, new { @class = "navbar-brand" })</li>
                                         <li>@Html.ActionLink("Insumos", "Index", "Insumos", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                        <li>@Html.ActionLink("Fincas", "Index", "Fincas", new { area = "" }, new { @class = "navbar-brand" })</li>
+                                        <li>@Html.ActionLink("Lotes", "Index", "Lotes", new { area = "" }, new { @class = "navbar-brand" })</li>
                                     </ul>
                                 </li>
                             </ul>

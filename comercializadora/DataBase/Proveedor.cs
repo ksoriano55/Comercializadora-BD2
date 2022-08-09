@@ -16,8 +16,8 @@ namespace comercializadora.DataBase
     {
         public Proveedor()
         {
-            this.Pagos = new HashSet<Pagos>();
             this.Compra = new HashSet<Compra>();
+            this.Pagos = new HashSet<Pagos>();
         }
     
         public int ProveedorID { get; set; }
@@ -26,9 +26,11 @@ namespace comercializadora.DataBase
         public string Telefono { get; set; }
         public string Direccion { get; set; }
         public string EMail { get; set; }
-        public Nullable<int> ListaPrecioID { get; set; }
+        public string ListaPrecioID { get; set; }
+        public Nullable<int> DiasCredito { get; set; }
     
-        public virtual ICollection<Pagos> Pagos { get; set; }
         public virtual ICollection<Compra> Compra { get; set; }
+        public virtual ListaPrecio ListaPrecio { get; set; }
+        public virtual ICollection<Pagos> Pagos { get; set; }
     }
 }
