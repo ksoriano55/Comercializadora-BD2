@@ -213,43 +213,6 @@ namespace comercializadora.DataBase
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertBodega_Result>("SP_InsertBodega", codigoParameter, nombreParameter);
         }
     
-        public virtual ObjectResult<SP_InsertProductores_Result> SP_InsertProductores(string nombre, string identidad, string rtn, string telefono, string email, Nullable<decimal> saldodisponible, Nullable<int> diascredito, Nullable<int> cuentabancaria)
-        {
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("nombre", nombre) :
-                new ObjectParameter("nombre", typeof(string));
-    
-            var identidadParameter = identidad != null ?
-                new ObjectParameter("identidad", identidad) :
-                new ObjectParameter("identidad", typeof(string));
-    
-            var rtnParameter = rtn != null ?
-                new ObjectParameter("rtn", rtn) :
-                new ObjectParameter("rtn", typeof(string));
-    
-            var telefonoParameter = telefono != null ?
-                new ObjectParameter("telefono", telefono) :
-                new ObjectParameter("telefono", typeof(string));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var saldodisponibleParameter = saldodisponible.HasValue ?
-                new ObjectParameter("saldodisponible", saldodisponible) :
-                new ObjectParameter("saldodisponible", typeof(decimal));
-    
-            var diascreditoParameter = diascredito.HasValue ?
-                new ObjectParameter("diascredito", diascredito) :
-                new ObjectParameter("diascredito", typeof(int));
-    
-            var cuentabancariaParameter = cuentabancaria.HasValue ?
-                new ObjectParameter("cuentabancaria", cuentabancaria) :
-                new ObjectParameter("cuentabancaria", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertProductores_Result>("SP_InsertProductores", nombreParameter, identidadParameter, rtnParameter, telefonoParameter, emailParameter, saldodisponibleParameter, diascreditoParameter, cuentabancariaParameter);
-        }
-    
         public virtual ObjectResult<SP_UpdateBodega_Result> SP_UpdateBodega(Nullable<int> bodegaid, string codigo, string nombre)
         {
             var bodegaidParameter = bodegaid.HasValue ?
@@ -265,47 +228,6 @@ namespace comercializadora.DataBase
                 new ObjectParameter("nombre", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateBodega_Result>("SP_UpdateBodega", bodegaidParameter, codigoParameter, nombreParameter);
-        }
-    
-        public virtual ObjectResult<SP_UpdateProductores_Result> SP_UpdateProductores(Nullable<int> productorid, string nombre, string identidad, string rtn, string telefono, string email, Nullable<decimal> saldodisponible, Nullable<int> diascredito, Nullable<int> cuentabancaria)
-        {
-            var productoridParameter = productorid.HasValue ?
-                new ObjectParameter("productorid", productorid) :
-                new ObjectParameter("productorid", typeof(int));
-    
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("nombre", nombre) :
-                new ObjectParameter("nombre", typeof(string));
-    
-            var identidadParameter = identidad != null ?
-                new ObjectParameter("identidad", identidad) :
-                new ObjectParameter("identidad", typeof(string));
-    
-            var rtnParameter = rtn != null ?
-                new ObjectParameter("rtn", rtn) :
-                new ObjectParameter("rtn", typeof(string));
-    
-            var telefonoParameter = telefono != null ?
-                new ObjectParameter("telefono", telefono) :
-                new ObjectParameter("telefono", typeof(string));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var saldodisponibleParameter = saldodisponible.HasValue ?
-                new ObjectParameter("saldodisponible", saldodisponible) :
-                new ObjectParameter("saldodisponible", typeof(decimal));
-    
-            var diascreditoParameter = diascredito.HasValue ?
-                new ObjectParameter("diascredito", diascredito) :
-                new ObjectParameter("diascredito", typeof(int));
-    
-            var cuentabancariaParameter = cuentabancaria.HasValue ?
-                new ObjectParameter("cuentabancaria", cuentabancaria) :
-                new ObjectParameter("cuentabancaria", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateProductores_Result>("SP_UpdateProductores", productoridParameter, nombreParameter, identidadParameter, rtnParameter, telefonoParameter, emailParameter, saldodisponibleParameter, diascreditoParameter, cuentabancariaParameter);
         }
     
         public virtual ObjectResult<SP_InsertProductos_Result> SP_InsertProductos(Nullable<int> loteId, string descripcion)
@@ -379,6 +301,92 @@ namespace comercializadora.DataBase
                 new ObjectParameter("Descripcion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateInsumo_Result>("SP_UpdateInsumo", insumoIdParameter, descripcionParameter);
+        }
+    
+        public virtual ObjectResult<SP_InsertProductores_Result> SP_InsertProductores(string nombre, string identidad, string rtn, string telefono, string email, Nullable<decimal> saldodisponible, Nullable<int> diascredito, Nullable<int> cuentabancaria, string listaprecio)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var identidadParameter = identidad != null ?
+                new ObjectParameter("identidad", identidad) :
+                new ObjectParameter("identidad", typeof(string));
+    
+            var rtnParameter = rtn != null ?
+                new ObjectParameter("rtn", rtn) :
+                new ObjectParameter("rtn", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("telefono", telefono) :
+                new ObjectParameter("telefono", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var saldodisponibleParameter = saldodisponible.HasValue ?
+                new ObjectParameter("saldodisponible", saldodisponible) :
+                new ObjectParameter("saldodisponible", typeof(decimal));
+    
+            var diascreditoParameter = diascredito.HasValue ?
+                new ObjectParameter("diascredito", diascredito) :
+                new ObjectParameter("diascredito", typeof(int));
+    
+            var cuentabancariaParameter = cuentabancaria.HasValue ?
+                new ObjectParameter("cuentabancaria", cuentabancaria) :
+                new ObjectParameter("cuentabancaria", typeof(int));
+    
+            var listaprecioParameter = listaprecio != null ?
+                new ObjectParameter("listaprecio", listaprecio) :
+                new ObjectParameter("listaprecio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertProductores_Result>("SP_InsertProductores", nombreParameter, identidadParameter, rtnParameter, telefonoParameter, emailParameter, saldodisponibleParameter, diascreditoParameter, cuentabancariaParameter, listaprecioParameter);
+        }
+    
+        public virtual ObjectResult<SP_UpdateProductores_Result> SP_UpdateProductores(Nullable<int> productorid, string nombre, string identidad, string rtn, string telefono, string email, Nullable<decimal> saldodisponible, Nullable<int> diascredito, Nullable<int> cuentabancaria, string listaprecio)
+        {
+            var productoridParameter = productorid.HasValue ?
+                new ObjectParameter("productorid", productorid) :
+                new ObjectParameter("productorid", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var identidadParameter = identidad != null ?
+                new ObjectParameter("identidad", identidad) :
+                new ObjectParameter("identidad", typeof(string));
+    
+            var rtnParameter = rtn != null ?
+                new ObjectParameter("rtn", rtn) :
+                new ObjectParameter("rtn", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("telefono", telefono) :
+                new ObjectParameter("telefono", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var saldodisponibleParameter = saldodisponible.HasValue ?
+                new ObjectParameter("saldodisponible", saldodisponible) :
+                new ObjectParameter("saldodisponible", typeof(decimal));
+    
+            var diascreditoParameter = diascredito.HasValue ?
+                new ObjectParameter("diascredito", diascredito) :
+                new ObjectParameter("diascredito", typeof(int));
+    
+            var cuentabancariaParameter = cuentabancaria.HasValue ?
+                new ObjectParameter("cuentabancaria", cuentabancaria) :
+                new ObjectParameter("cuentabancaria", typeof(int));
+    
+            var listaprecioParameter = listaprecio != null ?
+                new ObjectParameter("listaprecio", listaprecio) :
+                new ObjectParameter("listaprecio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateProductores_Result>("SP_UpdateProductores", productoridParameter, nombreParameter, identidadParameter, rtnParameter, telefonoParameter, emailParameter, saldodisponibleParameter, diascreditoParameter, cuentabancariaParameter, listaprecioParameter);
         }
     }
 }

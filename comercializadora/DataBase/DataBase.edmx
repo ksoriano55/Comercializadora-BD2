@@ -5,12 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ComercializadoraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'db_a8a9f9_comercializadora.dbo.Banco' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Banco">
-          <Property Name="bancoId" Type="int" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="100" />
-        </EntityType>-->
         <EntityType Name="Bodega">
           <Key>
             <PropertyRef Name="BodegaId" />
@@ -717,6 +711,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <Parameter Name="saldodisponible" Type="decimal" Mode="In" />
           <Parameter Name="diascredito" Type="int" Mode="In" />
           <Parameter Name="cuentabancaria" Type="int" Mode="In" />
+          <Parameter Name="listaprecio" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_InsertProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="loteId" Type="int" Mode="In" />
@@ -748,6 +743,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <Parameter Name="saldodisponible" Type="decimal" Mode="In" />
           <Parameter Name="diascredito" Type="int" Mode="In" />
           <Parameter Name="cuentabancaria" Type="int" Mode="In" />
+          <Parameter Name="listaprecio" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_UpdateTipoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TipoPago" Type="int" Mode="In" />
@@ -1115,31 +1111,10 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <Parameter Name="codigo" Mode="In" Type="String" />
             <Parameter Name="nombre" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_InsertProductores" ReturnType="Collection(ComercializadoraDBModel.SP_InsertProductores_Result)">
-            <Parameter Name="nombre" Mode="In" Type="String" />
-            <Parameter Name="identidad" Mode="In" Type="String" />
-            <Parameter Name="rtn" Mode="In" Type="String" />
-            <Parameter Name="telefono" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="saldodisponible" Mode="In" Type="Decimal" />
-            <Parameter Name="diascredito" Mode="In" Type="Int32" />
-            <Parameter Name="cuentabancaria" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_UpdateBodega" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateBodega_Result)">
             <Parameter Name="bodegaid" Mode="In" Type="Int32" />
             <Parameter Name="codigo" Mode="In" Type="String" />
             <Parameter Name="nombre" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_UpdateProductores" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateProductores_Result)">
-            <Parameter Name="productorid" Mode="In" Type="Int32" />
-            <Parameter Name="nombre" Mode="In" Type="String" />
-            <Parameter Name="identidad" Mode="In" Type="String" />
-            <Parameter Name="rtn" Mode="In" Type="String" />
-            <Parameter Name="telefono" Mode="In" Type="String" />
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="saldodisponible" Mode="In" Type="Decimal" />
-            <Parameter Name="diascredito" Mode="In" Type="Int32" />
-            <Parameter Name="cuentabancaria" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_InsertProductos" ReturnType="Collection(ComercializadoraDBModel.SP_InsertProductos_Result)">
             <Parameter Name="loteId" Mode="In" Type="Int32" />
@@ -1178,11 +1153,34 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <End Role="PrecioVenta" EntitySet="PrecioVenta" />
           </AssociationSet>
           <FunctionImport Name="SP_InsertInsumos" ReturnType="Collection(ComercializadoraDBModel.SP_InsertInsumos_Result)">
-            <Parameter Name="Descripcion" Mode="In" Type="String" />
+          <Parameter Name="Descripcion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_UpdateInsumo" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateInsumo_Result)">
             <Parameter Name="InsumoId" Mode="In" Type="Int32" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertProductores" ReturnType="Collection(ComercializadoraDBModel.SP_InsertProductores_Result)">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="identidad" Mode="In" Type="String" />
+            <Parameter Name="rtn" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="saldodisponible" Mode="In" Type="Decimal" />
+            <Parameter Name="diascredito" Mode="In" Type="Int32" />
+            <Parameter Name="cuentabancaria" Mode="In" Type="Int32" />
+            <Parameter Name="listaprecio" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateProductores" ReturnType="Collection(ComercializadoraDBModel.SP_UpdateProductores_Result)">
+            <Parameter Name="productorid" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="identidad" Mode="In" Type="String" />
+            <Parameter Name="rtn" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="saldodisponible" Mode="In" Type="Decimal" />
+            <Parameter Name="diascredito" Mode="In" Type="Int32" />
+            <Parameter Name="cuentabancaria" Mode="In" Type="Int32" />
+            <Parameter Name="listaprecio" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Cliente">
@@ -1838,12 +1836,6 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
         <ComplexType Name="SP_UpdateBodega_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
         </ComplexType>
-        <ComplexType Name="SP_InsertProductores_Result">
-          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
-        </ComplexType>
-        <ComplexType Name="SP_UpdateProductores_Result">
-          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
-        </ComplexType>
         <ComplexType Name="SP_InsertProductos_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
         </ComplexType>
@@ -1933,6 +1925,12 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
         </ComplexType>
         <ComplexType Name="SP_UpdateInsumo_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_InsertProductores_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_UpdateProductores_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2293,23 +2291,9 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_InsertProductores" FunctionName="ComercializadoraDBModel.Store.SP_InsertProductores" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertProductores_Result">
-                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_UpdateBodega" FunctionName="ComercializadoraDBModel.Store.SP_UpdateBodega" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateBodega_Result">
-                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_UpdateProductores" FunctionName="ComercializadoraDBModel.Store.SP_UpdateProductores" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateProductores_Result">
                 <ScalarProperty Name="MessageError" ColumnName="MessageError" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -2358,6 +2342,20 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <FunctionImportMapping FunctionImportName="SP_UpdateInsumo" FunctionName="ComercializadoraDBModel.Store.SP_UpdateInsumo" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateInsumo_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_InsertProductores" FunctionName="ComercializadoraDBModel.Store.SP_InsertProductores" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_InsertProductores_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateProductores" FunctionName="ComercializadoraDBModel.Store.SP_UpdateProductores" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.SP_UpdateProductores_Result">
                 <ScalarProperty Name="MessageError" ColumnName="MessageError" />
               </ComplexTypeMapping>
             </ResultMapping>

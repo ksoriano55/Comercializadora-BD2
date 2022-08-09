@@ -17,7 +17,8 @@ namespace comercializadora.Controllers
         // GET: Productor
         public ActionResult Index()
         {
-            var productor = db.Productor.Include(p => p.CuentaBancaria);
+            var productor = db.Productor.Include(p => p.CuentaBancaria).Include(p => p.ListaPrecio);
+            
             return View(productor.ToList());
         }
 
@@ -40,6 +41,7 @@ namespace comercializadora.Controllers
         public ActionResult Create()
         {
             ViewBag.CuentaBancariaID = new SelectList(db.CuentaBancaria, "CuantaID", "Banco");
+            ViewBag.ListaPrecioID = new SelectList(db.ListaPrecio, "Codigo", "Descripcion");
             return View();
         }
 
@@ -48,7 +50,7 @@ namespace comercializadora.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductorID,Nombre,Identidad,RTN,Telefono,EMail,SaldoDisponible,DiasCredito,CuentaBancariaID")] Productor productor)
+        public ActionResult Create([Bind(Include = "ProductorID,Nombre,Identidad,RTN,Telefono,EMail,SaldoDisponible,DiasCredito,CuentaBancariaID,ListaPrecioID")] Productor productor)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +64,9 @@ namespace comercializadora.Controllers
                                                 productor.EMail,
                                                 productor.SaldoDisponible,
                                                 productor.DiasCredito,
-                                                productor.CuentaBancariaID);
+                                                productor.CuentaBancariaID,
+                                                productor.ListaPrecioID
+                                                );
                 foreach (SP_InsertProductores_Result tbProductores in list)
                     MensajeError = tbProductores.MessageError;
                 if (MensajeError.StartsWith("-1"))
@@ -73,6 +77,7 @@ namespace comercializadora.Controllers
             }
 
             ViewBag.CuentaBancariaID = new SelectList(db.CuentaBancaria, "CuantaID", "Banco", productor.CuentaBancariaID);
+            ViewBag.ListaprecioID = new SelectList(db.ListaPrecio, "Codigo", "Descripcion", productor.ListaPrecioID);
             return View(productor);
         }
 
@@ -89,6 +94,7 @@ namespace comercializadora.Controllers
                 return HttpNotFound();
             }
             ViewBag.CuentaBancariaID = new SelectList(db.CuentaBancaria, "CuantaID", "Banco", productor.CuentaBancariaID);
+            ViewBag.ListaprecioID = new SelectList(db.ListaPrecio, "Codigo", "Descripcion", productor.ListaPrecioID);
             return View(productor);
         }
 
@@ -97,12 +103,29 @@ namespace comercializadora.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductorID,Nombre,Identidad,RTN,Telefono,EMail,SaldoDisponible,DiasCredito,CuentaBancariaID")] Productor productor)
+        public ActionResult Edit([Bind(Include = "ProductorID,Nombre,Identidad,RTN,Telefono,EMail,SaldoDisponible,DiasCredito,CuentaBancariaID,ListaPrecioID")] Productor productor)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(productor).State = EntityState.Modified;
-                db.SaveChanges();
+                var MensajeError = "";
+                IEnumerable<object> list;
+
+                list = db.SP_UpdateProductores( productor.ProductorID,
+                                                productor.Nombre,
+                                                productor.Identidad,
+                                                productor.RTN,
+                                                productor.Telefono,
+                                                productor.EMail,
+                                                productor.SaldoDisponible,
+                                                productor.DiasCredito,
+                                                productor.CuentaBancariaID,
+                                                productor.ListaPrecioID);
+                foreach (SP_UpdateProductores_Result tbProductores in list)
+                    MensajeError = tbProductores.MessageError;
+                if (MensajeError.StartsWith("-1"))
+                {
+                    return Json("No se pudo registrar, favor contacte al administrador.", JsonRequestBehavior.AllowGet);
+                }        
                 return RedirectToAction("Index");
             }
             ViewBag.CuentaBancariaID = new SelectList(db.CuentaBancaria, "CuantaID", "Banco", productor.CuentaBancariaID);

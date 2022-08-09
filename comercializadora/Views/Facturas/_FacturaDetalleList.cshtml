@@ -11,11 +11,15 @@
         <th>
             @Html.DisplayNameFor(model => model.PrecioUnitario)
         </th>
+        <th>
+            Total
+        </th>
     </tr>
 
     @foreach (var item in Model)
     {
         var nombre = item.Producto != null ? item.Producto.Descripcion : item.Insumo.Descripcion;
+        var totalLine = item.Cantidad * item.PrecioUnitario;
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => nombre)
@@ -25,6 +29,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PrecioUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => totalLine)
             </td>
         </tr>
     }

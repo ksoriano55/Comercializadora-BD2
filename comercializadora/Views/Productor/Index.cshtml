@@ -4,10 +4,6 @@
     ViewBag.Title = "Index";
 }
 
-<p>
-    @Html.ActionLink("Registrar Nuevo", "Create")
-</p>
-
 <div class="row">
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
@@ -18,7 +14,7 @@
                         <a href="@Url.Action("Create", "Productor")" class="btn btn-outline-info btn-sm" title="Registrar Nuevo">
                             <i class="ace-icon fa fa-plus-circle bigger-120"></i>
                             Registrar Nuevo
-                        </a>
+                        </a>                       
                     </li>
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -57,7 +53,10 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.CuentaBancaria.Banco)
                                         </th>
-                                        <th></th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ListaPrecio.Descripcion)
+                                        </th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,9 +88,12 @@
                                                 @Html.DisplayFor(modelItem => item.CuentaBancaria.Banco)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "Edit", new { id = item.ProductorID }) |
-
-                                                @Html.ActionLink("Delete", "Delete", new { id = item.ProductorID })
+                                                @Html.DisplayFor(modelItem => item.ListaPrecio.Descripcion)
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("Edit", "Productor", new { id = item.ProductorID })" class="btn btn-app" title="Editar">
+                                                    <i class="fa fa-edit"></i>Editar
+                                                </a>
                                             </td>
                                         </tr>
                                     }
