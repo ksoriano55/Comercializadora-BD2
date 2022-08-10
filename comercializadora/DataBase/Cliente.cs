@@ -17,6 +17,7 @@ namespace comercializadora.DataBase
         public Cliente()
         {
             this.Factura = new HashSet<Factura>();
+            this.Cobros = new HashSet<Cobros>();
         }
     
         public int ClienteID { get; set; }
@@ -28,5 +29,6 @@ namespace comercializadora.DataBase
     
         public virtual ICollection<Factura> Factura { get; set; }
         public virtual ListaPrecio ListaPrecio { get; set; }
+        public virtual ICollection<Cobros> Cobros { get; set; }
     }
 }

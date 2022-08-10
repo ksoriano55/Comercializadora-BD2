@@ -12,17 +12,13 @@ namespace comercializadora.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class Cobros
+    public partial class vPrecioVentaInsumos
     {
-        public string codigoCobro { get; set; }
-        public Nullable<int> clienteId { get; set; }
-        public Nullable<int> facturaId { get; set; }
-        public int TipoPagoID { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
-        public decimal Monto { get; set; }
-    
-        public virtual Cliente Cliente { get; set; }
-        public virtual Factura Factura { get; set; }
-        public virtual TipoPago TipoPago { get; set; }
+        public int PrecioVentaID { get; set; }
+        public int InsumoID { get; set; }
+        public string Insumo { get; set; }
+        public decimal Precio { get; set; }
+        public System.DateTime FechaDesde { get; set; }
+        public System.DateTime FechaHasta { get; set; }
     }
 }

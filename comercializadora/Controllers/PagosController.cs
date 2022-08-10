@@ -36,10 +36,32 @@ namespace comercializadora.Controllers
             return View(pagos);
         }
 
+        public JsonResult getCompras(int proveedorId)
+        {
+            var listaCompras = db.Compra.Where(x => x.ProveedorID == proveedorId && x.SaldoPendiente > 0).Select(x => new SelectListItem
+            {
+                Text = x.CodigoCompra + " - L." + x.SaldoPendiente,
+                Value = x.CompraID.ToString()
+            }).ToList();
+
+            return Json(listaCompras, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CreateAnticipo()
+        {
+            ViewBag.ProductorId = new SelectList(db.Productor, "ProductorID", "Nombre");
+            ViewBag.TipoPagoId = new SelectList(db.TipoPago, "TipoPagoId", "Descripcion");
+            return View();
+        }
         // GET: Pagos/Create
         public ActionResult Create()
         {
-            ViewBag.CompraId = new SelectList(db.Compra, "CompraID", "CompraID");
+            var compraBD = db.Compra.Where(x=> x.SaldoPendiente>0).Select(x => new
+            {
+                CompraID = x.CompraID,
+                Descripcion = x.CodigoCompra + " - L." + x.SaldoPendiente,
+            });
+            ViewBag.CompraId = new SelectList(compraBD, "CompraID", "Descripcion");
             ViewBag.ProductorId = new SelectList(db.Productor, "ProductorID", "Nombre");
             ViewBag.ProveedorId = new SelectList(db.Proveedor, "ProveedorID", "Nombre");
             ViewBag.TipoPagoId = new SelectList(db.TipoPago, "TipoPagoId", "Descripcion");
@@ -55,8 +77,22 @@ namespace comercializadora.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Pagos.Add(pagos);
-                db.SaveChanges();
+                var MensajeError = "";
+                IEnumerable<object> list;
+                var concepto = pagos.Concepto == null ? "Anticipo" : pagos.Concepto;
+                list = db.SP_InsertPagos(pagos.ProductorId,
+                                         pagos.ProveedorId,
+                                         pagos.CompraId,
+                                         pagos.TipoPagoId,
+                                         concepto,
+                                         pagos.Fecha,
+                                         pagos.Monto);
+                foreach (SP_InsertPagos_Result p in list)
+                    MensajeError = p.MensajeError;
+                if (MensajeError.StartsWith("-1"))
+                {
+                    return Json("No se pudo registrar, favor contacte al administrador.", JsonRequestBehavior.AllowGet);
+                }
                 return RedirectToAction("Index");
             }
 

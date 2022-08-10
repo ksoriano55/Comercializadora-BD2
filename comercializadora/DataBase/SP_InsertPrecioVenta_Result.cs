@@ -10,20 +10,9 @@
 namespace comercializadora.DataBase
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TipoPago
+    public partial class SP_InsertPrecioVenta_Result
     {
-        public TipoPago()
-        {
-            this.Pagos = new HashSet<Pagos>();
-            this.Cobros = new HashSet<Cobros>();
-        }
-    
-        public int TipoPagoId { get; set; }
-        public string Descripcion { get; set; }
-    
-        public virtual ICollection<Pagos> Pagos { get; set; }
-        public virtual ICollection<Cobros> Cobros { get; set; }
+        public string MessageError { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace comercializadora.DataBase
         public Nullable<System.DateTime> FechaVencimiento { get; set; }
     
         public virtual ICollection<CompraDetalle> CompraDetalle { get; set; }
-        public virtual ICollection<Pagos> Pagos { get; set; }
         public virtual Proveedor Proveedor { get; set; }
+        public virtual ICollection<Pagos> Pagos { get; set; }
     }
 }

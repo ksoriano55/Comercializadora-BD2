@@ -16,8 +16,8 @@ namespace comercializadora.DataBase
     {
         public Cosecha()
         {
-            this.Pagos = new HashSet<Pagos>();
             this.CosechaDetalle = new HashSet<CosechaDetalle>();
+            this.Pagos = new HashSet<Pagos>();
         }
     
         public int CosechaId { get; set; }
@@ -25,7 +25,7 @@ namespace comercializadora.DataBase
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFinal { get; set; }
     
-        public virtual ICollection<Pagos> Pagos { get; set; }
         public virtual ICollection<CosechaDetalle> CosechaDetalle { get; set; }
+        public virtual ICollection<Pagos> Pagos { get; set; }
     }
 }

@@ -41,7 +41,6 @@ namespace comercializadora.DataBase
         public DbSet<vInventarioInsumos> vInventarioInsumos { get; set; }
         public DbSet<vInventarioProductos> vInventarioProductos { get; set; }
         public DbSet<TipoPago> TipoPago { get; set; }
-        public DbSet<Pagos> Pagos { get; set; }
         public DbSet<Compra> Compra { get; set; }
         public DbSet<CompraDetalle> CompraDetalle { get; set; }
         public DbSet<Cosecha> Cosecha { get; set; }
@@ -51,9 +50,12 @@ namespace comercializadora.DataBase
         public DbSet<FacturaDetalle> FacturaDetalle { get; set; }
         public DbSet<Factura> Factura { get; set; }
         public DbSet<CosechaDetalle> CosechaDetalle { get; set; }
-        public DbSet<Cobros> Cobros { get; set; }
         public DbSet<PrecioVenta> PrecioVenta { get; set; }
         public DbSet<Proveedor> Proveedor { get; set; }
+        public DbSet<Pagos> Pagos { get; set; }
+        public DbSet<Cobros> Cobros { get; set; }
+        public DbSet<vPrecioVentaInsumos> vPrecioVentaInsumos { get; set; }
+        public DbSet<vPrecioVentaProductos> vPrecioVentaProductos { get; set; }
     
         public virtual ObjectResult<SP_InsertListaPrecio_Result> SP_InsertListaPrecio(string codigo, string descripcion)
         {
@@ -200,17 +202,13 @@ namespace comercializadora.DataBase
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateListaPrecio_Result>("SP_UpdateListaPrecio", codigoParameter, descripcionParameter);
         }
     
-        public virtual ObjectResult<SP_InsertBodega_Result> SP_InsertBodega(string codigo, string nombre)
+        public virtual ObjectResult<SP_InsertBodega_Result> SP_InsertBodega(string nombre)
         {
-            var codigoParameter = codigo != null ?
-                new ObjectParameter("codigo", codigo) :
-                new ObjectParameter("codigo", typeof(string));
-    
             var nombreParameter = nombre != null ?
                 new ObjectParameter("nombre", nombre) :
                 new ObjectParameter("nombre", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertBodega_Result>("SP_InsertBodega", codigoParameter, nombreParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertBodega_Result>("SP_InsertBodega", nombreParameter);
         }
     
         public virtual ObjectResult<SP_UpdateBodega_Result> SP_UpdateBodega(Nullable<int> bodegaid, string codigo, string nombre)
@@ -509,6 +507,97 @@ namespace comercializadora.DataBase
                 new ObjectParameter("EMail", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spUpdateProveedor_Result>("spUpdateProveedor", proveedorIDParameter, nombreParameter, rTNParameter, telefonoParameter, eMailParameter);
+        }
+    
+        public virtual ObjectResult<SP_InsertPagos_Result> SP_InsertPagos(Nullable<int> productorId, Nullable<int> proveedorId, Nullable<int> compraId, Nullable<int> tipoPagoId, string concepto, Nullable<System.DateTime> fecha, Nullable<decimal> monto)
+        {
+            var productorIdParameter = productorId.HasValue ?
+                new ObjectParameter("productorId", productorId) :
+                new ObjectParameter("productorId", typeof(int));
+    
+            var proveedorIdParameter = proveedorId.HasValue ?
+                new ObjectParameter("proveedorId", proveedorId) :
+                new ObjectParameter("proveedorId", typeof(int));
+    
+            var compraIdParameter = compraId.HasValue ?
+                new ObjectParameter("compraId", compraId) :
+                new ObjectParameter("compraId", typeof(int));
+    
+            var tipoPagoIdParameter = tipoPagoId.HasValue ?
+                new ObjectParameter("tipoPagoId", tipoPagoId) :
+                new ObjectParameter("tipoPagoId", typeof(int));
+    
+            var conceptoParameter = concepto != null ?
+                new ObjectParameter("concepto", concepto) :
+                new ObjectParameter("concepto", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(System.DateTime));
+    
+            var montoParameter = monto.HasValue ?
+                new ObjectParameter("monto", monto) :
+                new ObjectParameter("monto", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertPagos_Result>("SP_InsertPagos", productorIdParameter, proveedorIdParameter, compraIdParameter, tipoPagoIdParameter, conceptoParameter, fechaParameter, montoParameter);
+        }
+    
+        public virtual ObjectResult<SP_InsertPrecioVenta_Result> SP_InsertPrecioVenta(Nullable<int> productoID, Nullable<decimal> precio, Nullable<System.DateTime> fechaDesde, Nullable<System.DateTime> fechaHasta, string listaPrecio, Nullable<int> insumoid)
+        {
+            var productoIDParameter = productoID.HasValue ?
+                new ObjectParameter("ProductoID", productoID) :
+                new ObjectParameter("ProductoID", typeof(int));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("Precio", precio) :
+                new ObjectParameter("Precio", typeof(decimal));
+    
+            var fechaDesdeParameter = fechaDesde.HasValue ?
+                new ObjectParameter("FechaDesde", fechaDesde) :
+                new ObjectParameter("FechaDesde", typeof(System.DateTime));
+    
+            var fechaHastaParameter = fechaHasta.HasValue ?
+                new ObjectParameter("FechaHasta", fechaHasta) :
+                new ObjectParameter("FechaHasta", typeof(System.DateTime));
+    
+            var listaPrecioParameter = listaPrecio != null ?
+                new ObjectParameter("ListaPrecio", listaPrecio) :
+                new ObjectParameter("ListaPrecio", typeof(string));
+    
+            var insumoidParameter = insumoid.HasValue ?
+                new ObjectParameter("insumoid", insumoid) :
+                new ObjectParameter("insumoid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertPrecioVenta_Result>("SP_InsertPrecioVenta", productoIDParameter, precioParameter, fechaDesdeParameter, fechaHastaParameter, listaPrecioParameter, insumoidParameter);
+        }
+    
+        public virtual ObjectResult<SP_UpdatePrecioVenta_Result> SP_UpdatePrecioVenta(Nullable<int> productoID, Nullable<decimal> precio, Nullable<System.DateTime> fechaDesde, Nullable<System.DateTime> fechaHasta, string listaPrecio, Nullable<int> insumoid)
+        {
+            var productoIDParameter = productoID.HasValue ?
+                new ObjectParameter("ProductoID", productoID) :
+                new ObjectParameter("ProductoID", typeof(int));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("Precio", precio) :
+                new ObjectParameter("Precio", typeof(decimal));
+    
+            var fechaDesdeParameter = fechaDesde.HasValue ?
+                new ObjectParameter("FechaDesde", fechaDesde) :
+                new ObjectParameter("FechaDesde", typeof(System.DateTime));
+    
+            var fechaHastaParameter = fechaHasta.HasValue ?
+                new ObjectParameter("FechaHasta", fechaHasta) :
+                new ObjectParameter("FechaHasta", typeof(System.DateTime));
+    
+            var listaPrecioParameter = listaPrecio != null ?
+                new ObjectParameter("ListaPrecio", listaPrecio) :
+                new ObjectParameter("ListaPrecio", typeof(string));
+    
+            var insumoidParameter = insumoid.HasValue ?
+                new ObjectParameter("insumoid", insumoid) :
+                new ObjectParameter("insumoid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdatePrecioVenta_Result>("SP_UpdatePrecioVenta", productoIDParameter, precioParameter, fechaDesdeParameter, fechaHastaParameter, listaPrecioParameter, insumoidParameter);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model comercializadora.DataBase.Pagos
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "CreateAnticipo";
 }
 
 @using (Html.BeginForm("Create", "Pagos", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -10,7 +10,7 @@
 
     <div class="x_panel">
         <div class="x_title">
-            <h2>Registro nuevo pago</h2>
+            <h2>Registro nuevo anticipo</h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -28,24 +28,9 @@
 
                 <div class="form-group row">
                     <div class="col-md-6">
-                        @Html.LabelFor(model => model.ProveedorId, "ProveedorId", htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.DropDownList("ProveedorId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProveedorId, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="col-md-6">
-                        @Html.LabelFor(model => model.CompraId, "CompraId", htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.DropDownList("CompraId", new SelectList(string.Empty, "Value", "Text"), "--Seleccione compra--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.CompraId, "", new { @class = "text-danger" })
-                    </div>
-
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        @Html.LabelFor(model => model.Concepto, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Concepto, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.ProductorId, "ProductorId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.DropDownList("ProductorId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductorId, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="col-md-6">
@@ -61,13 +46,13 @@
                         @Html.TextBoxFor(model => model.Fecha, new { @type = "date", @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                     </div>
+
                     <div class="col-md-6">
                         @Html.LabelFor(model => model.Monto, htmlAttributes: new { @class = "control-label col-md-2" })
                         @Html.EditorFor(model => model.Monto, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Monto, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="center">
                     <a href="@Url.Action("Index","Pagos")" class="btn btn-xs btn-danger" data-rel="tooltip">
                         <i class="ace-icon fa fa-times"></i>
@@ -81,9 +66,7 @@
             </div>
         </div>
     </div>
- }
-
-        @section Scripts {
-            <script src="~/Scripts/App/Generalidades.js"></script>
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

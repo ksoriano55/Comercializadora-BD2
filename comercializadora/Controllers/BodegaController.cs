@@ -53,8 +53,7 @@ namespace comercializadora.Controllers
                 var MensajeError = "";
                 IEnumerable<object> list;
 
-                list = db.SP_InsertBodega(bodega.Codigo,
-                                            bodega.Nombre);
+                list = db.SP_InsertBodega(bodega.Nombre);
                 foreach (SP_InsertBodega_Result tbBodega in list)
                     MensajeError = tbBodega.MessageError;
                 if (MensajeError.StartsWith("-1"))
