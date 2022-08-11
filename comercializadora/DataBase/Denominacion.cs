@@ -12,14 +12,17 @@ namespace comercializadora.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class vPrecioCompraInsumos
+    public partial class Denominacion
     {
-        public int precioCompraId { get; set; }
-        public int InsumoID { get; set; }
-        public string Nombre_Insumo { get; set; }
-        public decimal Precio { get; set; }
-        public System.DateTime FechaDesde { get; set; }
-        public Nullable<System.DateTime> FechaHasta { get; set; }
-        public string ListaPrecios { get; set; }
+        public Denominacion()
+        {
+            this.EfectivoArqueo = new HashSet<EfectivoArqueo>();
+        }
+    
+        public int Codigo { get; set; }
+        public string Tipo { get; set; }
+        public string Denominación { get; set; }
+    
+        public virtual ICollection<EfectivoArqueo> EfectivoArqueo { get; set; }
     }
 }

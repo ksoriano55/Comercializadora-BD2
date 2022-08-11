@@ -41,15 +41,17 @@
 
                 <div class="form-group row">
                     <div class="col-md-6" id="visibleProducto">
-                        @Html.LabelFor(model => model.InsumoId, "Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.ProductoId, "Producto", htmlAttributes: new { @class = "control-label col-md-2" })
                         @Html.DropDownList("ProductoId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ProductoId, "", new { @class = "text-danger" })
+                        <input type="hidden" id="productName" />
                     </div>
 
                     <div class="col-md-6" id="visibleInsumo">
                         @Html.LabelFor(model => model.InsumoId, "Insumo", htmlAttributes: new { @class = "control-label col-md-2" })
                         @Html.DropDownList("InsumoId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.InsumoId, "", new { @class = "text-danger" })
+                        <input type="hidden" id="insumoName" />
                     </div>
 
                     <div class="col-md-4">

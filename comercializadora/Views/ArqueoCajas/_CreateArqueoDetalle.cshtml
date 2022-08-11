@@ -1,0 +1,34 @@
+﻿@model comercializadora.DataBase.ArqueoCajaDetalle
+
+
+@using (Html.BeginForm()) 
+{
+    
+<div class="form-horizontal">
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label>Denominacion</label>
+            @Html.DropDownList("Denominacion", new SelectList(string.Empty, "Value", "Text"), "--Seleccione denominacion--", new { @class = "form-control" })
+            <input type="hidden" id="denominacionDescripcion" />
+        </div>
+
+        <div class="col-md-3">
+            <label>Cantidad</label>
+            <input type="text" id="cantidad" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <br />
+            <button id="AgregarEfectivo" class="btn btn-sm btn-primary" type="button">Agregar</button>
+        </div>
+    </div>
+
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

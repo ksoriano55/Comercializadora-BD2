@@ -57,12 +57,20 @@ namespace comercializadora.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "precioCompraId,esInsumos,ListaPrecios,ProductoId,InsumoId,Precio,FechaDesde,FechaHasta")] PrecioCompra precioCompra ,bool? esInsumo)
+        public ActionResult Create([Bind(Include = "precioCompraId,esInsumo,ListaPrecios,ProductoId,InsumoId,Precio,FechaDesde,FechaHasta")] PrecioCompra precioCompra ,bool? esInsumo)
         {
             if (ModelState.IsValid)
             {
                 var MensajeError = "";
                 IEnumerable<object> list;
+                if(precioCompra.esInsumo)
+                {
+                    precioCompra.ProductoId = null;
+                }
+                else
+                {
+                    precioCompra.InsumoId = null ;
+                }
 
                 list = db.SP_InsertPrecioCompra(precioCompra.ListaPrecios,
                                                precioCompra.ProductoId,

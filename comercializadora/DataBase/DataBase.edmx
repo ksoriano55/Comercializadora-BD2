@@ -5,6 +5,32 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ComercializadoraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ArqueoCaja">
+          <Key>
+            <PropertyRef Name="CodigoArqueo" />
+          </Key>
+          <Property Name="CodigoArqueo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" />
+          <Property Name="FechaFinal" Type="datetime" />
+          <Property Name="CajeroID" Type="int" />
+        </EntityType>
+        <EntityType Name="ArqueoCajaDetalle">
+          <Key>
+            <PropertyRef Name="ArqueoDetalleID" />
+          </Key>
+          <Property Name="ArqueoDetalleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArqueoCaja" Type="varchar" MaxLength="20" />
+          <Property Name="EfectivoArqueoID" Type="int" />
+          <Property Name="ChequeArqueoID" Type="int" />
+          <Property Name="Monto" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Banco">
+          <Key>
+            <PropertyRef Name="bancoId" />
+          </Key>
+          <Property Name="bancoId" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Bodega">
           <Key>
             <PropertyRef Name="BodegaId" />
@@ -12,6 +38,22 @@
           <Property Name="BodegaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Codigo" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cajero">
+          <Key>
+            <PropertyRef Name="CajeroID" />
+          </Key>
+          <Property Name="CajeroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="20" />
+          <Property Name="Nombre" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="ChequeArqueo">
+          <Key>
+            <PropertyRef Name="ChequeID" />
+          </Key>
+          <Property Name="ChequeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroCheque" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BancoID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -83,6 +125,22 @@
           <Property Name="CuantaID" Type="int" Nullable="false" />
           <Property Name="Banco" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="NumeroCuenta" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Denominacion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Denominación" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EfectivoArqueo">
+          <Key>
+            <PropertyRef Name="EfectivoArqueoID" />
+          </Key>
+          <Property Name="EfectivoArqueoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Denominacion" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Factura">
           <Key>
@@ -234,6 +292,19 @@
           <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vFincas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vFincas">
+          <Key>
+            <PropertyRef Name="Nombre Finca" />
+            <PropertyRef Name="Numero Lote" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="Dueño" Type="varchar" MaxLength="80" />
+          <Property Name="Nombre Finca" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="Numero Lote" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vInventarioInsumos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInventarioInsumos">
           <Key>
@@ -278,6 +349,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <PropertyRef Name="Nombre_Insumo" />
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="precioCompraId" Type="int" Nullable="false" />
           <Property Name="InsumoID" Type="int" Nullable="false" />
@@ -285,6 +357,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FechaDesde" Type="date" Nullable="false" />
           <Property Name="FechaHasta" Type="date" />
+          <Property Name="ListaPrecios" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompraProductos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -295,6 +368,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
             <PropertyRef Name="Nombre_Producto" />
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="precioCompraId" Type="int" Nullable="false" />
           <Property Name="productoId" Type="int" Nullable="false" />
@@ -302,6 +376,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioCompra
           <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FechaDesde" Type="date" Nullable="false" />
           <Property Name="FechaHasta" Type="date" />
+          <Property Name="ListaPrecios" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaInsumos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -313,6 +388,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaI
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
             <PropertyRef Name="FechaHasta" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="PrecioVentaID" Type="int" Nullable="false" />
           <Property Name="InsumoID" Type="int" Nullable="false" />
@@ -320,6 +396,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaI
           <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FechaDesde" Type="date" Nullable="false" />
           <Property Name="FechaHasta" Type="date" Nullable="false" />
+          <Property Name="ListaPrecios" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaProductos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -331,6 +408,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
             <PropertyRef Name="FechaHasta" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="PrecioVentaID" Type="int" Nullable="false" />
           <Property Name="productoId" Type="int" Nullable="false" />
@@ -338,6 +416,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FechaDesde" Type="date" Nullable="false" />
           <Property Name="FechaHasta" Type="date" Nullable="false" />
+          <Property Name="ListaPrecios" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="CompraDetalle_Compra_FK">
           <End Role="Compra" Type="Self.Compra" Multiplicity="1" />
@@ -348,6 +427,18 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             </Principal>
             <Dependent Role="CompraDetalle">
               <PropertyRef Name="CompraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoID">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
+          <End Role="ChequeArqueo" Type="Self.ChequeArqueo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="bancoId" />
+            </Principal>
+            <Dependent Role="ChequeArqueo">
+              <PropertyRef Name="BancoID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -723,6 +814,54 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkACDArqueoCaja">
+          <End Role="ArqueoCaja" Type="Self.ArqueoCaja" Multiplicity="0..1" />
+          <End Role="ArqueoCajaDetalle" Type="Self.ArqueoCajaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArqueoCaja">
+              <PropertyRef Name="CodigoArqueo" />
+            </Principal>
+            <Dependent Role="ArqueoCajaDetalle">
+              <PropertyRef Name="ArqueoCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkACDChequeArqueoID">
+          <End Role="ChequeArqueo" Type="Self.ChequeArqueo" Multiplicity="0..1" />
+          <End Role="ArqueoCajaDetalle" Type="Self.ArqueoCajaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChequeArqueo">
+              <PropertyRef Name="ChequeID" />
+            </Principal>
+            <Dependent Role="ArqueoCajaDetalle">
+              <PropertyRef Name="ChequeArqueoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkACDEfectivoArqueoID">
+          <End Role="EfectivoArqueo" Type="Self.EfectivoArqueo" Multiplicity="0..1" />
+          <End Role="ArqueoCajaDetalle" Type="Self.ArqueoCajaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EfectivoArqueo">
+              <PropertyRef Name="EfectivoArqueoID" />
+            </Principal>
+            <Dependent Role="ArqueoCajaDetalle">
+              <PropertyRef Name="EfectivoArqueoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkAqueoCajeroID">
+          <End Role="Cajero" Type="Self.Cajero" Multiplicity="0..1" />
+          <End Role="ArqueoCaja" Type="Self.ArqueoCaja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cajero">
+              <PropertyRef Name="CajeroID" />
+            </Principal>
+            <Dependent Role="ArqueoCaja">
+              <PropertyRef Name="CajeroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkClienteListaPrecio">
           <End Role="ListaPrecio" Type="Self.ListaPrecio" Multiplicity="0..1" />
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
@@ -732,6 +871,18 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             </Principal>
             <Dependent Role="Cliente">
               <PropertyRef Name="ListaPrecioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkEfectivoDenominacion">
+          <End Role="Denominacion" Type="Self.Denominacion" Multiplicity="1" />
+          <End Role="EfectivoArqueo" Type="Self.EfectivoArqueo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Denominacion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="EfectivoArqueo">
+              <PropertyRef Name="Denominacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -904,7 +1055,12 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Parameter Name="EMail" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ComercializadoraDBModelStoreContainer">
+          <EntitySet Name="ArqueoCaja" EntityType="Self.ArqueoCaja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArqueoCajaDetalle" EntityType="Self.ArqueoCajaDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Banco" EntityType="Self.Banco" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bodega" EntityType="Self.Bodega" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cajero" EntityType="Self.Cajero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChequeArqueo" EntityType="Self.ChequeArqueo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cobros" EntityType="Self.Cobros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Compra" EntityType="Self.Compra" Schema="dbo" store:Type="Tables" />
@@ -912,6 +1068,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <EntitySet Name="Cosecha" EntityType="Self.Cosecha" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CosechaDetalle" EntityType="Self.CosechaDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CuentaBancaria" EntityType="Self.CuentaBancaria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Denominacion" EntityType="Self.Denominacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EfectivoArqueo" EntityType="Self.EfectivoArqueo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FacturaDetalle" EntityType="Self.FacturaDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Finca" EntityType="Self.Finca" Schema="dbo" store:Type="Tables" />
@@ -926,6 +1084,14 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <EntitySet Name="Productor" EntityType="Self.Productor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vFincas" EntityType="Self.vFincas" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vFincas].[Dueño] AS [Dueño], 
+    [vFincas].[Nombre Finca] AS [Nombre Finca], 
+    [vFincas].[Numero Lote] AS [Numero Lote], 
+    [vFincas].[Descripcion] AS [Descripcion]
+    FROM [dbo].[vFincas] AS [vFincas]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vInventarioInsumos" EntityType="Self.vInventarioInsumos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vInventarioInsumos].[InventarioId] AS [InventarioId], 
@@ -953,7 +1119,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
     [vPrecioCompraInsumos].[Nombre_Insumo] AS [Nombre_Insumo], 
     [vPrecioCompraInsumos].[Precio] AS [Precio], 
     [vPrecioCompraInsumos].[FechaDesde] AS [FechaDesde], 
-    [vPrecioCompraInsumos].[FechaHasta] AS [FechaHasta]
+    [vPrecioCompraInsumos].[FechaHasta] AS [FechaHasta], 
+    [vPrecioCompraInsumos].[ListaPrecios] AS [ListaPrecios]
     FROM [dbo].[vPrecioCompraInsumos] AS [vPrecioCompraInsumos]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPrecioCompraProductos" EntityType="Self.vPrecioCompraProductos" store:Type="Views" store:Schema="dbo">
@@ -963,7 +1130,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
     [vPrecioCompraProductos].[Nombre_Producto] AS [Nombre_Producto], 
     [vPrecioCompraProductos].[Precio] AS [Precio], 
     [vPrecioCompraProductos].[FechaDesde] AS [FechaDesde], 
-    [vPrecioCompraProductos].[FechaHasta] AS [FechaHasta]
+    [vPrecioCompraProductos].[FechaHasta] AS [FechaHasta], 
+    [vPrecioCompraProductos].[ListaPrecios] AS [ListaPrecios]
     FROM [dbo].[vPrecioCompraProductos] AS [vPrecioCompraProductos]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPrecioVentaInsumos" EntityType="Self.vPrecioVentaInsumos" store:Type="Views" store:Schema="dbo">
@@ -973,7 +1141,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
     [vPrecioVentaInsumos].[Insumo] AS [Insumo], 
     [vPrecioVentaInsumos].[Precio] AS [Precio], 
     [vPrecioVentaInsumos].[FechaDesde] AS [FechaDesde], 
-    [vPrecioVentaInsumos].[FechaHasta] AS [FechaHasta]
+    [vPrecioVentaInsumos].[FechaHasta] AS [FechaHasta], 
+    [vPrecioVentaInsumos].[ListaPrecios] AS [ListaPrecios]
     FROM [dbo].[vPrecioVentaInsumos] AS [vPrecioVentaInsumos]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPrecioVentaProductos" EntityType="Self.vPrecioVentaProductos" store:Type="Views" store:Schema="dbo">
@@ -983,12 +1152,17 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
     [vPrecioVentaProductos].[Producto] AS [Producto], 
     [vPrecioVentaProductos].[Precio] AS [Precio], 
     [vPrecioVentaProductos].[FechaDesde] AS [FechaDesde], 
-    [vPrecioVentaProductos].[FechaHasta] AS [FechaHasta]
+    [vPrecioVentaProductos].[FechaHasta] AS [FechaHasta], 
+    [vPrecioVentaProductos].[ListaPrecios] AS [ListaPrecios]
     FROM [dbo].[vPrecioVentaProductos] AS [vPrecioVentaProductos]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="CompraDetalle_Compra_FK" Association="Self.CompraDetalle_Compra_FK">
             <End Role="Compra" EntitySet="Compra" />
             <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoID" Association="Self.FK_BancoID">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="ChequeArqueo" EntitySet="ChequeArqueo" />
           </AssociationSet>
           <AssociationSet Name="FK_Cobro_Cliente_ClienteId" Association="Self.FK_Cobro_Cliente_ClienteId">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -1114,9 +1288,29 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <End Role="Producto" EntitySet="Producto" />
             <End Role="PrecioVenta" EntitySet="PrecioVenta" />
           </AssociationSet>
+          <AssociationSet Name="fkACDArqueoCaja" Association="Self.fkACDArqueoCaja">
+            <End Role="ArqueoCaja" EntitySet="ArqueoCaja" />
+            <End Role="ArqueoCajaDetalle" EntitySet="ArqueoCajaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="fkACDChequeArqueoID" Association="Self.fkACDChequeArqueoID">
+            <End Role="ChequeArqueo" EntitySet="ChequeArqueo" />
+            <End Role="ArqueoCajaDetalle" EntitySet="ArqueoCajaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="fkACDEfectivoArqueoID" Association="Self.fkACDEfectivoArqueoID">
+            <End Role="EfectivoArqueo" EntitySet="EfectivoArqueo" />
+            <End Role="ArqueoCajaDetalle" EntitySet="ArqueoCajaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="fkAqueoCajeroID" Association="Self.fkAqueoCajeroID">
+            <End Role="Cajero" EntitySet="Cajero" />
+            <End Role="ArqueoCaja" EntitySet="ArqueoCaja" />
+          </AssociationSet>
           <AssociationSet Name="fkClienteListaPrecio" Association="Self.fkClienteListaPrecio">
             <End Role="ListaPrecio" EntitySet="ListaPrecio" />
             <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="fkEfectivoDenominacion" Association="Self.fkEfectivoDenominacion">
+            <End Role="Denominacion" EntitySet="Denominacion" />
+            <End Role="EfectivoArqueo" EntitySet="EfectivoArqueo" />
           </AssociationSet>
           <AssociationSet Name="fkProveedorListaPrecio" Association="Self.fkProveedorListaPrecio">
             <End Role="ListaPrecio" EntitySet="ListaPrecio" />
@@ -1448,6 +1642,38 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <Parameter Name="ListaPrecio" Mode="In" Type="String" />
             <Parameter Name="insumoid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="ArqueoCaja" EntityType="ComercializadoraDBModel.ArqueoCaja" />
+          <EntitySet Name="ArqueoCajaDetalle" EntityType="ComercializadoraDBModel.ArqueoCajaDetalle" />
+          <EntitySet Name="Banco" EntityType="ComercializadoraDBModel.Banco" />
+          <EntitySet Name="Cajero" EntityType="ComercializadoraDBModel.Cajero" />
+          <EntitySet Name="ChequeArqueo" EntityType="ComercializadoraDBModel.ChequeArqueo" />
+          <EntitySet Name="Denominacion" EntityType="ComercializadoraDBModel.Denominacion" />
+          <EntitySet Name="EfectivoArqueo" EntityType="ComercializadoraDBModel.EfectivoArqueo" />
+          <AssociationSet Name="fkACDArqueoCaja" Association="ComercializadoraDBModel.fkACDArqueoCaja">
+            <End Role="ArqueoCaja" EntitySet="ArqueoCaja" />
+            <End Role="ArqueoCajaDetalle" EntitySet="ArqueoCajaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="fkAqueoCajeroID" Association="ComercializadoraDBModel.fkAqueoCajeroID">
+            <End Role="Cajero" EntitySet="Cajero" />
+            <End Role="ArqueoCaja" EntitySet="ArqueoCaja" />
+          </AssociationSet>
+          <AssociationSet Name="fkACDChequeArqueoID" Association="ComercializadoraDBModel.fkACDChequeArqueoID">
+            <End Role="ChequeArqueo" EntitySet="ChequeArqueo" />
+            <End Role="ArqueoCajaDetalle" EntitySet="ArqueoCajaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="fkACDEfectivoArqueoID" Association="ComercializadoraDBModel.fkACDEfectivoArqueoID">
+            <End Role="EfectivoArqueo" EntitySet="EfectivoArqueo" />
+            <End Role="ArqueoCajaDetalle" EntitySet="ArqueoCajaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoID" Association="ComercializadoraDBModel.FK_BancoID">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="ChequeArqueo" EntitySet="ChequeArqueo" />
+          </AssociationSet>
+          <AssociationSet Name="fkEfectivoDenominacion" Association="ComercializadoraDBModel.fkEfectivoDenominacion">
+            <End Role="Denominacion" EntitySet="Denominacion" />
+            <End Role="EfectivoArqueo" EntitySet="EfectivoArqueo" />
+          </AssociationSet>
+          <EntitySet Name="vFincas" EntityType="ComercializadoraDBModel.vFincas" />
           </EntityContainer>
         <EntityType Name="Cliente">
           <Key>
@@ -1775,6 +2001,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <PropertyRef Name="Nombre_Insumo" />
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="precioCompraId" Type="Int32" Nullable="false" />
           <Property Name="InsumoID" Type="Int32" Nullable="false" />
@@ -1782,6 +2009,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaHasta" Type="DateTime" Precision="0" />
+          <Property Name="ListaPrecios" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vPrecioCompraProductos">
           <Key>
@@ -1790,6 +2018,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <PropertyRef Name="Nombre_Producto" />
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="precioCompraId" Type="Int32" Nullable="false" />
           <Property Name="productoId" Type="Int32" Nullable="false" />
@@ -1797,6 +2026,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaHasta" Type="DateTime" Precision="0" />
+          <Property Name="ListaPrecios" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PrecioCompra_Insumo_InsumoId">
           <End Type="ComercializadoraDBModel.Insumo" Role="Insumo" Multiplicity="0..1" />
@@ -2298,6 +2528,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
             <PropertyRef Name="FechaHasta" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="PrecioVentaID" Type="Int32" Nullable="false" />
           <Property Name="InsumoID" Type="Int32" Nullable="false" />
@@ -2305,6 +2536,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaHasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ListaPrecios" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vPrecioVentaProductos">
           <Key>
@@ -2314,6 +2546,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <PropertyRef Name="Precio" />
             <PropertyRef Name="FechaDesde" />
             <PropertyRef Name="FechaHasta" />
+            <PropertyRef Name="ListaPrecios" />
           </Key>
           <Property Name="PrecioVentaID" Type="Int32" Nullable="false" />
           <Property Name="productoId" Type="Int32" Nullable="false" />
@@ -2321,10 +2554,164 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaHasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ListaPrecios" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="SP_UpdatePrecioVenta_Result">
           <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
         </ComplexType>
+        <EntityType Name="ArqueoCaja">
+          <Key>
+            <PropertyRef Name="CodigoArqueo" />
+          </Key>
+          <Property Name="CodigoArqueo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="3" />
+          <Property Name="FechaFinal" Type="DateTime" Precision="3" />
+          <Property Name="CajeroID" Type="Int32" />
+          <NavigationProperty Name="ArqueoCajaDetalle" Relationship="ComercializadoraDBModel.fkACDArqueoCaja" FromRole="ArqueoCaja" ToRole="ArqueoCajaDetalle" />
+          <NavigationProperty Name="Cajero" Relationship="ComercializadoraDBModel.fkAqueoCajeroID" FromRole="ArqueoCaja" ToRole="Cajero" />
+        </EntityType>
+        <EntityType Name="ArqueoCajaDetalle">
+          <Key>
+            <PropertyRef Name="ArqueoDetalleID" />
+          </Key>
+          <Property Name="ArqueoDetalleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArqueoCaja" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EfectivoArqueoID" Type="Int32" />
+          <Property Name="ChequeArqueoID" Type="Int32" />
+          <Property Name="Monto" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="ArqueoCaja1" Relationship="ComercializadoraDBModel.fkACDArqueoCaja" FromRole="ArqueoCajaDetalle" ToRole="ArqueoCaja" />
+          <NavigationProperty Name="ChequeArqueo" Relationship="ComercializadoraDBModel.fkACDChequeArqueoID" FromRole="ArqueoCajaDetalle" ToRole="ChequeArqueo" />
+          <NavigationProperty Name="EfectivoArqueo" Relationship="ComercializadoraDBModel.fkACDEfectivoArqueoID" FromRole="ArqueoCajaDetalle" ToRole="EfectivoArqueo" />
+        </EntityType>
+        <EntityType Name="Banco">
+          <Key>
+            <PropertyRef Name="bancoId" />
+          </Key>
+          <Property Name="bancoId" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ChequeArqueo" Relationship="ComercializadoraDBModel.FK_BancoID" FromRole="Banco" ToRole="ChequeArqueo" />
+        </EntityType>
+        <EntityType Name="Cajero">
+          <Key>
+            <PropertyRef Name="CajeroID" />
+          </Key>
+          <Property Name="CajeroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ArqueoCaja" Relationship="ComercializadoraDBModel.fkAqueoCajeroID" FromRole="Cajero" ToRole="ArqueoCaja" />
+        </EntityType>
+        <EntityType Name="ChequeArqueo">
+          <Key>
+            <PropertyRef Name="ChequeID" />
+          </Key>
+          <Property Name="ChequeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroCheque" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BancoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ArqueoCajaDetalle" Relationship="ComercializadoraDBModel.fkACDChequeArqueoID" FromRole="ChequeArqueo" ToRole="ArqueoCajaDetalle" />
+          <NavigationProperty Name="Banco" Relationship="ComercializadoraDBModel.FK_BancoID" FromRole="ChequeArqueo" ToRole="Banco" />
+        </EntityType>
+        <EntityType Name="Denominacion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Denominación" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EfectivoArqueo" Relationship="ComercializadoraDBModel.fkEfectivoDenominacion" FromRole="Denominacion" ToRole="EfectivoArqueo" />
+        </EntityType>
+        <EntityType Name="EfectivoArqueo">
+          <Key>
+            <PropertyRef Name="EfectivoArqueoID" />
+          </Key>
+          <Property Name="EfectivoArqueoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Denominacion" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ArqueoCajaDetalle" Relationship="ComercializadoraDBModel.fkACDEfectivoArqueoID" FromRole="EfectivoArqueo" ToRole="ArqueoCajaDetalle" />
+          <NavigationProperty Name="Denominacion1" Relationship="ComercializadoraDBModel.fkEfectivoDenominacion" FromRole="EfectivoArqueo" ToRole="Denominacion" />
+        </EntityType>
+        <Association Name="fkACDArqueoCaja">
+          <End Type="ComercializadoraDBModel.ArqueoCaja" Role="ArqueoCaja" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.ArqueoCajaDetalle" Role="ArqueoCajaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArqueoCaja">
+              <PropertyRef Name="CodigoArqueo" />
+            </Principal>
+            <Dependent Role="ArqueoCajaDetalle">
+              <PropertyRef Name="ArqueoCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkAqueoCajeroID">
+          <End Type="ComercializadoraDBModel.Cajero" Role="Cajero" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.ArqueoCaja" Role="ArqueoCaja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cajero">
+              <PropertyRef Name="CajeroID" />
+            </Principal>
+            <Dependent Role="ArqueoCaja">
+              <PropertyRef Name="CajeroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkACDChequeArqueoID">
+          <End Type="ComercializadoraDBModel.ChequeArqueo" Role="ChequeArqueo" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.ArqueoCajaDetalle" Role="ArqueoCajaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChequeArqueo">
+              <PropertyRef Name="ChequeID" />
+            </Principal>
+            <Dependent Role="ArqueoCajaDetalle">
+              <PropertyRef Name="ChequeArqueoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkACDEfectivoArqueoID">
+          <End Type="ComercializadoraDBModel.EfectivoArqueo" Role="EfectivoArqueo" Multiplicity="0..1" />
+          <End Type="ComercializadoraDBModel.ArqueoCajaDetalle" Role="ArqueoCajaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EfectivoArqueo">
+              <PropertyRef Name="EfectivoArqueoID" />
+            </Principal>
+            <Dependent Role="ArqueoCajaDetalle">
+              <PropertyRef Name="EfectivoArqueoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoID">
+          <End Type="ComercializadoraDBModel.Banco" Role="Banco" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.ChequeArqueo" Role="ChequeArqueo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="bancoId" />
+            </Principal>
+            <Dependent Role="ChequeArqueo">
+              <PropertyRef Name="BancoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkEfectivoDenominacion">
+          <End Type="ComercializadoraDBModel.Denominacion" Role="Denominacion" Multiplicity="1" />
+          <End Type="ComercializadoraDBModel.EfectivoArqueo" Role="EfectivoArqueo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Denominacion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="EfectivoArqueo">
+              <PropertyRef Name="Denominacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vFincas">
+          <Key>
+            <PropertyRef Name="Nombre_Finca" />
+            <PropertyRef Name="Numero_Lote" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="Dueño" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre_Finca" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Numero_Lote" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2551,6 +2938,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <EntitySetMapping Name="vPrecioCompraInsumos">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.vPrecioCompraInsumos">
               <MappingFragment StoreEntitySet="vPrecioCompraInsumos">
+                <ScalarProperty Name="ListaPrecios" ColumnName="ListaPrecios" />
                 <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
                 <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
@@ -2563,6 +2951,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <EntitySetMapping Name="vPrecioCompraProductos">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.vPrecioCompraProductos">
               <MappingFragment StoreEntitySet="vPrecioCompraProductos">
+                <ScalarProperty Name="ListaPrecios" ColumnName="ListaPrecios" />
                 <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
                 <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
@@ -2808,6 +3197,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <EntitySetMapping Name="vPrecioVentaInsumos">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.vPrecioVentaInsumos">
               <MappingFragment StoreEntitySet="vPrecioVentaInsumos">
+                <ScalarProperty Name="ListaPrecios" ColumnName="ListaPrecios" />
                 <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
                 <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
@@ -2820,6 +3210,7 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <EntitySetMapping Name="vPrecioVentaProductos">
             <EntityTypeMapping TypeName="ComercializadoraDBModel.vPrecioVentaProductos">
               <MappingFragment StoreEntitySet="vPrecioVentaProductos">
+                <ScalarProperty Name="ListaPrecios" ColumnName="ListaPrecios" />
                 <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
                 <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
@@ -2836,6 +3227,81 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ArqueoCaja">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.ArqueoCaja">
+              <MappingFragment StoreEntitySet="ArqueoCaja">
+                <ScalarProperty Name="CajeroID" ColumnName="CajeroID" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="CodigoArqueo" ColumnName="CodigoArqueo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArqueoCajaDetalle">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.ArqueoCajaDetalle">
+              <MappingFragment StoreEntitySet="ArqueoCajaDetalle">
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="ChequeArqueoID" ColumnName="ChequeArqueoID" />
+                <ScalarProperty Name="EfectivoArqueoID" ColumnName="EfectivoArqueoID" />
+                <ScalarProperty Name="ArqueoCaja" ColumnName="ArqueoCaja" />
+                <ScalarProperty Name="ArqueoDetalleID" ColumnName="ArqueoDetalleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banco">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Banco">
+              <MappingFragment StoreEntitySet="Banco">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="bancoId" ColumnName="bancoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cajero">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Cajero">
+              <MappingFragment StoreEntitySet="Cajero">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CajeroID" ColumnName="CajeroID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChequeArqueo">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.ChequeArqueo">
+              <MappingFragment StoreEntitySet="ChequeArqueo">
+                <ScalarProperty Name="BancoID" ColumnName="BancoID" />
+                <ScalarProperty Name="NumeroCheque" ColumnName="NumeroCheque" />
+                <ScalarProperty Name="ChequeID" ColumnName="ChequeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Denominacion">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.Denominacion">
+              <MappingFragment StoreEntitySet="Denominacion">
+                <ScalarProperty Name="Denominación" ColumnName="Denominación" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EfectivoArqueo">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.EfectivoArqueo">
+              <MappingFragment StoreEntitySet="EfectivoArqueo">
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="Denominacion" ColumnName="Denominacion" />
+                <ScalarProperty Name="EfectivoArqueoID" ColumnName="EfectivoArqueoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vFincas">
+            <EntityTypeMapping TypeName="ComercializadoraDBModel.vFincas">
+              <MappingFragment StoreEntitySet="vFincas">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Numero_Lote" ColumnName="Numero Lote" />
+                <ScalarProperty Name="Nombre_Finca" ColumnName="Nombre Finca" />
+                <ScalarProperty Name="Dueño" ColumnName="Dueño" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

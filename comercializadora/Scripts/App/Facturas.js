@@ -11,7 +11,6 @@ $("#AgregarFactura").click(function () {
     var cantidad = $('#Cantidad').val();
     var descripcion = productoId ? NombreProducto : NombreInsumo;
     var codigo = productoId ? productoId : insumoId;
-    console.log("insumo", descripcion)
 
     console.log("productoId", productoId)
     function GetFacturaDetalle() {

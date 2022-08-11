@@ -56,6 +56,14 @@ namespace comercializadora.DataBase
         public DbSet<Cobros> Cobros { get; set; }
         public DbSet<vPrecioVentaInsumos> vPrecioVentaInsumos { get; set; }
         public DbSet<vPrecioVentaProductos> vPrecioVentaProductos { get; set; }
+        public DbSet<ArqueoCaja> ArqueoCaja { get; set; }
+        public DbSet<ArqueoCajaDetalle> ArqueoCajaDetalle { get; set; }
+        public DbSet<Banco> Banco { get; set; }
+        public DbSet<Cajero> Cajero { get; set; }
+        public DbSet<ChequeArqueo> ChequeArqueo { get; set; }
+        public DbSet<Denominacion> Denominacion { get; set; }
+        public DbSet<EfectivoArqueo> EfectivoArqueo { get; set; }
+        public DbSet<vFincas> vFincas { get; set; }
     
         public virtual ObjectResult<SP_InsertListaPrecio_Result> SP_InsertListaPrecio(string codigo, string descripcion)
         {

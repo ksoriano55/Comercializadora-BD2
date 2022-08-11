@@ -130,6 +130,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArqueoCajasController.cs" />
     <Compile Include="Controllers\BodegaController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
@@ -148,7 +149,22 @@
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\ProveedorsController.cs" />
     <Compile Include="Controllers\TipoPagosController.cs" />
+    <Compile Include="DataBase\ArqueoCaja.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\ArqueoCajaDetalle.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Banco.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\Bodega.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Cajero.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\ChequeArqueo.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Cliente.cs">
@@ -186,6 +202,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataBase.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Denominacion.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\EfectivoArqueo.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Factura.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
@@ -307,6 +329,9 @@
     <Compile Include="DataBase\TipoPago.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataBase\vFincas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\vInventarioInsumos.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -352,10 +377,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\Arqueo.js" />
     <Content Include="Scripts\App\Compras.js" />
     <Content Include="Scripts\App\Facturas.js" />
     <Content Include="Scripts\App\Generalidades.js" />
     <Content Include="Scripts\App\Inventario.js" />
+    <Content Include="Scripts\App\Pventa.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="DataBase\DataBase.edmx">
@@ -5173,6 +5200,9 @@
     <Content Include="Views\PrecioVenta\Delete.cshtml" />
     <Content Include="Views\PrecioVenta\Edit.cshtml" />
     <Content Include="Views\PrecioVenta\Index.cshtml" />
+    <Content Include="Views\ArqueoCajas\Create.cshtml" />
+    <Content Include="Views\ArqueoCajas\Index.cshtml" />
+    <Content Include="Views\ArqueoCajas\_CreateArqueoDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

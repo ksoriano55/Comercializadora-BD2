@@ -67,6 +67,20 @@
         <AssociationConnector Association="ComercializadoraDBModel.FK_Cobro_TipoPago_TipoPagoId" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.vPrecioVentaInsumos" Width="1.5" PointX="12.375" PointY="4.75" />
         <EntityTypeShape EntityType="ComercializadoraDBModel.vPrecioVentaProductos" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.ArqueoCaja" Width="1.5" PointX="18.625" PointY="18.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.ArqueoCajaDetalle" Width="1.5" PointX="20.875" PointY="15" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Banco" Width="1.5" PointX="16.375" PointY="15.375" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Cajero" Width="1.5" PointX="16.375" PointY="19" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.ChequeArqueo" Width="1.5" PointX="18.625" PointY="15.25" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.Denominacion" Width="1.5" PointX="16.375" PointY="21.75" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.EfectivoArqueo" Width="1.5" PointX="18.625" PointY="21.75" />
+        <AssociationConnector Association="ComercializadoraDBModel.fkACDArqueoCaja" />
+        <AssociationConnector Association="ComercializadoraDBModel.fkAqueoCajeroID" />
+        <AssociationConnector Association="ComercializadoraDBModel.fkACDChequeArqueoID" />
+        <AssociationConnector Association="ComercializadoraDBModel.fkACDEfectivoArqueoID" />
+        <AssociationConnector Association="ComercializadoraDBModel.FK_BancoID" />
+        <AssociationConnector Association="ComercializadoraDBModel.fkEfectivoDenominacion" />
+        <EntityTypeShape EntityType="ComercializadoraDBModel.vFincas" Width="1.5" PointX="15.375" PointY="3.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

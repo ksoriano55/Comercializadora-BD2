@@ -53,55 +53,21 @@
                         <div class="menu_section">
                             <h3>GENERAL</h3>
                             <ul class="nav side-menu">
-                                <li>
-                                    <a><i class="fa fa-group"></i> Productores <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Productores", "Index", "Productor", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-user-plus"></i> Proveedores <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Proveedores", "Index", "Proveedors", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                    </ul>
+                                <li><a href="@Url.Action("Index", "Productor")"><i class="fa fa-group"></i> Productores</a></li>
+                                <li><a href="@Url.Action("Index", "Proveedors")"><i class="fa fa-group"></i> Proveedores</a></li>
+                                <li><a href="@Url.Action("Index", "Clientes")"><i class="fa fa-users"></i> Clientes</a></li>
+                                <li><a href="@Url.Action("Index", "Inventarios")"><i class="fa fa-cubes"></i> Entrada Inventarios</a></li>
+                                <li><a href="@Url.Action("Index", "Compras")"><i class="fa fa-tags"></i> Compras</a></li>
 
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-users"></i> Clientes <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Clientes", "Index", "Clientes", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                    </ul>
-
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-cubes"></i> Inventario <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Entrada Inventarios", "Index", "Inventarios", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                    </ul>
-
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-tags"></i> Compras <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Compras", "Index", "Compras", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                    </ul>
-
-                                </li>
                                 <li>
                                     <a><i class="fa fa-shopping-cart"></i> Ventas <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>@Html.ActionLink("Ventas a Clientes", "Index", "Facturas", new { area = "" }, new { @class = "navbar-brand" })</li>
                                         <li>@Html.ActionLink("Ventas a Productores", "IndexFacturaProductor", "Facturas", new { area = "" }, new { @class = "navbar-brand" })</li>
                                     </ul>
-
                                 </li>
-                                <li>
-                                    <a><i class="fa fa-credit-card"></i> Pagos <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Pagos", "Index", "Pagos", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                    </ul>
 
-                                </li>
+                                <li><a href="@Url.Action("Index", "Pagos")"><i class="fa fa-credit-card"></i> Pagos</a></li>
                                 <li>
                                     <a><i class="fa fa-calculator"></i> Precios <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -109,12 +75,8 @@
                                         <li>@Html.ActionLink("Precios Compras", "Index", "PrecioCompras", new { area = "" }, new { @class = "navbar-brand" })</li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a><i class="fa fa-crosshairs"></i> Cosecha <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Cosecha", "Index", "CosechaDetalles", new { area = "" }, new { @class = "navbar-brand" })</li>
-                                    </ul>
-                                </li>
+                                <li><a href="@Url.Action("Index", "CosechaDetalles")"><i class="fa fa-crosshairs"></i> Cosecha</a></li>
+                                <li><a href="@Url.Action("Index", "ArqueoCajas")"><i class="fa fa-crosshairs"></i> Arqueo</a></li>
                             </ul>
                         </div>
                         <div class="menu_section">

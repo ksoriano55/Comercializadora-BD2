@@ -1,6 +1,7 @@
 ﻿
 $(document).ready(function () {
 
+///---------------------------
     $("#FincaId").change(function () {
         $("#LoteId").empty();
         $.getJSON('/Productos/getLotes', { idFinca: $('#FincaId').val() }, function (data) {

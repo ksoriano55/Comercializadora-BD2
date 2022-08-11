@@ -20,5 +20,6 @@ namespace comercializadora.DataBase
         public decimal Precio { get; set; }
         public System.DateTime FechaDesde { get; set; }
         public Nullable<System.DateTime> FechaHasta { get; set; }
+        public string ListaPrecios { get; set; }
     }
 }

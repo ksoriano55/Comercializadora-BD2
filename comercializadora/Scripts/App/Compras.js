@@ -5,6 +5,8 @@ $("#AgregarCompra").click(function () {
 
     var insumoId = $('#InsumoId').val();
     var cantidad = $('#Cantidad').val();
+    let insumo = $('#insumoName').val($("#InsumoId option:selected").text());
+    let NombreInsumo = $('#insumoName').val();
 
     function GetCompraDetalle() {
         var compraDetalle = {
@@ -28,7 +30,7 @@ $("#AgregarCompra").click(function () {
             contador = contador + 1;
             copiar = "<tr data-id=" + contador + ">";
             copiar += "<td id = 'insumoId'>" + $('#InsumoId').val() + "</td>";
-            copiar += "<td id = 'Descripcion'>" + 'Insepticida'/*$('#Descripcion').val()*/ + "</td>";
+            copiar += "<td id = 'Descripcion'>" + NombreInsumo + "</td>";
             copiar += "<td id = 'cantidad'>" + $('#Cantidad').val() + "</td>";
             copiar += "<td>" + '<button id="QuitarBeneficiario" class="btn btn-danger btn-xs eliminar" type="button" title="Quitar"><i class="fa fa-trash-o fa-lg"></i></button>' + "</td>";
             copiar += "</tr>";

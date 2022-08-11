@@ -43,6 +43,9 @@
                                 Insumo
                             </th>
                             <th>
+                                Lista Precios
+                            </th>
+                            <th>
                                 Precio
                             </th>
                             <th>
@@ -55,20 +58,23 @@
 
                         @for (int i = 0; i < Model.vPrecioCompraInsumos.Count(); i++)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].Nombre_Insumo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].Precio)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].FechaDesde)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].FechaHasta)
-                                </td>
-                            </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].Nombre_Insumo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].ListaPrecios)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].Precio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].FechaDesde)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.vPrecioCompraInsumos[i].FechaHasta)
+                        </td>
+                    </tr>
                         }
 
                     </table>
@@ -78,6 +84,9 @@
                         <tr>
                             <th>
                                 Producto
+                            </th>
+                            <th>
+                                Lista Precios
                             </th>
                             <th>
                                 Precio
@@ -92,20 +101,23 @@
 
                         @for (int i = 0; i < Model.vPrecioCompraProductos.Count(); i++)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].Nombre_Producto)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].Precio)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].FechaDesde)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].FechaHasta)
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].Nombre_Producto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].ListaPrecios)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].Precio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].FechaDesde)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.vPrecioCompraProductos[i].FechaHasta)
+                            </td>
+                        </tr>
                         }
 
                     </table>
