@@ -21,4 +21,14 @@ $(document).ready(function () {
             });
         });
     });
+
+    $("#clienteId").change(function () {
+        $("#facturaId").empty();
+        $.getJSON('/Cobros/getFacturas', { clienteId: $('#clienteId').val() }, function (data) {
+            $.each(data, function () {
+                $('#facturaId').append('<option value=' +
+                    this.Value + '>' + this.Text + '</option>');
+            });
+        });
+    });
 });

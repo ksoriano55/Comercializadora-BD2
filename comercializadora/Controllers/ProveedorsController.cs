@@ -39,6 +39,7 @@ namespace comercializadora.Controllers
         // GET: Proveedors/Create
         public ActionResult Create()
         {
+            ViewBag.ListaPrecioID = new SelectList(db.ListaPrecio, "Codigo", "Descripcion");
             return View();
         }
 
@@ -47,14 +48,14 @@ namespace comercializadora.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nombre,RTN,Telefono,Direccion,EMail")] Proveedor proveedor)
+        public ActionResult Create([Bind(Include = "Nombre,RTN,Telefono,Direccion,EMail,ListaPrecioID,DiasCredito")] Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
                 var MensajeError = "";
                 IEnumerable<object> list;
 
-                list = db.spInsertProveedor(proveedor.Nombre, proveedor.RTN, proveedor.Telefono, proveedor.Direccion, proveedor.EMail);
+                list = db.spInsertProveedor(proveedor.Nombre, proveedor.RTN, proveedor.Telefono, proveedor.Direccion, proveedor.EMail, proveedor.ListaPrecioID, proveedor.DiasCredito);
                 foreach (spInsertProveedor_Result tbProveedor in list)
                     MensajeError = tbProveedor.MessageError;
                 if (MensajeError.StartsWith("-1"))

@@ -904,6 +904,13 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
         <Function Name="SP_InsertBodega" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nombre" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_InsertCobros" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClienteID" Type="int" Mode="In" />
+          <Parameter Name="FacturaID" Type="int" Mode="In" />
+          <Parameter Name="TipoDePago" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+          <Parameter Name="Monto" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="SP_InsertCompra" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="proveedorId" Type="int" Mode="In" />
           <Parameter Name="ValorCompra" Type="decimal" Mode="In" />
@@ -1022,6 +1029,9 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
         <Function Name="spDeleteCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClienteID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spInsertBancos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spInsertCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="RTN" Type="varchar" Mode="In" />
@@ -1046,6 +1056,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
           <Parameter Name="Direccion" Type="varchar" Mode="In" />
           <Parameter Name="EMail" Type="varchar" Mode="In" />
+          <Parameter Name="ListaPrecioID" Type="varchar" Mode="In" />
+          <Parameter Name="DiasCredito" Type="int" Mode="In" />
         </Function>
         <Function Name="spUpdateProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProveedorID" Type="int" Mode="In" />
@@ -1573,6 +1585,8 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <Parameter Name="Telefono" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
             <Parameter Name="EMail" Mode="In" Type="String" />
+            <Parameter Name="ListaPrecioID" Mode="In" Type="String" />
+            <Parameter Name="DiasCredito" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spUpdateProveedor" ReturnType="Collection(ComercializadoraDBModel.spUpdateProveedor_Result)">
             <Parameter Name="ProveedorID" Mode="In" Type="Int32" />
@@ -1674,6 +1688,16 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
             <End Role="EfectivoArqueo" EntitySet="EfectivoArqueo" />
           </AssociationSet>
           <EntitySet Name="vFincas" EntityType="ComercializadoraDBModel.vFincas" />
+          <FunctionImport Name="spInsertBancos" ReturnType="Collection(ComercializadoraDBModel.spInsertBancos_Result)">
+          <Parameter Name="Descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertCobros" ReturnType="Collection(ComercializadoraDBModel.sp_InsertCobros_Result)">
+            <Parameter Name="ClienteID" Mode="In" Type="Int32" />
+            <Parameter Name="FacturaID" Mode="In" Type="Int32" />
+            <Parameter Name="TipoDePago" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Monto" Mode="In" Type="Decimal" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Cliente">
           <Key>
@@ -2712,6 +2736,12 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
           <Property Name="Numero_Lote" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="spInsertBancos_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="sp_InsertCobros_Result">
+          <Property Type="String" Name="MessageError" Nullable="false" MaxLength="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3302,6 +3332,20 @@ advertencia 6002: La tabla o vista 'db_a8a9f9_comercializadora.dbo.vPrecioVentaP
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spInsertBancos" FunctionName="ComercializadoraDBModel.Store.spInsertBancos" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.spInsertBancos_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_InsertCobros" FunctionName="ComercializadoraDBModel.Store.sp_InsertCobros" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ComercializadoraDBModel.sp_InsertCobros_Result">
+                <ScalarProperty Name="MessageError" ColumnName="MessageError" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

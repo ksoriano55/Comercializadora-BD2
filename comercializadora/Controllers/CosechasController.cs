@@ -1,127 +1,116 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+//using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using comercializadora.DataBase;
-using EntityState = System.Data.Entity.EntityState;
 
 namespace comercializadora.Controllers
 {
-    public class FincasController : Controller
+    public class CosechasController : Controller
     {
         private ComercializadoraDBEntities db = new ComercializadoraDBEntities();
 
-        // GET: Fincas
+        // GET: Cosechas
         public ActionResult Index()
         {
-            return View(db.Finca.ToList());
+            return View(db.Cosecha.ToList());
         }
 
-        // GET: Fincas/Details/5
+        // GET: Cosechas/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Finca finca = db.Finca.Find(id);
-            if (finca == null)
+            Cosecha cosecha = db.Cosecha.Find(id);
+            if (cosecha == null)
             {
                 return HttpNotFound();
             }
-            return View(finca);
+            return View(cosecha);
         }
 
-        // GET: Fincas/Create
+        // GET: Cosechas/Create
         public ActionResult Create()
         {
-            ViewBag.ProductorID = new SelectList(db.Productor, "ProductorID", "Nombre");
             return View();
         }
 
-        // POST: Fincas/Create
+        // POST: Cosechas/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nombre,ProductorID")] Finca finca)
+        public ActionResult Create([Bind(Include = "CosechaId,Descripcion,FechaInicio,FechaFinal")] Cosecha cosecha)
         {
             if (ModelState.IsValid)
             {
-                var MensajeError = "";
-                IEnumerable<object> list;
-
-                list = db.spInsertFinca(finca.Nombre, finca.ProductorID);
-                foreach (spInsertFinca_Result tbFinca in list)
-                    MensajeError = tbFinca.MessageError;
-                if (MensajeError.StartsWith("-1"))
-                {
-                    return Json("No se pudo registrar, favor contacte al administrador.", JsonRequestBehavior.AllowGet);
-                }
-
+                db.Cosecha.Add(cosecha);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(finca);
+            return View(cosecha);
         }
 
-        // GET: Fincas/Edit/5
+        // GET: Cosechas/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Finca finca = db.Finca.Find(id);
-            if (finca == null)
+            Cosecha cosecha = db.Cosecha.Find(id);
+            if (cosecha == null)
             {
                 return HttpNotFound();
             }
-            return View(finca);
+            return View(cosecha);
         }
 
-        // POST: Fincas/Edit/5
+        // POST: Cosechas/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FincaID,Nombre,ProductorID")] Finca finca)
+        public ActionResult Edit([Bind(Include = "CosechaId,Descripcion,FechaInicio,FechaFinal")] Cosecha cosecha)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(finca).State = EntityState.Modified;
+                db.Entry(cosecha).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(finca);
+            return View(cosecha);
         }
 
-        // GET: Fincas/Delete/5
+        // GET: Cosechas/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Finca finca = db.Finca.Find(id);
-            if (finca == null)
+            Cosecha cosecha = db.Cosecha.Find(id);
+            if (cosecha == null)
             {
                 return HttpNotFound();
             }
-            return View(finca);
+            return View(cosecha);
         }
 
-        // POST: Fincas/Delete/5
+        // POST: Cosechas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Finca finca = db.Finca.Find(id);
-            db.Finca.Remove(finca);
+            Cosecha cosecha = db.Cosecha.Find(id);
+            db.Cosecha.Remove(cosecha);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

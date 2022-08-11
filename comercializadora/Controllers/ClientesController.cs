@@ -39,6 +39,7 @@ namespace comercializadora.Controllers
         // GET: Clientes/Create
         public ActionResult Create()
         {
+            ViewBag.ListaPrecioID = new SelectList(db.ListaPrecio, "Codigo", "Descripcion");
             return View();
         }
 

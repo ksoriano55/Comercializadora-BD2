@@ -1,0 +1,44 @@
+﻿@model comercializadora.DataBase.Cosecha
+@using comercializadora.DataBase
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaFinal)
+        </dd>
+
+    </dl>
+</div>
+
+@Html.Partial("_CosechaDetalle", Model.CosechaDetalle)
+
+
+<a href="@Url.Action("Index","Cosechas")" class="btn btn-xs btn-info" data-rel="tooltip">
+    Regresar
+</a>

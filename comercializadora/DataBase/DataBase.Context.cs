@@ -467,7 +467,7 @@ namespace comercializadora.DataBase
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertLote_Result>("spInsertLote", fincaIDParameter, extensionParameter, tipoSueloParameter, tipoRiegoParameter, cantidadCosechaParameter);
         }
     
-        public virtual ObjectResult<spInsertProveedor_Result> spInsertProveedor(string nombre, string rTN, string telefono, string direccion, string eMail)
+        public virtual ObjectResult<spInsertProveedor_Result> spInsertProveedor(string nombre, string rTN, string telefono, string direccion, string eMail, string listaPrecioID, Nullable<int> diasCredito)
         {
             var nombreParameter = nombre != null ?
                 new ObjectParameter("Nombre", nombre) :
@@ -489,7 +489,15 @@ namespace comercializadora.DataBase
                 new ObjectParameter("EMail", eMail) :
                 new ObjectParameter("EMail", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertProveedor_Result>("spInsertProveedor", nombreParameter, rTNParameter, telefonoParameter, direccionParameter, eMailParameter);
+            var listaPrecioIDParameter = listaPrecioID != null ?
+                new ObjectParameter("ListaPrecioID", listaPrecioID) :
+                new ObjectParameter("ListaPrecioID", typeof(string));
+    
+            var diasCreditoParameter = diasCredito.HasValue ?
+                new ObjectParameter("DiasCredito", diasCredito) :
+                new ObjectParameter("DiasCredito", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertProveedor_Result>("spInsertProveedor", nombreParameter, rTNParameter, telefonoParameter, direccionParameter, eMailParameter, listaPrecioIDParameter, diasCreditoParameter);
         }
     
         public virtual ObjectResult<spUpdateProveedor_Result> spUpdateProveedor(Nullable<int> proveedorID, string nombre, string rTN, string telefono, string eMail)
@@ -606,6 +614,40 @@ namespace comercializadora.DataBase
                 new ObjectParameter("insumoid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdatePrecioVenta_Result>("SP_UpdatePrecioVenta", productoIDParameter, precioParameter, fechaDesdeParameter, fechaHastaParameter, listaPrecioParameter, insumoidParameter);
+        }
+    
+        public virtual ObjectResult<spInsertBancos_Result> spInsertBancos(string descripcion)
+        {
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spInsertBancos_Result>("spInsertBancos", descripcionParameter);
+        }
+    
+        public virtual ObjectResult<sp_InsertCobros_Result> sp_InsertCobros(Nullable<int> clienteID, Nullable<int> facturaID, Nullable<int> tipoDePago, Nullable<System.DateTime> fecha, Nullable<decimal> monto)
+        {
+            var clienteIDParameter = clienteID.HasValue ?
+                new ObjectParameter("ClienteID", clienteID) :
+                new ObjectParameter("ClienteID", typeof(int));
+    
+            var facturaIDParameter = facturaID.HasValue ?
+                new ObjectParameter("FacturaID", facturaID) :
+                new ObjectParameter("FacturaID", typeof(int));
+    
+            var tipoDePagoParameter = tipoDePago.HasValue ?
+                new ObjectParameter("TipoDePago", tipoDePago) :
+                new ObjectParameter("TipoDePago", typeof(int));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var montoParameter = monto.HasValue ?
+                new ObjectParameter("Monto", monto) :
+                new ObjectParameter("Monto", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_InsertCobros_Result>("sp_InsertCobros", clienteIDParameter, facturaIDParameter, tipoDePagoParameter, fechaParameter, montoParameter);
         }
     }
 }

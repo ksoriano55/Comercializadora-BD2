@@ -40,7 +40,12 @@ namespace comercializadora.Controllers
         // GET: Productor/Create
         public ActionResult Create()
         {
-            ViewBag.CuentaBancariaID = new SelectList(db.CuentaBancaria, "CuantaID", "Banco");
+            var cuentabancaria = db.CuentaBancaria.Select(x => new
+            {
+                CuantaID = x.CuantaID,
+                Nombre = x.NumeroCuenta + " - " + x.Banco
+            });
+            ViewBag.CuentaBancariaID = new SelectList(cuentabancaria, "CuantaID", "Nombre");
             ViewBag.ListaPrecioID = new SelectList(db.ListaPrecio, "Codigo", "Descripcion");
             return View();
         }

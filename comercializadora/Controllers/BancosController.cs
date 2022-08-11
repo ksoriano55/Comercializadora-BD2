@@ -1,127 +1,126 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+//using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using comercializadora.DataBase;
-using EntityState = System.Data.Entity.EntityState;
 
 namespace comercializadora.Controllers
 {
-    public class FincasController : Controller
+    public class BancosController : Controller
     {
         private ComercializadoraDBEntities db = new ComercializadoraDBEntities();
 
-        // GET: Fincas
+        // GET: Bancos
         public ActionResult Index()
         {
-            return View(db.Finca.ToList());
+            return View(db.Banco.ToList());
         }
 
-        // GET: Fincas/Details/5
+        // GET: Bancos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Finca finca = db.Finca.Find(id);
-            if (finca == null)
+            Banco banco = db.Banco.Find(id);
+            if (banco == null)
             {
                 return HttpNotFound();
             }
-            return View(finca);
+            return View(banco);
         }
 
-        // GET: Fincas/Create
+        // GET: Bancos/Create
         public ActionResult Create()
         {
-            ViewBag.ProductorID = new SelectList(db.Productor, "ProductorID", "Nombre");
             return View();
         }
 
-        // POST: Fincas/Create
+        // POST: Bancos/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nombre,ProductorID")] Finca finca)
+        public ActionResult Create([Bind(Include = "bancoId,Descripcion")] Banco banco)
         {
             if (ModelState.IsValid)
             {
                 var MensajeError = "";
-                IEnumerable<object> list;
+            IEnumerable<object> list;
 
-                list = db.spInsertFinca(finca.Nombre, finca.ProductorID);
-                foreach (spInsertFinca_Result tbFinca in list)
-                    MensajeError = tbFinca.MessageError;
-                if (MensajeError.StartsWith("-1"))
-                {
-                    return Json("No se pudo registrar, favor contacte al administrador.", JsonRequestBehavior.AllowGet);
-                }
-
+            list = db.spInsertBancos(banco.Descripcion);
+            foreach (spInsertBancos_Result tbBancos in list)
+                MensajeError = tbBancos.MessageError;
+            if (MensajeError.StartsWith("-1"))
+            {
+                return Json("No se pudo registrar, favor contacte al administrador.", JsonRequestBehavior.AllowGet);
+             }
+                
                 return RedirectToAction("Index");
+            
             }
 
-            return View(finca);
+                return View(banco);
         }
 
-        // GET: Fincas/Edit/5
+        // GET: Bancos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Finca finca = db.Finca.Find(id);
-            if (finca == null)
+            Banco banco = db.Banco.Find(id);
+            if (banco == null)
             {
                 return HttpNotFound();
             }
-            return View(finca);
+            return View(banco);
         }
 
-        // POST: Fincas/Edit/5
+        // POST: Bancos/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FincaID,Nombre,ProductorID")] Finca finca)
+        public ActionResult Edit([Bind(Include = "bancoId,Descripcion")] Banco banco)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(finca).State = EntityState.Modified;
+                db.Entry(banco).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(finca);
+            return View(banco);
         }
 
-        // GET: Fincas/Delete/5
+        // GET: Bancos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Finca finca = db.Finca.Find(id);
-            if (finca == null)
+            Banco banco = db.Banco.Find(id);
+            if (banco == null)
             {
                 return HttpNotFound();
             }
-            return View(finca);
+            return View(banco);
         }
 
-        // POST: Fincas/Delete/5
+        // POST: Bancos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Finca finca = db.Finca.Find(id);
-            db.Finca.Remove(finca);
+            Banco banco = db.Banco.Find(id);
+            db.Banco.Remove(banco);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

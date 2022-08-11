@@ -1,20 +1,21 @@
-﻿@model IEnumerable<comercializadora.DataBase.Proveedor>
+﻿@model IEnumerable<comercializadora.DataBase.Cosecha>
 
 @{
     ViewBag.Title = "Index";
 }
 
+
 <div class="row">
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
             <div class="x_title">
-                <h2>LISTADO DE PROVEEDORES</h2>
+                <h2>COSECHAS</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
-                        <a href="@Url.Action("Create", "Proveedors")" class="btn btn-outline-primary btn-sm" title="Registrar Nuevo">
+                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modalCreate">
                             <i class="ace-icon fa fa-plus-circle bigger-120"></i>
                             Registrar Nuevo
-                        </a>
+                        </button>
                     </li>
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -30,19 +31,13 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Nombre)
+                                            @Html.DisplayNameFor(model => model.Descripcion)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.RTN)
+                                            @Html.DisplayNameFor(model => model.FechaInicio)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Telefono)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Direccion)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EMail)
+                                            @Html.DisplayNameFor(model => model.FechaFinal)
                                         </th>
                                         <th></th>
                                     </tr>
@@ -52,23 +47,16 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.RTN)
+                                                @Html.DisplayFor(modelItem => item.FechaInicio)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Telefono)
+                                                @Html.DisplayFor(modelItem => item.FechaFinal)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Direccion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EMail)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.ProveedorID }) |
-                                                @Html.ActionLink("Detalles", "Details", new { id = item.ProveedorID }) 
+                                                @Html.ActionLink("Detalles", "Details", new { id = item.CosechaId }) 
                                             </td>
                                         </tr>
                                     }
@@ -78,6 +66,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Registrar Nueva Lista de Precios-->
+
+<div id="modalCreate" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel"> REGISTRAR NUEVA COSECHA</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_Create", new comercializadora.DataBase.Cosecha())
+            </div>
+
         </div>
     </div>
 </div>

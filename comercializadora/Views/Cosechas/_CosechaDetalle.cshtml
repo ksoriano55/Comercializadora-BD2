@@ -1,0 +1,38 @@
+﻿@model IEnumerable<comercializadora.DataBase.CosechaDetalle>
+
+<table id="datatable" class="table table-striped table-bordered" style="width:100%">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            Total
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var totalLine = item.Cantidad * item.Precio;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => totalLine)
+            </td>
+        </tr>
+    }
+
+</table>
